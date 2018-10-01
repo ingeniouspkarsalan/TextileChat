@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.Sign_in" />
-        <activity android:name=".activities.Sign_up"></activity>
+        <activity android:name=".activities.Sign_up" />
     </application>
 
 </manifest>

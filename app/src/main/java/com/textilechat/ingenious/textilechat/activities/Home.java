@@ -12,11 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.pixplicity.easyprefs.library.Prefs;
+import com.pkmmte.view.CircularImageView;
 import com.textilechat.ingenious.textilechat.R;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    String username,useremail;
+    private TextView usernameview,useremailview;
+    CircularImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +32,18 @@ public class Home extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        username= Prefs.getString("user_name","");
+        useremail=Prefs.getString("user_email","");
+
+//
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -42,6 +53,19 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        View headerView = navigationView.getHeaderView(0);
+        usernameview=(TextView) headerView.findViewById(R.id.tv_name);
+        useremailview=(TextView) headerView.findViewById(R.id.tv_email);
+        imageView = headerView.findViewById(R.id.avatar);
+
+
+        if (username!=null&&useremail!=null){
+            usernameview.setText(username);
+            useremailview.setText(useremail);
+        }
+
     }
 
     @Override

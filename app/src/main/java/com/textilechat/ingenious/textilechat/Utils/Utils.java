@@ -25,6 +25,9 @@ public class Utils
         return pDialog;
     }
 
+
+
+
     public static boolean isOnline(Context ctx) {
 
         ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(CONNECTIVITY_SERVICE);

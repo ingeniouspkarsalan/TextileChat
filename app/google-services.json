@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "757121112273",
+    "firebase_url": "https://textilechat-3bae4.firebaseio.com",
+    "project_id": "textilechat-3bae4",
+    "storage_bucket": "textilechat-3bae4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757121112273:android:914634155c1dd9a3",
+        "android_client_info": {
+          "package_name": "com.textilechat.ingenious.textilechat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757121112273-1fasmn8p8pronovr73tb830idesmpb2r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.textilechat.ingenious.textilechat",
+            "certificate_hash": "c07f039f3bae026007109f0997f2d8f1ea3d815e"
+          }
+        },
+        {
+          "client_id": "757121112273-vl9oii8opsvhgcvr0qhgor0utetocm31.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxcLRzDiC6uKZqH5xU3iixdi-L17IbVZk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757121112273-vl9oii8opsvhgcvr0qhgor0utetocm31.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

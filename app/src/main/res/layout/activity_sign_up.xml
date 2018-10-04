@@ -7,4 +7,45 @@
     android:orientation="vertical"
     tools:context=".activities.Sign_up">
 
+
+
+    <EditText
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/loggin_banner"
+        android:background="@drawable/btn_stlye"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:inputType="text"
+        android:layout_marginEnd="10dp"
+        android:paddingStart="10dp"
+        android:hint="Name"/>
+
+    <EditText
+        android:id="@+id/tv_contact"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/loggin_banner"
+        android:background="@drawable/btn_stlye"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:inputType="text"
+        android:layout_marginEnd="10dp"
+        android:paddingStart="10dp"
+        android:hint="Contact"/>
+
+    <EditText
+        android:id="@+id/tv_email"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/loggin_banner"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/btn_stlye"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="10dp" />
+
 </LinearLayout>

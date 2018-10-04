@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:background="@drawable/btn_stlye"
-                    android:text="Sing In"
+                    android:text="Sign In"
                     android:textAllCaps="true"
                     android:textSize="18dp"
                     android:fontFamily="sans-serif-light"

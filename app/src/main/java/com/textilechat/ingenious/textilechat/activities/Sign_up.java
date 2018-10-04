@@ -87,7 +87,7 @@ public class Sign_up extends AppCompatActivity {
 
 
         }else{
-            new SweetAlertDialog(getApplicationContext(), SweetAlertDialog.ERROR_TYPE)
+            new SweetAlertDialog(Sign_up.this, SweetAlertDialog.ERROR_TYPE)
                     .setTitleText("Oops...")
                     .setContentText("Fill all Fields")
                     .show();

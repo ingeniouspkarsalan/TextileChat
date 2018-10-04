@@ -39,7 +39,6 @@ public class Sign_in extends AppCompatActivity {
     private void init(){
         tv_email=findViewById(R.id.tv_email);
         tv_pass=findViewById(R.id.tv_pass);
-
         findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,14 +60,9 @@ public class Sign_in extends AppCompatActivity {
 
     private void scaningallfields(){
         if(!TextUtils.isEmpty(tv_email.getText().toString()) & !TextUtils.isEmpty(tv_pass.getText().toString())){
-
                 sign_in(tv_email.getText().toString(),tv_pass.getText().toString());
-
-
-
-
         }else{
-            new SweetAlertDialog(getApplicationContext(), SweetAlertDialog.ERROR_TYPE)
+            new SweetAlertDialog(Sign_in.this, SweetAlertDialog.ERROR_TYPE)
                     .setTitleText("Oops...")
                     .setContentText("Fill all Fields")
                     .show();
@@ -141,13 +135,6 @@ public class Sign_in extends AppCompatActivity {
             }
         });
     }
-
-
-
-
-
-
-
 
 
     @Override

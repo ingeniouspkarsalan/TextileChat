@@ -34,6 +34,7 @@ dependencies {
     implementation 'com.github.GrenderG:Toasty:1.3.0'
     implementation 'com.github.f0ris.sweetalert:library:1.5.3'
     implementation 'com.pkmmte.view:circularimageview:1.1'
+    implementation 'com.github.florent37:shapeofview:v1.0.7'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.github.bumptech.glide:glide:4.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'

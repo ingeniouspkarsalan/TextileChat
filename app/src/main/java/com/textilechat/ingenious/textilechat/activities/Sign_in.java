@@ -1,5 +1,6 @@
 package com.textilechat.ingenious.textilechat.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.Utils.Endpoints;
 import com.textilechat.ingenious.textilechat.Utils.Utils;
@@ -31,13 +33,14 @@ public class Sign_in extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        init();
     }
 
     private void init(){
         tv_email=findViewById(R.id.tv_email);
         tv_pass=findViewById(R.id.tv_pass);
 
-        findViewById(R.id.tv_submit).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Utils.isOnline(Sign_in.this))
@@ -100,11 +103,16 @@ public class Sign_in extends AppCompatActivity {
                         JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                         if(object.getBoolean("success")) {
                             Toasty.success(Sign_in.this,object.getString("message"),Toast.LENGTH_LONG).show();
-                            finish();
+                            Prefs.putString("user_id",object.getString("id"));
+                            Prefs.putString("user_name",object.getString("name"));
+                            Prefs.putString("user_email",object.getString("email"));
+                            Prefs.putBoolean("loginSuccess",true); // change this value on logout
+                            startActivity(new Intent(Sign_in.this, Home.class));
+                            Animation.slideUp(Sign_in.this);
                         }else {
                             new SweetAlertDialog(Sign_in.this, SweetAlertDialog.ERROR_TYPE)
                                     .setTitleText("Oops...")
-                                    .setContentText("Try Again")
+                                    .setContentText(object.getString("message"))
                                     .show();
                         }
 

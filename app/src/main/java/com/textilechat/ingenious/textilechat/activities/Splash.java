@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.pixplicity.easyprefs.library.Prefs;
 import com.squareup.picasso.Picasso;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.classes.Animation;
@@ -38,5 +39,13 @@ public class Splash extends AppCompatActivity {
                 Animation.slideLeft(Splash.this);
             }
         });
+
+        //To check if user logged in
+        Boolean isLoginSucces = Prefs.getBoolean("loginSuccess",false);
+        if(isLoginSucces) {
+            //start activity..
+            Intent intent = new Intent(Splash.this,Home.class);
+            startActivity(intent);
+        }
     }
 }

@@ -25,7 +25,7 @@ public class JSONParser
                 myCategoryClass = new CategoryClass();
 
                 myCategoryClass.setC_id(jsonObject.getString("c_id"));
-                myCategoryClass.setC_image(jsonObject.getString("c_name"));
+                myCategoryClass.setC_name(jsonObject.getString("c_name"));
                 myCategoryClass.setC_image(jsonObject.getString("c_icon"));
 
                 categoryClassList.add(myCategoryClass);

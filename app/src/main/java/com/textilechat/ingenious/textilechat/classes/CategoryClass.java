@@ -1,6 +1,6 @@
 package com.textilechat.ingenious.textilechat.classes;
 
-public class Category
+public class CategoryClass
 {
     String c_id, c_name, c_image;
 

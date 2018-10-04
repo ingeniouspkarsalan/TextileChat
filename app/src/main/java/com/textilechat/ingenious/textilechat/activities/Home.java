@@ -3,6 +3,8 @@ package com.textilechat.ingenious.textilechat.activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,10 +15,30 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.pkmmte.view.CircularImageView;
+import com.textilechat.ingenious.textilechat.Adaptors.Catergory_adaptor;
 import com.textilechat.ingenious.textilechat.R;
+import com.textilechat.ingenious.textilechat.Utils.Endpoints;
+import com.textilechat.ingenious.textilechat.Utils.Utils;
+import com.textilechat.ingenious.textilechat.classes.CategoryClass;
+import com.textilechat.ingenious.textilechat.classes.JSONParser;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,6 +46,11 @@ public class Home extends AppCompatActivity
     String username,useremail;
     private TextView usernameview,useremailview;
     CircularImageView imageView;
+
+
+    private RecyclerView recyclerView;
+    private List<CategoryClass> categoryClassList;
+     Catergory_adaptor catergory_adaptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +93,72 @@ public class Home extends AppCompatActivity
             useremailview.setText(useremail);
         }
 
+
+        recyclerView=(RecyclerView) findViewById(R.id.recyclerview);
+
+
+        if(Utils.isOnline(Home.this))
+        {
+            try
+            {
+                requestData(Endpoints.ip_server);
+            }
+            catch (Exception ex) {
+                new SweetAlertDialog(Home.this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Some thing went wrong!")
+                        .show();
+            }
+        } else
+        {
+            new SweetAlertDialog(Home.this, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Oops...")
+                    .setContentText("Internet Not Found!")
+                    .show();
+        }
     }
+
+
+    public void requestData(String uri) {
+        final String id = Prefs.getString("user_id", "0");
+        StringRequest request = new StringRequest(Request.Method.POST, uri, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.contains("null")) {
+                    Toasty.warning(Home.this, "Categories not available.", Toast.LENGTH_LONG).show();
+                } else {
+                    categoryClassList = JSONParser.parse_category(response);
+                    catergory_adaptor = new Catergory_adaptor(Home.this, categoryClassList);
+                    recyclerView.setAdapter(catergory_adaptor);
+                    recyclerView.setLayoutManager(new GridLayoutManager(Home.this,2));
+                }
+
+
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        new SweetAlertDialog(Home.this, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("Some thing went wrong!")
+                                .show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("req_key", "all_category");
+                return params;
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(request);
+    }
+
+
+
+
 
     @Override
     public void onBackPressed() {

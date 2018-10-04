@@ -99,7 +99,7 @@ public class Sign_up extends AppCompatActivity {
     {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.put("req_key","Registration");
+        params.put("req_key","user_registration");
         params.put("name",name);
         params.put("email",email);
         params.put("contact",contact);

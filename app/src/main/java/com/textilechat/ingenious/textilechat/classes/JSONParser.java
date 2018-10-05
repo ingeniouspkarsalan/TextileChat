@@ -54,6 +54,9 @@ public class JSONParser
             {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 sub_category_class = new Sub_category_class();
+                sub_category_class.setSc_id(jsonObject.getString("sc_id"));
+                sub_category_class.setSc_name(jsonObject.getString("sc_name"));
+                sub_category_class.setSc_image(jsonObject.getString("sc_icon"));
 
 
                 subcategoryClassList.add(sub_category_class);

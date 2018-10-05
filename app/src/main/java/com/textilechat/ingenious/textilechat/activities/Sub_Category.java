@@ -76,7 +76,16 @@ public class Sub_Category extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 if (response.contains("null")) {
-                    Toasty.warning(Sub_Category.this, "Categories not available.", Toast.LENGTH_LONG).show();
+                    new SweetAlertDialog(Sub_Category.this, SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Alert...")
+                            .setContentText("Sub categories not available..")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    finish();
+                                }
+                            })
+                            .show();
                 } else {
                     sub_category_classList = JSONParser.parse_sub_category(response);
                     sub_category_adapter = new Sub_Category_Adapter(Sub_Category.this, sub_category_classList);
@@ -106,6 +115,12 @@ public class Sub_Category extends AppCompatActivity {
         };
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
     }
 
     @Override

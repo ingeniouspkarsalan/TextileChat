@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.Home"
-    android:orientation="vertical"
     tools:showIn="@layout/app_bar_home">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/banner"
-        android:scaleType="fitXY"/>
 
-    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent">
+    </LinearLayout>
+
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:shimmer_demo_child_count="10"
-        app:shimmer_demo_angle="20" />
+        app:shimmer_demo_angle="20"
+        app:shimmer_demo_child_count="10" />
 
-</LinearLayout>
+</RelativeLayout>

@@ -130,7 +130,7 @@ public class Home extends AppCompatActivity
                     categoryClassList = JSONParser.parse_category(response);
                     catergory_adaptor = new Catergory_adaptor(Home.this, categoryClassList);
                     recyclerView.setAdapter(catergory_adaptor);
-                    recyclerView.setLayoutManager(new GridLayoutManager(Home.this,2));
+                    recyclerView.setLayoutManager(new GridLayoutManager(Home.this,1));
                 }
 
 

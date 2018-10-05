@@ -20,6 +20,7 @@ import com.textilechat.ingenious.textilechat.Adapters.Sub_Category_Adapter;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.Utils.Endpoints;
 import com.textilechat.ingenious.textilechat.Utils.Utils;
+import com.textilechat.ingenious.textilechat.classes.Animation;
 import com.textilechat.ingenious.textilechat.classes.JSONParser;
 import com.textilechat.ingenious.textilechat.classes.Sub_category_class;
 
@@ -40,7 +41,9 @@ public class Sub_Category extends AppCompatActivity {
         setContentView(R.layout.activity_sub__category);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Sub Category");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView=(RecyclerView) findViewById(R.id.recyclerview);
 
@@ -105,6 +108,10 @@ public class Sub_Category extends AppCompatActivity {
         queue.add(request);
     }
 
-
+    @Override
+    public void finish() {
+        super.finish();
+        Animation.swipeLeft(this);
+    }
 
 }

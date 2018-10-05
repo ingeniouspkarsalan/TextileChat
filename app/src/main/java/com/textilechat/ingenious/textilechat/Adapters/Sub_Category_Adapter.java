@@ -2,6 +2,7 @@ package com.textilechat.ingenious.textilechat.Adapters;
 
 import android.content.Context;
 import android.media.Image;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +24,14 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
     class Sub_CategoryHolder extends RecyclerView.ViewHolder {
         TextView sc_name;
         ImageView sc_icon;
+        CardView for_click;
 
         public Sub_CategoryHolder(View itemView)
         {
             super(itemView);
             sc_name=itemView.findViewById(R.id.categor_name);
             sc_icon=itemView.findViewById(R.id.banner_image);
-
+            for_click=itemView.findViewById(R.id.card_view);
         }
     }
 
@@ -46,6 +48,13 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
                 .load(sub_category.getSc_image())
                 .into(holder.sc_icon);
         holder.sc_name.setText(sub_category.getSc_name());
+
+        holder.for_click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
 
     }
 

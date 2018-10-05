@@ -48,11 +48,13 @@
         <activity
             android:name=".activities.Home"
             android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.Sub_Category"
-            android:screenOrientation="portrait"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.Sub_Category"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.Chat_Activity"></activity>
     </application>
 
 </manifest>

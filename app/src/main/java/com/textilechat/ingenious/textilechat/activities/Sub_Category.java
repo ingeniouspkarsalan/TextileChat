@@ -109,6 +109,12 @@ public class Sub_Category extends AppCompatActivity {
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
+    }
+
+    @Override
     public void finish() {
         super.finish();
         Animation.swipeLeft(this);

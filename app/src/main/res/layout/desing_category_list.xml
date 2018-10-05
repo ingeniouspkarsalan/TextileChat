@@ -43,7 +43,7 @@
 
             <TextView
                 android:id="@+id/categor_name"
-                android:layout_width="230dp"
+                android:layout_width="137dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:layout_marginStart="50dp"

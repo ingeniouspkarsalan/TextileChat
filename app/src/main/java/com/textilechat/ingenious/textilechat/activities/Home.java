@@ -1,8 +1,6 @@
 package com.textilechat.ingenious.textilechat.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -26,7 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.pkmmte.view.CircularImageView;
-import com.textilechat.ingenious.textilechat.Adaptors.Catergory_adaptor;
+import com.textilechat.ingenious.textilechat.Adapters.Catergory_adapter;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.Utils.Endpoints;
 import com.textilechat.ingenious.textilechat.Utils.Utils;
@@ -50,7 +48,7 @@ public class Home extends AppCompatActivity
 
     private RecyclerView recyclerView;
     private List<CategoryClass> categoryClassList;
-     Catergory_adaptor catergory_adaptor;
+     Catergory_adapter catergory_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,8 +126,8 @@ public class Home extends AppCompatActivity
                     Toasty.warning(Home.this, "Categories not available.", Toast.LENGTH_LONG).show();
                 } else {
                     categoryClassList = JSONParser.parse_category(response);
-                    catergory_adaptor = new Catergory_adaptor(Home.this, categoryClassList);
-                    recyclerView.setAdapter(catergory_adaptor);
+                    catergory_adapter = new Catergory_adapter(Home.this, categoryClassList);
+                    recyclerView.setAdapter(catergory_adapter);
                     recyclerView.setLayoutManager(new GridLayoutManager(Home.this,1));
                 }
 
@@ -198,17 +196,15 @@ public class Home extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_Search) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_News) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_Blogs) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_Contact) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_About) {
 
         }
 

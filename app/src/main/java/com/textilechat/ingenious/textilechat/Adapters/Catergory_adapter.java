@@ -1,4 +1,4 @@
-package com.textilechat.ingenious.textilechat.Adaptors;
+package com.textilechat.ingenious.textilechat.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +14,7 @@ import com.textilechat.ingenious.textilechat.classes.CategoryClass;
 
 import java.util.List;
 
-public class Catergory_adaptor extends RecyclerView.Adapter<Catergory_adaptor.CategoryViewHolder>
+public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.CategoryViewHolder>
 {
     private Context context;
     private List<CategoryClass> categoryList;
@@ -31,7 +31,7 @@ public class Catergory_adaptor extends RecyclerView.Adapter<Catergory_adaptor.Ca
         }
     }
 
-    public Catergory_adaptor(Context context, List<CategoryClass> categoryList) {
+    public Catergory_adapter(Context context, List<CategoryClass> categoryList) {
         this.context = context;
         this.categoryList = categoryList;
     }

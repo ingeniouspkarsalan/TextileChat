@@ -10,6 +10,7 @@ import java.util.List;
 public class JSONParser
 {
     static List<CategoryClass> categoryClassList;
+    static List<Sub_category_class> subcategoryClassList;
 
     public static List<CategoryClass> parse_category(String content)
     {
@@ -38,4 +39,31 @@ public class JSONParser
         }
 
     }
+
+    //edit on it for subcategory
+    public static List<Sub_category_class> parse_sub_category(String content)
+    {
+        JSONArray jsonArray = null;
+        Sub_category_class sub_category_class = null;
+        try
+        {
+            jsonArray = new JSONArray(content);
+            subcategoryClassList = new ArrayList<>();
+            for(int i = 0; i < jsonArray.length(); i++)
+            {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                sub_category_class = new Sub_category_class();
+
+
+                subcategoryClassList.add(sub_category_class);
+            }
+            return subcategoryClassList;
+        }
+        catch (JSONException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
+
 }

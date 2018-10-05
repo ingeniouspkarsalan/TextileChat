@@ -48,8 +48,11 @@
         <activity
             android:name=".activities.Home"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".activities.Sub_Category"></activity>
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.Sub_Category"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

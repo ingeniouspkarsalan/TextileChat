@@ -1,18 +1,22 @@
 package com.textilechat.ingenious.textilechat.Adapters;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.classes.CategoryClass;
 
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.CategoryViewHolder>
 {
@@ -22,12 +26,14 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
     class CategoryViewHolder extends RecyclerView.ViewHolder {
         ImageView banner_image;
         TextView categor_name;
+        CardView for_click;
 
         public CategoryViewHolder(View itemView)
         {
             super(itemView);
             banner_image = (ImageView) itemView.findViewById(R.id.banner_image);
             categor_name = (TextView) itemView.findViewById(R.id.categor_name);
+            for_click = (CardView) itemView.findViewById(R.id.card_view);
         }
     }
 
@@ -44,6 +50,12 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
                 .load(category.getC_image())
                 .into(holder.banner_image);
         holder.categor_name.setText(category.getC_name());
+        holder.for_click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toasty.info(context,category.getIs_sub_cat(), Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 

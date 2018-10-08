@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.textilechat.ingenious.textilechat.R;
+import com.textilechat.ingenious.textilechat.activities.Chat_Activity;
 import com.textilechat.ingenious.textilechat.activities.Sub_Category;
 import com.textilechat.ingenious.textilechat.classes.CategoryClass;
 
@@ -55,9 +56,17 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
         holder.for_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in=new Intent(context, Sub_Category.class);
-                in.putExtra("c_id",category.getC_id());
-                context.startActivity(in);
+                String check=category.getIs_sub_cat().toString();
+                if(check.equals("1")){
+                    Intent in=new Intent(context, Sub_Category.class);
+                    in.putExtra("c_id",category.getC_id());
+                    context.startActivity(in);
+                }else if(check.equals("0")){
+                    Intent in=new Intent(context, Chat_Activity.class);
+                    in.putExtra("c_id",category.getC_id());
+                    context.startActivity(in);
+                }
+
             }
         });
 

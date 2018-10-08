@@ -1,6 +1,7 @@
 package com.textilechat.ingenious.textilechat.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.textilechat.ingenious.textilechat.R;
+import com.textilechat.ingenious.textilechat.activities.Chat_Activity;
 import com.textilechat.ingenious.textilechat.classes.Sub_category_class;
 
 import java.util.List;
@@ -52,7 +54,9 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
         holder.for_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Intent in=new Intent(context, Chat_Activity.class);
+                in.putExtra("s_id",sub_category.getSc_id());
+                context.startActivity(in);
             }
         });
 

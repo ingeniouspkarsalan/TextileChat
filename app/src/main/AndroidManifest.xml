@@ -54,7 +54,8 @@
         <activity
             android:name=".activities.Sub_Category"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.Chat_Activity"></activity>
+        <activity android:name=".activities.Chat_Activity" />
+        <activity android:name=".activities.News_Activity"></activity>
     </application>
 
 </manifest>

@@ -26,7 +26,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
 
-        showNotification(remoteMessage.getData().get("message"));
+        showNotification(remoteMessage.getData().get("title"),remoteMessage.getData().get("message"));
 //        if (remoteMessage.getData().size() > 0) {
 //            Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
 //            try {
@@ -39,7 +39,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
 
-    private void showNotification(String message) {
+    private void showNotification(String til,String message) {
 
         Intent i = new Intent(this,Home.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -48,7 +48,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setAutoCancel(true)
-                .setContentTitle("FCM Test")
+                .setContentTitle(til)
                 .setContentText(message)
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
                 .setContentIntent(pendingIntent);
@@ -85,11 +85,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             //if there is no image
             if(imageUrl.equals("null")){
                 //displaying small notification
-                mNotificationManager.showSmallNotification(title, message, intent);
-            }else{
-                //if there is an image
-                //displaying a big notification
-                mNotificationManager.showBigNotification(title, message, imageUrl, intent);
+                showNotification(title, message);
             }
         } catch (JSONException e) {
             Log.e(TAG, "Json Exception: " + e.getMessage());

@@ -56,6 +56,7 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
             public void onClick(View v) {
                 Intent in=new Intent(context, Chat_Activity.class);
                 in.putExtra("s_id",sub_category.getSc_id());
+                in.putExtra("id_name","sub_category");
                 context.startActivity(in);
             }
         });

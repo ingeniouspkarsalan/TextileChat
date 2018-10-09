@@ -53,18 +53,26 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
                 .load(category.getC_image())
                 .into(holder.banner_image);
         holder.categor_name.setText(category.getC_name());
+
         holder.for_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String check=category.getIs_sub_cat().toString();
+
                 if(check.equals("1")){
+
                     Intent in=new Intent(context, Sub_Category.class);
                     in.putExtra("c_id",category.getC_id());
                     context.startActivity(in);
+
                 }else if(check.equals("0")){
+
                     Intent in=new Intent(context, Chat_Activity.class);
                     in.putExtra("c_id",category.getC_id());
+                    in.putExtra("id_name","category");
                     context.startActivity(in);
+
                 }
 
             }

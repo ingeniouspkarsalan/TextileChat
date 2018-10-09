@@ -107,17 +107,17 @@ public class Chat_Activity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-//                if(getIntent().getStringExtra("id_name").equals("category")) {
-//
-//                    params.put("req_key", "retrive_category_masseges");
-//                    params.put("c_id", getIntent().getStringExtra("c_id")+"");
-//                    return params;
-//                }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
+                if(getIntent().getStringExtra("id_name").equals("category")) {
+
+                    params.put("req_key", "retrive_category_masseges");
+                    params.put("c_id", getIntent().getStringExtra("c_id")+"");
+
+                }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
 
                     params.put("req_key", "retrive_sub_category_masseges");
-                    params.put("sc_id", "1");
-//                    return params;
-//                }
+                    params.put("sc_id", getIntent().getStringExtra("s_id")+"");
+
+                }
                 return params;
             }
         };

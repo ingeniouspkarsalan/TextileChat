@@ -22,6 +22,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
 
@@ -29,11 +32,31 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        if(remoteMessage.getData().get("image").isEmpty()){
-            showNotificationwithoutimage(remoteMessage.getData().get("title"),remoteMessage.getData().get("message"));
+
+        if(remoteMessage.getData().get("title").equals("qwerty")){
+            String massege=remoteMessage.getData().get("massege"),
+                    u_id=remoteMessage.getData().get("u_id"),
+                    u_name=remoteMessage.getData().get("u_name"),
+                    created_at=remoteMessage.getData().get("created_at"),
+                    id_name=remoteMessage.getData().get("id_name"),
+                    c_id=remoteMessage.getData().get("c_id"),
+                    sc_id=remoteMessage.getData().get("sc_id");
+
+
+            showNotificationwithoutimage(massege," "+u_id+" "+u_name+" "+created_at+" "+id_name+" "+c_id+" "+sc_id+" ");
+
         }else {
-            showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("message"), remoteMessage.getData().get("image"));
+            if(remoteMessage.getData().get("image").isEmpty()){
+                showNotificationwithoutimage(remoteMessage.getData().get("title"),remoteMessage.getData().get("message"));
+            }else {
+                showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("message"), remoteMessage.getData().get("image"));
+            }
         }
+
+
+
+
+
     }
     private void showNotificationwithoutimage(String title,String message) {
 

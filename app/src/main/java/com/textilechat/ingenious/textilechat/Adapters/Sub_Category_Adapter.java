@@ -22,6 +22,7 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
 {
     private Context context;
     private List<Sub_category_class> subcategoryList;
+    private String c_id;
 
     class Sub_CategoryHolder extends RecyclerView.ViewHolder {
         TextView sc_name;
@@ -37,9 +38,10 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
         }
     }
 
-    public Sub_Category_Adapter(Context context, List<Sub_category_class> subcategoryList) {
+    public Sub_Category_Adapter(Context context, List<Sub_category_class> subcategoryList,String c_id) {
         this.context = context;
         this.subcategoryList = subcategoryList;
+        this.c_id=c_id;
     }
 
     @Override
@@ -55,6 +57,7 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
             @Override
             public void onClick(View v) {
                 Intent in=new Intent(context, Chat_Activity.class);
+                in.putExtra("c_id",c_id);
                 in.putExtra("s_id",sub_category.getSc_id());
                 in.putExtra("id_name","sub_category");
                 context.startActivity(in);

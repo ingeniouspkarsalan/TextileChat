@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,14 +16,21 @@ import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.classes.chat_messages;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHolder> {
     private Context context;
     private List<chat_messages> chat_messagesList;
 
+    private static String today;
+
     class chatViewHolder extends RecyclerView.ViewHolder {
-        TextView message,timestamp,owner_message,owner_timestamp;
+        TextView message,timestamp,owner_message,owner_timestamp,username,owner_username;
+        LinearLayout layoutofother,layoutofowner;
 
         public chatViewHolder(View itemView) {
             super(itemView);
@@ -30,12 +38,19 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
             timestamp=itemView.findViewById(R.id.timestamp);
             owner_message=itemView.findViewById(R.id.owner_message);
             owner_timestamp=itemView.findViewById(R.id.owner_timestamp);
+            username=itemView.findViewById(R.id.user_name);
+            owner_username=itemView.findViewById(R.id.owner_username);
+            layoutofother=itemView.findViewById(R.id.layoutofother);
+            layoutofowner=itemView.findViewById(R.id.layoutofowner);
         }
     }
 
     public chat_adapter(Context context, List<chat_messages> chat_messagesList) {
         this.context = context;
         this.chat_messagesList = chat_messagesList;
+
+        Calendar calendar = Calendar.getInstance();
+        today = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     @Override
@@ -43,14 +58,14 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
         final chat_messages c_message = chat_messagesList.get(position);
         final String id = Prefs.getString("user_id", "0");
         if(c_message.getIds().equals(id)){
-            holder.owner_message.setVisibility(View.VISIBLE);
+            holder.layoutofowner.setVisibility(View.VISIBLE);
+            holder.owner_username.setText(c_message.getUser_name().toString());
             holder.owner_message.setText(c_message.getMessages().toString());
-            holder.owner_timestamp.setVisibility(View.VISIBLE);
             holder.owner_timestamp.setText(c_message.getTimestamp().toString());
         }else{
-            holder.message.setVisibility(View.VISIBLE);
+            holder.layoutofother.setVisibility(View.VISIBLE);
+            holder.username.setText(c_message.getUser_name().toString());
             holder.message.setText(c_message.getMessages().toString());
-            holder.timestamp.setVisibility(View.VISIBLE);
             holder.timestamp.setText(c_message.getTimestamp().toString());
         }
 
@@ -66,5 +81,26 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     @Override
     public int getItemCount() {
         return chat_messagesList.size();
+    }
+
+
+    public static String getTimeStamp(String dateStr) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timestamp = "";
+
+        today = today.length() < 2 ? "0" + today : today;
+
+        try {
+            Date date = format.parse(dateStr);
+            SimpleDateFormat todayFormat = new SimpleDateFormat("dd");
+            String dateToday = todayFormat.format(date);
+            format = dateToday.equals(today) ? new SimpleDateFormat("hh:mm a") : new SimpleDateFormat("dd LLL, hh:mm a");
+            String date1 = format.format(date);
+            timestamp = date1.toString();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return timestamp;
     }
 }

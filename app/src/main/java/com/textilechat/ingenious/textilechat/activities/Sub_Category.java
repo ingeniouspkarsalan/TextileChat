@@ -88,7 +88,7 @@ public class Sub_Category extends AppCompatActivity {
                             .show();
                 } else {
                     sub_category_classList = JSONParser.parse_sub_category(response);
-                    sub_category_adapter = new Sub_Category_Adapter(Sub_Category.this, sub_category_classList);
+                    sub_category_adapter = new Sub_Category_Adapter(Sub_Category.this, sub_category_classList,getIntent().getStringExtra("c_id"));
                     recyclerView.setAdapter(sub_category_adapter);
                     recyclerView.setLayoutManager(new GridLayoutManager(Sub_Category.this,2));
                 }

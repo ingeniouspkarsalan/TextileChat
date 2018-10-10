@@ -2,10 +2,14 @@ package com.textilechat.ingenious.textilechat.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,12 +31,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import cz.msebera.android.httpclient.Header;
+import es.dmoral.toasty.Toasty;
 
 public class Chat_Activity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<chat_messages> chat_messages;
     private chat_adapter chat_adapters;
+
+    String sending_msg;
+    private EditText edit_message;
+    private Button btn_send;
+    final String id = Prefs.getString("user_id", "0");
+
+    private SweetAlertDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +64,8 @@ public class Chat_Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView=(RecyclerView) findViewById(R.id.recycler_view);
+        edit_message=findViewById(R.id.edit_msg);
+        btn_send=findViewById(R.id.btn_send);
 
 
         if(Utils.isOnline(Chat_Activity.this))
@@ -65,31 +87,47 @@ public class Chat_Activity extends AppCompatActivity {
                     .setContentText("Internet Not Found!")
                     .show();
         }
-    }
 
+        //sending msg
+        btn_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sending_msg=edit_message.getText().toString();
+                if(!sending_msg.isEmpty()){
+                    if(getIntent().getStringExtra("id_name").equals("category")) {
+
+                        sending_chat_to_server(sending_msg,getIntent().getStringExtra("c_id")+"","0");
+
+                    }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
+
+                        sending_chat_to_server(sending_msg,getIntent().getStringExtra("c_id")+"",getIntent().getStringExtra("s_id")+"");
+
+                    }
+                }else{
+                    Toast.makeText(Chat_Activity.this,"Insert text to send",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+
+
+    }
+    //getting chats from server one time
     public void requestData(String uri) {
-        final String id = Prefs.getString("user_id", "0");
+
         StringRequest request = new StringRequest(Request.Method.POST, uri, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response.contains("null")) {
-                    new SweetAlertDialog(Chat_Activity.this, SweetAlertDialog.ERROR_TYPE)
-                            .setTitleText("Alert...")
-                            .setContentText("Chats not available..")
-                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    finish();
-                                }
-                            })
-                            .show();
+
                 } else {
                     chat_messages = JSONParser.parse_chatmessages(response);
                     chat_adapters = new chat_adapter(Chat_Activity.this, chat_messages);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
+                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(chat_adapters);
-                    LinearLayoutManager llm = new LinearLayoutManager(Chat_Activity.this);
-                    llm.setOrientation(LinearLayoutManager.VERTICAL);
-                    recyclerView.setLayoutManager(llm);
                 }
 
 
@@ -124,6 +162,55 @@ public class Chat_Activity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
     }
+
+
+    // Declear the Registration Function
+    private void sending_chat_to_server(String message,String cat_id, String sc_id)
+    {
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("req_key","add_messges");
+        params.put("cat_id",cat_id);
+        params.put("sub_cat_id",sc_id);
+        params.put("user_id",id);
+        params.put("message",message);
+        client.post(Endpoints.ip_server, params, new AsyncHttpResponseHandler()
+        {
+            @Override
+            public void onStart()
+            {
+                super.onStart();
+//                pd = Utils.showProgress(Chat_Activity.this);
+//                pd.show();
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response = Utils.getResponse(responseBody);
+                if(response.equals("null")) {
+                    //Toasty.warning(Chat_Activity.this, "Response is null", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                String  response  = Utils.getResponse(responseBody);
+                if(response.equals("null")) {
+                    Toasty.warning(Chat_Activity.this, "Unable to Connect Server", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    Log.d("response",response);
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                pd.dismiss();
+            }
+        });
+    }
+
+
 
     @Override
     public void onBackPressed() {

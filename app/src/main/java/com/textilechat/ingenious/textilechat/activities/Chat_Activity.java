@@ -98,11 +98,15 @@ public class Chat_Activity extends AppCompatActivity {
             public void onReceive(Context context, Intent intent) {
                 serialize_msg_class msg_class=(serialize_msg_class) intent.getSerializableExtra("msg");
                 chat_messages coming=new chat_messages();
+
+                //Toast.makeText(Chat_Activity.this,"Message "+chat_message_list.size(),Toast.LENGTH_SHORT).show();
                 coming.setIds(msg_class.getU_id().toString());
                 coming.setUser_name(msg_class.getU_name().toString());
                 coming.setMessages(msg_class.getMassege().toString());
                 coming.setTimestamp(msg_class.getCreated_at().toString());
                 chat_message_list.add(coming);
+               // Toast.makeText(Chat_Activity.this,"Message "+coming.getMessages()+" User ID "+msg_class.getU_id()+"  "+chat_message_list.size(),Toast.LENGTH_SHORT).show();
+
                 chat_adapters.notifyDataSetChanged();
             }
         };

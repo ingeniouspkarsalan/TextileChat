@@ -159,6 +159,7 @@ public class Chat_Activity extends AppCompatActivity {
                     LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.scrollToPosition(chat_message_list.size());
                     recyclerView.setAdapter(chat_adapters);
                 }
 
@@ -185,6 +186,7 @@ public class Chat_Activity extends AppCompatActivity {
                 }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
 
                     params.put("req_key", "retrive_sub_category_masseges");
+                    params.put("c_id", getIntent().getStringExtra("c_id")+"");
                     params.put("sc_id", getIntent().getStringExtra("s_id")+"");
 
                 }

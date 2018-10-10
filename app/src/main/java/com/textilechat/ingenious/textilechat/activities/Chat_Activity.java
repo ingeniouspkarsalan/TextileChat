@@ -1,5 +1,6 @@
 package com.textilechat.ingenious.textilechat.activities;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -108,6 +110,9 @@ public class Chat_Activity extends AppCompatActivity {
                // Toast.makeText(Chat_Activity.this,"Message "+coming.getMessages()+" User ID "+msg_class.getU_id()+"  "+chat_message_list.size(),Toast.LENGTH_SHORT).show();
 
                 chat_adapters.notifyDataSetChanged();
+                if (chat_adapters.getItemCount() > 1) {
+                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                }
             }
         };
 
@@ -124,11 +129,12 @@ public class Chat_Activity extends AppCompatActivity {
                     if(getIntent().getStringExtra("id_name").equals("category")) {
 
                         sending_chat_to_server(sending_msg,getIntent().getStringExtra("c_id")+"","0");
+                        hideSoftKeyboard(Chat_Activity.this);
 
                     }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
 
                         sending_chat_to_server(sending_msg,getIntent().getStringExtra("c_id")+"",getIntent().getStringExtra("s_id")+"");
-
+                        hideSoftKeyboard(Chat_Activity.this);
                     }
                 }else{
                     Toast.makeText(Chat_Activity.this,"Insert text to send",Toast.LENGTH_SHORT).show();
@@ -136,6 +142,11 @@ public class Chat_Activity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 
     @Override
@@ -159,8 +170,10 @@ public class Chat_Activity extends AppCompatActivity {
                     LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.scrollToPosition(chat_message_list.size());
                     recyclerView.setAdapter(chat_adapters);
+                    if (chat_adapters.getItemCount() > 1) {
+                        recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                    }
                 }
 
 

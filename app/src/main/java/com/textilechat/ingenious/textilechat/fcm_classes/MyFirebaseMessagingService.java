@@ -48,6 +48,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             serialize_msg_class sendclass=new serialize_msg_class(massege,u_id,u_name,created_at,id_name,c_id,sc_id);
             Intent pushNotification = new Intent("chat");
             pushNotification.putExtra("msg", sendclass);
+
+            
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
              showNotificationwithoutimage(massege," "+u_id+" "+u_name+" "+created_at+" "+id_name+" "+c_id+" "+sc_id+" ");

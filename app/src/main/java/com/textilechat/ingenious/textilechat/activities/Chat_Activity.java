@@ -1,5 +1,10 @@
 package com.textilechat.ingenious.textilechat.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +39,7 @@ import java.util.Map;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.textilechat.ingenious.textilechat.classes.serialize_msg_class;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,15 +50,14 @@ import es.dmoral.toasty.Toasty;
 
 public class Chat_Activity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private List<chat_messages> chat_messages;
+    private List<chat_messages> chat_message_list;
     private chat_adapter chat_adapters;
-
     String sending_msg;
     private EditText edit_message;
     private Button btn_send;
     final String id = Prefs.getString("user_id", "0");
 
-    private SweetAlertDialog pd;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +93,24 @@ public class Chat_Activity extends AppCompatActivity {
                     .show();
         }
 
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                serialize_msg_class msg_class=(serialize_msg_class) intent.getSerializableExtra("msg");
+                chat_messages coming=new chat_messages();
+                coming.setIds(msg_class.getU_id());
+                coming.setUser_name(msg_class.getU_name());
+                coming.setMessages(msg_class.getMassege());
+                coming.setTimestamp(msg_class.getCreated_at());
+                chat_message_list.add(coming);
+                chat_adapters.notifyDataSetChanged();
+            }
+        };
+
+
+
+
+
         //sending msg
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,10 +132,15 @@ public class Chat_Activity extends AppCompatActivity {
             }
         });
 
-
-
-
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("chat"));
+    }
+
     //getting chats from server one time
     public void requestData(String uri) {
 
@@ -122,8 +150,8 @@ public class Chat_Activity extends AppCompatActivity {
                 if (response.contains("null")) {
 
                 } else {
-                    chat_messages = JSONParser.parse_chatmessages(response);
-                    chat_adapters = new chat_adapter(Chat_Activity.this, chat_messages);
+                    chat_message_list = JSONParser.parse_chatmessages(response);
+                    chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(layoutManager);
@@ -205,7 +233,8 @@ public class Chat_Activity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 super.onFinish();
-                pd.dismiss();
+//                pd.dismiss();
+                edit_message.setText("");
             }
         });
     }

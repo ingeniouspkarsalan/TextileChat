@@ -1,5 +1,6 @@
 package com.textilechat.ingenious.textilechat.fcm_classes;
 
+import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
 import android.util.Log;
 
@@ -16,6 +18,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.activities.Home;
+import com.textilechat.ingenious.textilechat.classes.serialize_msg_class;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,8 +45,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     c_id=remoteMessage.getData().get("c_id"),
                     sc_id=remoteMessage.getData().get("sc_id");
 
+            serialize_msg_class sendclass=new serialize_msg_class(massege,u_id,u_name,created_at,id_name,c_id,sc_id);
+            Intent pushNotification = new Intent("chat");
+            pushNotification.putExtra("msg", sendclass);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
-            showNotificationwithoutimage(massege," "+u_id+" "+u_name+" "+created_at+" "+id_name+" "+c_id+" "+sc_id+" ");
+             showNotificationwithoutimage(massege," "+u_id+" "+u_name+" "+created_at+" "+id_name+" "+c_id+" "+sc_id+" ");
 
         }else {
             if(remoteMessage.getData().get("image").isEmpty()){
@@ -53,11 +60,29 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
         }
 
-
-
-
-
     }
+
+
+
+//    @Override
+//    protected void onHandleIntent(Intent intent) {
+//        String key = intent.getStringExtra("");
+//        switch (key) {
+//            case SUBSCRIBE:
+//                // subscribe to a topic
+//                String topic = intent.getStringExtra(TOPIC);
+//                subscribeToTopic(topic);
+//                break;
+//            case UNSUBSCRIBE:
+//                break;
+//            default:
+//                // if key is specified, register with GCM
+//                registerGCM();
+//        }
+//
+//    }
+
+
     private void showNotificationwithoutimage(String title,String message) {
 
         Intent i = new Intent(this,Home.class);

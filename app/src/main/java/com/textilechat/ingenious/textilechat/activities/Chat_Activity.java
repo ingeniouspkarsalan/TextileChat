@@ -34,6 +34,7 @@ import com.textilechat.ingenious.textilechat.classes.Animation;
 import com.textilechat.ingenious.textilechat.classes.JSONParser;
 import com.textilechat.ingenious.textilechat.classes.chat_messages;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,15 +102,27 @@ public class Chat_Activity extends AppCompatActivity {
                 serialize_msg_class msg_class=(serialize_msg_class) intent.getSerializableExtra("msg");
                 chat_messages coming=new chat_messages();
 
-                //Toast.makeText(Chat_Activity.this,"Message "+chat_message_list.size(),Toast.LENGTH_SHORT).show();
                 coming.setIds(msg_class.getU_id().toString());
                 coming.setUser_name(msg_class.getU_name().toString());
                 coming.setMessages(msg_class.getMassege().toString());
                 coming.setTimestamp(msg_class.getCreated_at().toString());
-                chat_message_list.add(coming);
-               // Toast.makeText(Chat_Activity.this,"Message "+coming.getMessages()+" User ID "+msg_class.getU_id()+"  "+chat_message_list.size(),Toast.LENGTH_SHORT).show();
 
-                chat_adapters.notifyDataSetChanged();
+                if(chat_message_list.size() > 1 ){
+                    chat_message_list.add(coming);
+                    chat_adapters.notifyDataSetChanged();
+                }else{
+                    chat_message_list = new ArrayList<>();
+                    chat_message_list.add(coming);
+                    chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
+                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setAdapter(chat_adapters);
+                    if (chat_adapters.getItemCount() > 1) {
+                        recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                    }
+                }
+
                 if (chat_adapters.getItemCount() > 1) {
                     recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
                 }

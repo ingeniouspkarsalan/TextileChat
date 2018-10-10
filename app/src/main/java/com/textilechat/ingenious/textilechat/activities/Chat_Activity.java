@@ -43,7 +43,7 @@ public class Chat_Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        recyclerView=(RecyclerView) findViewById(R.id.recyclerview);
+        recyclerView=(RecyclerView) findViewById(R.id.recycler_view);
 
 
         if(Utils.isOnline(Chat_Activity.this))

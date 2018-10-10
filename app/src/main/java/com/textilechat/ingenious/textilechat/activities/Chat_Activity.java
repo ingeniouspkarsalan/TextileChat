@@ -112,7 +112,6 @@ public class Chat_Activity extends AppCompatActivity {
                 chat_adapters.notifyDataSetChanged();
                 if (chat_adapters.getItemCount() > 1) {
                     recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
-                    recyclerView.notify();
                 }
             }
         };
@@ -175,8 +174,6 @@ public class Chat_Activity extends AppCompatActivity {
                         recyclerView.setAdapter(chat_adapters);
                         if (chat_adapters.getItemCount() > 1) {
                             recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
-                            chat_adapters.notifyDataSetChanged();
-                            recyclerView.notify();
                         }
                     }catch (Exception e){
 

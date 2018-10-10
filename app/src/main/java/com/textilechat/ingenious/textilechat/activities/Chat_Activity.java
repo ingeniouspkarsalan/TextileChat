@@ -112,6 +112,7 @@ public class Chat_Activity extends AppCompatActivity {
                 chat_adapters.notifyDataSetChanged();
                 if (chat_adapters.getItemCount() > 1) {
                     recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                    recyclerView.notify();
                 }
             }
         };
@@ -165,14 +166,20 @@ public class Chat_Activity extends AppCompatActivity {
                 if (response.contains("null")) {
 
                 } else {
-                    chat_message_list = JSONParser.parse_chatmessages(response);
-                    chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
-                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(chat_adapters);
-                    if (chat_adapters.getItemCount() > 1) {
-                        recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                    try {
+                        chat_message_list = JSONParser.parse_chatmessages(response);
+                        chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
+                        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerView.setAdapter(chat_adapters);
+                        if (chat_adapters.getItemCount() > 1) {
+                            recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                            chat_adapters.notifyDataSetChanged();
+                            recyclerView.notify();
+                        }
+                    }catch (Exception e){
+
                     }
                 }
 

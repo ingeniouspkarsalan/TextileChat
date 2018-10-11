@@ -22,6 +22,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.R;
+import com.textilechat.ingenious.textilechat.activities.Chat_Activity;
 import com.textilechat.ingenious.textilechat.activities.Home;
 import com.textilechat.ingenious.textilechat.classes.serialize_msg_class;
 
@@ -43,6 +44,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         if(remoteMessage.getData().get("title").equals("qwerty")) {
+
             String massege = remoteMessage.getData().get("massege"),
                     u_id = remoteMessage.getData().get("u_id"),
                     u_name = remoteMessage.getData().get("u_name"),
@@ -58,9 +60,29 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             if(!id.equals(u_id)){
             if (!isAppIsInBackground(this)) {
-                showNotificationsilent(massege, "yes");
+
+                if(sendclass.getSc_id().equals("0")){
+
+                    showNotificationsilentforchat(massege, sendclass.getC_id(),"category",sendclass.getC_id(),"0");
+
+                }else{
+
+                    showNotificationsilentforchat(massege, sendclass.getC_id()+"->"+sendclass.getSc_id(),"sub_category",sendclass.getC_id(),sendclass.getSc_id());
+
+                }
+
             } else {
-                showNotificationwithoutimage(massege, " " + u_id + " " + u_name + " " + created_at + " " + id_name + " " + c_id + " " + sc_id + " ");
+
+                if(sendclass.getSc_id().equals("0")){
+
+                    showNotificationforchat(massege, sendclass.getC_id(),"category",sendclass.getC_id(),"0");
+
+                }else{
+
+                    showNotificationforchat(massege, sendclass.getC_id()+"->"+sendclass.getSc_id(),"sub_category",sendclass.getC_id(),sendclass.getSc_id());
+
+                }
+
             }
         }
 
@@ -77,26 +99,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
 
-//    @Override
-//    protected void onHandleIntent(Intent intent) {
-//        String key = intent.getStringExtra("");
-//        switch (key) {
-//            case SUBSCRIBE:
-//                // subscribe to a topic
-//                String topic = intent.getStringExtra(TOPIC);
-//                subscribeToTopic(topic);
-//                break;
-//            case UNSUBSCRIBE:
-//                break;
-//            default:
-//                // if key is specified, register with GCM
-//                registerGCM();
-//        }
-//
-//    }
-private void showNotificationsilent(String title,String message) {
 
-    Intent i = new Intent(this,Home.class);
+    //for silent chat notification
+    private void showNotificationsilentforchat(String title,String message,String id_name,String c_id,String sc_id) {
+
+    Intent i = new Intent(this,Chat_Activity.class);
+    i.putExtra("id_name",id_name);
+    i.putExtra("c_id",c_id);
+    i.putExtra("s_id",sc_id);
     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 
@@ -115,6 +125,37 @@ private void showNotificationsilent(String title,String message) {
     manager.notify(0,builder.build());
 }
 
+
+    //for  chat notification with sound
+    private void showNotificationforchat(String title,String message,String id_name,String c_id,String sc_id) {
+
+        Intent i = new Intent(this,Chat_Activity.class);
+        i.putExtra("id_name",id_name);
+        i.putExtra("c_id",c_id);
+        i.putExtra("s_id",sc_id);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setAutoCancel(true)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setSound(alarmSound)
+                .setVibrate(new long[] { 1000, 1000})
+                .setContentIntent(pendingIntent);
+
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        manager.notify(0,builder.build());
+    }
+
+
+
+        //this for normal notification withoutimage
     private void showNotificationwithoutimage(String title,String message) {
 
         Intent i = new Intent(this,Home.class);
@@ -138,6 +179,8 @@ private void showNotificationsilent(String title,String message) {
         manager.notify(0,builder.build());
     }
 
+
+    //this for normal notification withimage
     private void showNotification(String title,String message,String url) {
 
         Intent i = new Intent(this,Home.class);
@@ -167,6 +210,7 @@ private void showNotificationsilent(String title,String message) {
         manager.notify(0,builder.build());
     }
 
+    //for showing image in normal notification
     private Bitmap getBitmapFromURL(String strURL) {
         try {
             URL url = new URL(strURL);
@@ -183,6 +227,7 @@ private void showNotificationsilent(String title,String message) {
     }
 
 
+    //checking method app is alive or not
     public static boolean isAppIsInBackground(Context context) {
         boolean isInBackground = true;
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);

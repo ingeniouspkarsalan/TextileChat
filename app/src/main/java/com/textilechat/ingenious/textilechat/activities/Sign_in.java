@@ -102,7 +102,9 @@ public class Sign_in extends AppCompatActivity {
                             Prefs.putString("user_email",object.getString("email"));
                             Prefs.putBoolean("loginSuccess",true); // change this value on logout
                             startActivity(new Intent(Sign_in.this, Home.class));
+                            finish();
                             Animation.slideUp(Sign_in.this);
+
                         }else {
                             new SweetAlertDialog(Sign_in.this, SweetAlertDialog.ERROR_TYPE)
                                     .setTitleText("Oops...")

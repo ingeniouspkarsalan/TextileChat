@@ -17,6 +17,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -24,6 +25,7 @@ import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.activities.Chat_Activity;
 import com.textilechat.ingenious.textilechat.activities.Home;
+import com.textilechat.ingenious.textilechat.classes.Database_Helper;
 import com.textilechat.ingenious.textilechat.classes.serialize_msg_class;
 
 import java.io.IOException;
@@ -37,7 +39,7 @@ import es.dmoral.toasty.Toasty;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
-
+    private Database_Helper database_helper;
 
     final String id = Prefs.getString("user_id", "0");
     @Override
@@ -57,6 +59,34 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Intent pushNotification = new Intent("chat");
             pushNotification.putExtra("msg", sendclass);
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
+
+            database_helper=new Database_Helper(this);
+
+            if(database_helper.getvalueexist(c_id,sc_id) == 0){
+
+                if(database_helper.insert_marks(c_id,sc_id,1) == 1){
+
+
+                    showNotificationwithoutimage("yes","inserted");
+
+                }else {
+
+
+                    showNotificationwithoutimage("not","inserted");
+
+                }
+            }else {
+                if(database_helper.updatemarks(c_id,sc_id) == 1){
+
+                    showNotificationwithoutimage("yes","updated");
+
+                }else {
+
+                    showNotificationwithoutimage("not","updated");
+
+                }
+            }
+
 
             if(!id.equals(u_id)){
             if (!isAppIsInBackground(this)) {

@@ -107,21 +107,21 @@ public class Chat_Activity extends AppCompatActivity {
                 coming.setMessages(msg_class.getMassege().toString());
                 coming.setTimestamp(msg_class.getCreated_at().toString());
 
-                if(chat_message_list.size() > 1 ){
+//                if(chat_message_list.size() > 1 ){
                     chat_message_list.add(coming);
                     chat_adapters.notifyDataSetChanged();
-                }else{
-                    chat_message_list = new ArrayList<>();
-                    chat_message_list.add(coming);
-                    chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
-                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(chat_adapters);
-                    if (chat_adapters.getItemCount() > 1) {
-                        recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
-                    }
-                }
+//                }else{
+//                    chat_message_list = new ArrayList<>();
+//                    chat_message_list.add(coming);
+//                    chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
+//                    LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
+//                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//                    recyclerView.setLayoutManager(layoutManager);
+//                    recyclerView.setAdapter(chat_adapters);
+//                    if (chat_adapters.getItemCount() > 1) {
+//                        recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+//                    }
+//                }
 
                 if (chat_adapters.getItemCount() > 1) {
                     recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
@@ -177,6 +177,12 @@ public class Chat_Activity extends AppCompatActivity {
             public void onResponse(String response) {
                 if (response.contains("null")) {
 
+                    chat_message_list = new ArrayList<>();
+                    chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
+                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setAdapter(chat_adapters);
                 } else {
                     try {
                         chat_message_list = JSONParser.parse_chatmessages(response);

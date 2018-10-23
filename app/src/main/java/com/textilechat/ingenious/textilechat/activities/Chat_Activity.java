@@ -138,13 +138,6 @@ public class Chat_Activity extends AppCompatActivity {
                     }
 
                 }
-
-
-
-
-
-
-
             }
         };
 
@@ -201,8 +194,8 @@ public class Chat_Activity extends AppCompatActivity {
                     LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(chat_adapters);
                     recyclerView.setHasFixedSize(true);
+                    recyclerView.setAdapter(chat_adapters);
                 } else {
                     try {
                         chat_message_list = JSONParser.parse_chatmessages(response);
@@ -213,9 +206,9 @@ public class Chat_Activity extends AppCompatActivity {
                         chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
                         LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
                         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                        recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setAdapter(chat_adapters);
-                        recyclerView.setHasFixedSize(true);
                         if (chat_adapters.getItemCount() > 1) {
                             recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
                         }

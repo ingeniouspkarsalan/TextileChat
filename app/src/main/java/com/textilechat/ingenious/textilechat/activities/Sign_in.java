@@ -72,11 +72,13 @@ public class Sign_in extends AppCompatActivity {
     // Declear the Registration Function
     private void sign_in(String email, String password)
     {
+        String token = SharedPrefManager.getInstance(this).getDeviceToken();
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("req_key","user_login");
         params.put("email",email);
         params.put("pass",password);
+        params.put("token",token);
         client.post(Endpoints.ip_server, params, new AsyncHttpResponseHandler()
         {
             @Override

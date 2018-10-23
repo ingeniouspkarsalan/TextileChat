@@ -36,6 +36,7 @@ import com.textilechat.ingenious.textilechat.classes.chat_messages;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,8 @@ public class Chat_Activity extends AppCompatActivity {
     private Button btn_send;
     final String id = Prefs.getString("user_id", "0");
 
+    HashSet<chat_messages> hashSet;
+
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +77,7 @@ public class Chat_Activity extends AppCompatActivity {
         recyclerView=(RecyclerView) findViewById(R.id.recycler_view);
         edit_message=findViewById(R.id.edit_msg);
         btn_send=findViewById(R.id.btn_send);
+        hashSet = new HashSet<chat_messages>();
 
 
         if(Utils.isOnline(Chat_Activity.this))
@@ -107,25 +111,40 @@ public class Chat_Activity extends AppCompatActivity {
                 coming.setMessages(msg_class.getMassege().toString());
                 coming.setTimestamp(msg_class.getCreated_at().toString());
 
-//                if(chat_message_list.size() > 1 ){
-                    chat_message_list.add(coming);
-                    chat_adapters.notifyDataSetChanged();
-//                }else{
-//                    chat_message_list = new ArrayList<>();
-//                    chat_message_list.add(coming);
-//                    chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
-//                    LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
-//                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//                    recyclerView.setLayoutManager(layoutManager);
-//                    recyclerView.setAdapter(chat_adapters);
-//                    if (chat_adapters.getItemCount() > 1) {
-//                        recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
-//                    }
-//                }
+                if(getIntent().getStringExtra("id_name").equals("category")) {
+                    if(getIntent().getStringExtra("c_id").equals(msg_class.getC_id())){
+                        hashSet.addAll(chat_message_list);
+                        chat_message_list.clear();
+                        chat_message_list.addAll(hashSet);
+                        chat_message_list.add(chat_message_list.size(),coming);
+                        chat_adapters.notifyDataSetChanged();
 
-                if (chat_adapters.getItemCount() > 1) {
-                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                        if (chat_adapters.getItemCount() > 1) {
+                            recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                        }
+                    }
+
+                }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
+                    if(getIntent().getStringExtra("c_id").equals(msg_class.getC_id()) & getIntent().getStringExtra("s_id").equals(msg_class.getSc_id())){
+                        hashSet.addAll(chat_message_list);
+                        chat_message_list.clear();
+                        chat_message_list.addAll(hashSet);
+                        chat_message_list.add(chat_message_list.size(),coming);
+                        chat_adapters.notifyDataSetChanged();
+
+                        if (chat_adapters.getItemCount() > 1) {
+                            recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                        }
+                    }
+
                 }
+
+
+
+
+
+
+
             }
         };
 
@@ -183,14 +202,20 @@ public class Chat_Activity extends AppCompatActivity {
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(chat_adapters);
+                    recyclerView.setHasFixedSize(true);
                 } else {
                     try {
                         chat_message_list = JSONParser.parse_chatmessages(response);
+                        hashSet.addAll(chat_message_list);
+                        chat_message_list.clear();
+                        chat_message_list.addAll(hashSet);
+
                         chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
                         LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
                         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setAdapter(chat_adapters);
+                        recyclerView.setHasFixedSize(true);
                         if (chat_adapters.getItemCount() > 1) {
                             recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
                         }

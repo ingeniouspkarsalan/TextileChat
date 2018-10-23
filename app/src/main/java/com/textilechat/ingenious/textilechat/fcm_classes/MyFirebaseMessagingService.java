@@ -1,7 +1,6 @@
 package com.textilechat.ingenious.textilechat.fcm_classes;
 
 import android.app.ActivityManager;
-import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -12,12 +11,9 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -25,7 +21,6 @@ import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.activities.Chat_Activity;
 import com.textilechat.ingenious.textilechat.activities.Home;
-import com.textilechat.ingenious.textilechat.classes.Database_Helper;
 import com.textilechat.ingenious.textilechat.classes.serialize_msg_class;
 
 import java.io.IOException;
@@ -34,12 +29,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-import es.dmoral.toasty.Toasty;
-
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
-    private Database_Helper database_helper;
+
 
     final String id = Prefs.getString("user_id", "0");
     @Override
@@ -59,33 +51,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Intent pushNotification = new Intent("chat");
             pushNotification.putExtra("msg", sendclass);
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
-
-            database_helper=new Database_Helper(this);
-
-            if(database_helper.getvalueexist(c_id,sc_id) == 0){
-
-                if(database_helper.insert_marks(c_id,sc_id,1) == 1){
-
-
-                    showNotificationwithoutimage("yes","inserted");
-
-                }else {
-
-
-                    showNotificationwithoutimage("not","inserted");
-
-                }
-            }else {
-                if(database_helper.updatemarks(c_id,sc_id) == 1){
-
-                    showNotificationwithoutimage("yes","updated");
-
-                }else {
-
-                    showNotificationwithoutimage("not","updated");
-
-                }
-            }
 
 
             if(!id.equals(u_id)){

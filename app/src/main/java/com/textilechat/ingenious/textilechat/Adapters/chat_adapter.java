@@ -20,12 +20,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHolder> {
     private Context context;
     private List<chat_messages> chat_messagesList;
-
     private static String today;
 
     class chatViewHolder extends RecyclerView.ViewHolder {
@@ -48,7 +48,6 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     public chat_adapter(Context context, List<chat_messages> chat_messagesList) {
         this.context = context;
         this.chat_messagesList = chat_messagesList;
-
         Calendar calendar = Calendar.getInstance();
         today = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
     }
@@ -57,16 +56,16 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     public void onBindViewHolder(chatViewHolder holder, int position) {
         final chat_messages c_message = chat_messagesList.get(position);
         final String id = Prefs.getString("user_id", "0");
-        if(c_message.getIds().equals(id)){
-            holder.layoutofowner.setVisibility(View.VISIBLE);
-            holder.owner_username.setText(c_message.getUser_name().toString());
-            holder.owner_message.setText(c_message.getMessages().toString());
-            holder.owner_timestamp.setText(c_message.getTimestamp().toString());
-        }else{
+        if(!c_message.getIds().equals(id)){
             holder.layoutofother.setVisibility(View.VISIBLE);
             holder.username.setText(c_message.getUser_name().toString());
             holder.message.setText(c_message.getMessages().toString());
             holder.timestamp.setText(c_message.getTimestamp().toString());
+        }else  if(c_message.getIds().equals(id)){
+            holder.layoutofowner.setVisibility(View.VISIBLE);
+            holder.owner_username.setText(c_message.getUser_name().toString());
+            holder.owner_message.setText(c_message.getMessages().toString());
+            holder.owner_timestamp.setText(c_message.getTimestamp().toString());
         }
 
     }

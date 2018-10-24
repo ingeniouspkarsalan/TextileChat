@@ -1,11 +1,6 @@
 package com.textilechat.ingenious.textilechat.activities;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +20,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.Adapters.chat_adapter;
 import com.textilechat.ingenious.textilechat.R;
@@ -36,23 +34,14 @@ import com.textilechat.ingenious.textilechat.classes.chat_messages;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import com.textilechat.ingenious.textilechat.classes.serialize_msg_class;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import cz.msebera.android.httpclient.Header;
 import es.dmoral.toasty.Toasty;
 
-public class Chat_Activity extends AppCompatActivity {
+public class Singal_User_Chat extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<chat_messages> chat_message_list;
     private chat_adapter chat_adapters;
@@ -60,14 +49,10 @@ public class Chat_Activity extends AppCompatActivity {
     private EditText edit_message;
     private Button btn_send;
     final String id = Prefs.getString("user_id", "0");
-
-    HashSet<chat_messages> hashSet;
-
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_);
+        setContentView(R.layout.activity_singal__user__chat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getIntent().getStringExtra("name"));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -77,73 +62,27 @@ public class Chat_Activity extends AppCompatActivity {
         recyclerView=(RecyclerView) findViewById(R.id.recycler_view);
         edit_message=findViewById(R.id.edit_msg);
         btn_send=findViewById(R.id.btn_send);
-        hashSet = new HashSet<chat_messages>();
 
 
-        if(Utils.isOnline(Chat_Activity.this))
+        if(Utils.isOnline(Singal_User_Chat.this))
         {
             try
             {
                 requestData(Endpoints.ip_server);
             }
             catch (Exception ex) {
-                new SweetAlertDialog(Chat_Activity.this, SweetAlertDialog.ERROR_TYPE)
+                new SweetAlertDialog(Singal_User_Chat.this, SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Oops...")
                         .setContentText("Some thing went wrong!")
                         .show();
             }
         } else
         {
-            new SweetAlertDialog(Chat_Activity.this, SweetAlertDialog.ERROR_TYPE)
+            new SweetAlertDialog(Singal_User_Chat.this, SweetAlertDialog.ERROR_TYPE)
                     .setTitleText("Oops...")
                     .setContentText("Internet Not Found!")
                     .show();
         }
-
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                serialize_msg_class msg_class=(serialize_msg_class) intent.getSerializableExtra("msg");
-                chat_messages coming=new chat_messages();
-
-                coming.setIds(msg_class.getU_id().toString());
-                coming.setUser_name(msg_class.getU_name().toString());
-                coming.setMessages(msg_class.getMassege().toString());
-                coming.setTimestamp(msg_class.getCreated_at().toString());
-
-                if(getIntent().getStringExtra("id_name").equals("category")) {
-                    if(getIntent().getStringExtra("c_id").equals(msg_class.getC_id())){
-                        hashSet.addAll(chat_message_list);
-                        chat_message_list.clear();
-                        chat_message_list.addAll(hashSet);
-                        chat_message_list.add(chat_message_list.size(),coming);
-                        chat_adapters.notifyDataSetChanged();
-
-                        if (chat_adapters.getItemCount() > 1) {
-                            recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
-                        }
-                    }
-
-                }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
-                    if(getIntent().getStringExtra("c_id").equals(msg_class.getC_id()) & getIntent().getStringExtra("s_id").equals(msg_class.getSc_id())){
-                        hashSet.addAll(chat_message_list);
-                        chat_message_list.clear();
-                        chat_message_list.addAll(hashSet);
-                        chat_message_list.add(chat_message_list.size(),coming);
-                        chat_adapters.notifyDataSetChanged();
-
-                        if (chat_adapters.getItemCount() > 1) {
-                            recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
-                        }
-                    }
-
-                }
-            }
-        };
-
-
-
-
 
         //sending msg
         btn_send.setOnClickListener(new View.OnClickListener() {
@@ -151,35 +90,16 @@ public class Chat_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 sending_msg=edit_message.getText().toString();
                 if(!sending_msg.isEmpty()){
-                    if(getIntent().getStringExtra("id_name").equals("category")) {
-
                         sending_chat_to_server(sending_msg,getIntent().getStringExtra("c_id")+"","0");
-                        hideSoftKeyboard(Chat_Activity.this);
-
-                    }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
-
-                        sending_chat_to_server(sending_msg,getIntent().getStringExtra("c_id")+"",getIntent().getStringExtra("s_id")+"");
-                        hideSoftKeyboard(Chat_Activity.this);
-                    }
+                        hideSoftKeyboard(Singal_User_Chat.this);
                 }else{
-                    Toast.makeText(Chat_Activity.this,"Insert text to send",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Singal_User_Chat.this,"Insert text to send",Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter("chat"));
-    }
 
     //getting chats from server one time
     public void requestData(String uri) {
@@ -190,8 +110,8 @@ public class Chat_Activity extends AppCompatActivity {
                 if (response.contains("null")) {
 
                     chat_message_list = new ArrayList<>();
-                    chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
+                    chat_adapters = new chat_adapter(Singal_User_Chat.this, chat_message_list);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(Singal_User_Chat.this);
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setHasFixedSize(true);
@@ -199,12 +119,8 @@ public class Chat_Activity extends AppCompatActivity {
                 } else {
                     try {
                         chat_message_list = JSONParser.parse_chatmessages(response);
-                        hashSet.addAll(chat_message_list);
-                        chat_message_list.clear();
-                        chat_message_list.addAll(hashSet);
-
-                        chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
+                        chat_adapters = new chat_adapter(Singal_User_Chat.this, chat_message_list);
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(Singal_User_Chat.this);
                         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(layoutManager);
@@ -223,7 +139,7 @@ public class Chat_Activity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        new SweetAlertDialog(Chat_Activity.this, SweetAlertDialog.ERROR_TYPE)
+                        new SweetAlertDialog(Singal_User_Chat.this, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Oops...")
                                 .setContentText("Some thing went wrong!")
                                 .show();
@@ -232,18 +148,10 @@ public class Chat_Activity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                if(getIntent().getStringExtra("id_name").equals("category")) {
+                params.put("req_key", "");
+                params.put("", "");
+                params.put("", "");
 
-                    params.put("req_key", "retrive_category_masseges");
-                    params.put("c_id", getIntent().getStringExtra("c_id")+"");
-
-                }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
-
-                    params.put("req_key", "retrive_sub_category_masseges");
-                    params.put("c_id", getIntent().getStringExtra("c_id")+"");
-                    params.put("sc_id", getIntent().getStringExtra("s_id")+"");
-
-                }
                 return params;
             }
         };
@@ -257,11 +165,9 @@ public class Chat_Activity extends AppCompatActivity {
     {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.put("req_key","add_messges");
-        params.put("cat_id",cat_id);
-        params.put("sub_cat_id",sc_id);
-        params.put("user_id",id);
-        params.put("message",message);
+        params.put("req_key","");
+        params.put("user_id","");
+        params.put("message","");
         client.post(Endpoints.ip_server, params, new AsyncHttpResponseHandler()
         {
             @Override
@@ -282,7 +188,7 @@ public class Chat_Activity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 String  response  = Utils.getResponse(responseBody);
                 if(response.equals("null")) {
-                    Toasty.warning(Chat_Activity.this, "Unable to Connect Server", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(Singal_User_Chat.this, "Unable to Connect Server", Toast.LENGTH_SHORT).show();
 
                 }else {
 
@@ -299,6 +205,13 @@ public class Chat_Activity extends AppCompatActivity {
         });
     }
 
+
+
+    //for keyboard hide
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
 
 
     @Override
@@ -318,5 +231,4 @@ public class Chat_Activity extends AppCompatActivity {
         super.finish();
         Animation.swipeLeft(this);
     }
-
 }

@@ -61,7 +61,7 @@ public class Chat_Activity extends AppCompatActivity {
     private Button btn_send;
     final String id = Prefs.getString("user_id", "0");
 
-    HashSet<chat_messages> hashSet;
+
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     @Override
@@ -77,7 +77,6 @@ public class Chat_Activity extends AppCompatActivity {
         recyclerView=(RecyclerView) findViewById(R.id.recycler_view);
         edit_message=findViewById(R.id.edit_msg);
         btn_send=findViewById(R.id.btn_send);
-        hashSet = new HashSet<chat_messages>();
 
 
         if(Utils.isOnline(Chat_Activity.this))
@@ -113,9 +112,6 @@ public class Chat_Activity extends AppCompatActivity {
 
                 if(getIntent().getStringExtra("id_name").equals("category")) {
                     if(getIntent().getStringExtra("c_id").equals(msg_class.getC_id())){
-                        hashSet.addAll(chat_message_list);
-                        chat_message_list.clear();
-                        chat_message_list.addAll(hashSet);
                         chat_message_list.add(chat_message_list.size(),coming);
                         chat_adapters.notifyDataSetChanged();
 
@@ -126,9 +122,6 @@ public class Chat_Activity extends AppCompatActivity {
 
                 }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
                     if(getIntent().getStringExtra("c_id").equals(msg_class.getC_id()) & getIntent().getStringExtra("s_id").equals(msg_class.getSc_id())){
-                        hashSet.addAll(chat_message_list);
-                        chat_message_list.clear();
-                        chat_message_list.addAll(hashSet);
                         chat_message_list.add(chat_message_list.size(),coming);
                         chat_adapters.notifyDataSetChanged();
 
@@ -199,9 +192,9 @@ public class Chat_Activity extends AppCompatActivity {
                 } else {
                     try {
                         chat_message_list = JSONParser.parse_chatmessages(response);
-                        hashSet.addAll(chat_message_list);
-                        chat_message_list.clear();
-                        chat_message_list.addAll(hashSet);
+                        for (int i=0;i<chat_message_list.size();i++){
+                            Log.e("hello",chat_message_list.get(i).getMessages());
+                        }
 
                         chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
                         LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
@@ -209,6 +202,7 @@ public class Chat_Activity extends AppCompatActivity {
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setAdapter(chat_adapters);
+
                         if (chat_adapters.getItemCount() > 1) {
                             recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
                         }

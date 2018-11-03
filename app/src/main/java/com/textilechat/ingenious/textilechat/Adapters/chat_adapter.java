@@ -2,6 +2,7 @@ package com.textilechat.ingenious.textilechat.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -56,16 +57,17 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     public void onBindViewHolder(chatViewHolder holder, int position) {
         final chat_messages c_message = chat_messagesList.get(position);
         final String id = Prefs.getString("user_id", "0");
-        if(!c_message.getIds().equals(id)){
-            holder.layoutofother.setVisibility(View.VISIBLE);
-            holder.username.setText(c_message.getUser_name().toString());
-            holder.message.setText(c_message.getMessages().toString());
-            holder.timestamp.setText(c_message.getTimestamp().toString());
-        }else  if(c_message.getIds().equals(id)){
+
+        if(c_message.getIds().equals(id)){
             holder.layoutofowner.setVisibility(View.VISIBLE);
             holder.owner_username.setText(c_message.getUser_name().toString());
             holder.owner_message.setText(c_message.getMessages().toString());
             holder.owner_timestamp.setText(c_message.getTimestamp().toString());
+        }else {
+            holder.layoutofother.setVisibility(View.VISIBLE);
+            holder.username.setText(c_message.getUser_name().toString());
+            holder.message.setText(c_message.getMessages().toString());
+            holder.timestamp.setText(c_message.getTimestamp().toString());
         }
 
     }
@@ -81,6 +83,8 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     public int getItemCount() {
         return chat_messagesList.size();
     }
+
+
 
 
 

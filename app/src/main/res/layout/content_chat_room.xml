@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.Chat_Activity"
     tools:showIn="@layout/activity_chat_">
 
-    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:shimmer_demo_angle="20"
-        app:shimmer_demo_child_count="10"
-        android:layout_above="@id/edit_msg"/>
+    <!--<com.cooltechworks.views.shimmer.ShimmerRecyclerView-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--android:id="@+id/recycler_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:shimmer_demo_angle="20"-->
+        <!--app:shimmer_demo_child_count="10"-->
+        <!--android:layout_weight="1"/>-->
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recycler_view"
+        android:layout_weight="1"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_horizontal"
+    android:padding="5dp"
+    >
     <EditText
         android:id="@+id/edit_msg"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
         android:background="@drawable/msg_text_box_style"
         android:fontFamily="sans-serif-light"
-        android:paddingLeft="15dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="60dp"
+        android:padding="15dp"
         android:inputType="text"
-        android:layout_alignParentBottom="true"
         android:textColor="#000"
+        android:layout_weight="1"
         android:hint="Enter Message"
         android:textSize="18sp" />
-
     <Button
         android:id="@+id/btn_send"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:background="@drawable/button_shape"
-        android:layout_alignParentBottom="true"
-        android:paddingTop="15dp"
-        android:paddingStart="15dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_alignParentEnd="true"
         android:drawableStart="@drawable/ic_send_black_24dp" />
-
-</RelativeLayout>
+</LinearLayout>
+</LinearLayout>

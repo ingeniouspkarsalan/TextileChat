@@ -204,8 +204,6 @@ public class Home extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_News) {
 
-        } else if (id == R.id.nav_Blogs) {
-
         } else if (id == R.id.nav_Contact) {
 
         } else if (id == R.id.nav_About) {

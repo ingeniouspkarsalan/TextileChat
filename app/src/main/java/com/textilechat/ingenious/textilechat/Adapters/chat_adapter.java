@@ -61,7 +61,7 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
         if(c_message.getIds().equals(id)){
             holder.layoutofowner.setVisibility(View.VISIBLE);
             holder.owner_username.setText(c_message.getUser_name().toString());
-            holder.owner_message.setText(c_message.getMessages().toString());
+            holder.owner_message.setText(" "+c_message.getMessages().toString());
             holder.owner_timestamp.setText(c_message.getTimestamp().toString());
         }else {
             holder.layoutofother.setVisibility(View.VISIBLE);

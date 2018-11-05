@@ -147,6 +147,7 @@ public class Chat_Activity extends AppCompatActivity {
                     if(getIntent().getStringExtra("id_name").equals("category")) {
 
                         sending_chat_to_server(sending_msg,getIntent().getStringExtra("c_id")+"","0");
+
                         hideSoftKeyboard(Chat_Activity.this);
 
                     }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {

@@ -1,6 +1,11 @@
 package com.textilechat.ingenious.textilechat.activities;
 
+import android.app.ActivityManager;
+import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +35,7 @@ import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.Utils.Endpoints;
 import com.textilechat.ingenious.textilechat.Utils.Utils;
 import com.textilechat.ingenious.textilechat.classes.CategoryClass;
+import com.textilechat.ingenious.textilechat.classes.Daily_service_class;
 import com.textilechat.ingenious.textilechat.classes.JSONParser;
 
 import java.util.HashMap;
@@ -41,6 +47,16 @@ import es.dmoral.toasty.Toasty;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private TabLayout tabLayout;
+    private int[] tabIcons = {
+            R.drawable.ic_menu_camera,
+            R.drawable.ic_menu_gallery,
+            R.drawable.ic_menu_send,
+            R.drawable.ic_menu_share,
+    };
+
+
 
     String username,useremail;
     private TextView usernameview,useremailview;
@@ -61,6 +77,13 @@ public class Home extends AppCompatActivity
         username= Prefs.getString("user_name","");
         useremail=Prefs.getString("user_email","");
 
+
+        if(isServiceRunning("Daily_service_class")){
+            Toast.makeText(this,"yes running",Toast.LENGTH_SHORT).show();
+        }else{
+            startService(new Intent(getBaseContext(), Daily_service_class.class));
+            Toast.makeText(this,"now running",Toast.LENGTH_SHORT).show();
+        }
 //
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +138,8 @@ public class Home extends AppCompatActivity
                     .setContentText("Internet Not Found!")
                     .show();
         }
+        fortablayout();
+
     }
 
 
@@ -158,10 +183,39 @@ public class Home extends AppCompatActivity
         queue.add(request);
     }
 
+    public void fortablayout(){
 
+        tabLayout=findViewById(R.id.tabLayout);
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[0]).setText("a"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[1]).setText("b"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[2]).setText("c"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[3]).setText("d"));
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tabLayout.getSelectedTabPosition() == 0){
+                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                }else if(tabLayout.getSelectedTabPosition() == 1){
+                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                }else if(tabLayout.getSelectedTabPosition() == 2){
+                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                }else if(tabLayout.getSelectedTabPosition() == 3){
+                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                }
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -214,4 +268,16 @@ public class Home extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public  boolean isServiceRunning(String serviceClassName){
+        final ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        final List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
+        for (ActivityManager.RunningServiceInfo runningServiceInfo : services) {
+            if (runningServiceInfo.service.getClassName().equals(serviceClassName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -52,8 +52,9 @@
         android:orientation="vertical"
         android:id="@+id/layoutofowner"
         android:layout_alignParentEnd="true"
+        android:visibility="gone"
         android:layout_below="@+id/layoutofother"
-        android:visibility="gone">
+         >
 
         <TextView
             android:id="@+id/owner_username"
@@ -73,6 +74,7 @@
             android:textIsSelectable="true"
             android:text="messages"
             android:layout_gravity="right"
+            android:drawableLeft="@drawable/for_msg_alert"
             android:background="@drawable/bubble_grey"
             android:textSize="14dp" />
 

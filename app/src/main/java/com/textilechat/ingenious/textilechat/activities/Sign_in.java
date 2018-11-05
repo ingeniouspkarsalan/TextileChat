@@ -17,6 +17,7 @@ import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.Utils.Endpoints;
 import com.textilechat.ingenious.textilechat.Utils.Utils;
 import com.textilechat.ingenious.textilechat.classes.Animation;
+import com.textilechat.ingenious.textilechat.classes.Daily_service_class;
 import com.textilechat.ingenious.textilechat.fcm_classes.SharedPrefManager;
 
 import org.json.JSONException;

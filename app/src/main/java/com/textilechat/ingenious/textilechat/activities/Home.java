@@ -50,18 +50,15 @@ public class Home extends AppCompatActivity
 
     private TabLayout tabLayout;
     private int[] tabIcons = {
-            R.drawable.ic_menu_camera,
-            R.drawable.ic_menu_gallery,
-            R.drawable.ic_menu_send,
-            R.drawable.ic_menu_share,
+            R.drawable.news_icon,
+            R.drawable.blog_icon,
+            R.drawable.contact_jcon,
+            R.drawable.about_icon,
     };
-
-
 
     String username,useremail;
     private TextView usernameview,useremailview;
     CircularImageView imageView;
-
 
     private RecyclerView recyclerView;
     private List<CategoryClass> categoryClassList;
@@ -77,12 +74,9 @@ public class Home extends AppCompatActivity
         username= Prefs.getString("user_name","");
         useremail=Prefs.getString("user_email","");
 
-
-        if(isMyServiceRunning(Daily_service_class.class)){
-            Toast.makeText(this,"yes running",Toast.LENGTH_SHORT).show();
-        }else{
+        //checking service class
+        if(!isMyServiceRunning(Daily_service_class.class)){
             startService(new Intent(getBaseContext(), Daily_service_class.class));
-            Toast.makeText(this,"now running",Toast.LENGTH_SHORT).show();
         }
 
 
@@ -178,10 +172,10 @@ public class Home extends AppCompatActivity
     public void fortablayout(){
 
         tabLayout=findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[0]).setText("a"));
-        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[1]).setText("b"));
-        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[2]).setText("c"));
-        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[3]).setText("d"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[0]).setText("News"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[1]).setText("Blog"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[2]).setText("Contact"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[3]).setText("About"));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -204,7 +198,15 @@ public class Home extends AppCompatActivity
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                if(tabLayout.getSelectedTabPosition() == 0){
+                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                }else if(tabLayout.getSelectedTabPosition() == 1){
+                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                }else if(tabLayout.getSelectedTabPosition() == 2){
+                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                }else if(tabLayout.getSelectedTabPosition() == 3){
+                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

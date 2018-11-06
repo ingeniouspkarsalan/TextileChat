@@ -79,11 +79,6 @@
         <activity android:name=".activities.News_Activity" />
         <activity android:name=".activities.Singal_User_Chat"></activity>
 
-        <receiver android:name="classes.BootBroadcastReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

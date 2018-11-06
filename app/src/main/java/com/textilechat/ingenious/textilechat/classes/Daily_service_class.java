@@ -11,10 +11,12 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.pixplicity.easyprefs.library.Prefs;
+
 import java.util.Calendar;
 
 public class Daily_service_class extends Service {
-
+    final String id = Prefs.getString("user_id", "0");
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -24,7 +26,7 @@ public class Daily_service_class extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(Daily_service_class.this, "its starting", Toast.LENGTH_LONG).show();
+
 //        final Handler handler = new Handler();
 //        handler.postDelayed(new Runnable() {
 //            public void run() {
@@ -33,23 +35,12 @@ public class Daily_service_class extends Service {
 //            }
 //        }, 86400000); //Every 120000 ms (2 minutes)
 
-        // Construct an intent that will execute the AlarmReceiver
-        Intent intents = new Intent(getApplicationContext(), BootBroadcastReceiver.class);
-        // Create a PendingIntent to be triggered when the alarm goes off
-        final PendingIntent pIntent = PendingIntent.getBroadcast(this, BootBroadcastReceiver.REQUEST_CODE,
-                intents, PendingIntent.FLAG_UPDATE_CURRENT);
-        // Setup periodic alarm every every half hour from this point onwards
-        long firstMillis = System.currentTimeMillis(); // alarm is set right away
-        AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
-        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 23);
         cal.set(Calendar.MINUTE, 25);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pIntent);
 
 
 

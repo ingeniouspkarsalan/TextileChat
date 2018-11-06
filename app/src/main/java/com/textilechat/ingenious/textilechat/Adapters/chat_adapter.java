@@ -33,6 +33,7 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     class chatViewHolder extends RecyclerView.ViewHolder {
         TextView message,timestamp,owner_message,owner_timestamp,username,owner_username;
         RelativeLayout layoutofother,layoutofowner;
+        ImageView owner_image,other_image;
 
         public chatViewHolder(View itemView) {
             super(itemView);
@@ -44,6 +45,8 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
             owner_username=itemView.findViewById(R.id.owner_username);
             layoutofother=itemView.findViewById(R.id.layoutofother);
             layoutofowner=itemView.findViewById(R.id.layoutofowner);
+            owner_image=itemView.findViewById(R.id.owner_image);
+            other_image=itemView.findViewById(R.id.other_image);
         }
     }
 
@@ -64,11 +67,23 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
             holder.owner_username.setText(c_message.getUser_name().toString());
             holder.owner_message.setText(" "+c_message.getMessages().toString());
             holder.owner_timestamp.setText(c_message.getTimestamp().toString());
+            Glide.with(context)
+                    .load(c_message.getU_image())
+                    .into(holder.owner_image);
+            if(c_message.getU_status().equals("0")){
+                holder.owner_message.setCompoundDrawablesWithIntrinsicBounds(R.drawable.for_msg_alert,0,0,0);
+            }
         }else {
-            holder.layoutofother.setVisibility(View.VISIBLE);
-            holder.username.setText(c_message.getUser_name().toString());
-            holder.message.setText(c_message.getMessages().toString());
-            holder.timestamp.setText(c_message.getTimestamp().toString());
+            if(!c_message.getU_status().equals("0")){
+                holder.layoutofother.setVisibility(View.VISIBLE);
+                holder.username.setText(c_message.getUser_name().toString());
+                holder.message.setText(c_message.getMessages().toString());
+                holder.timestamp.setText(c_message.getTimestamp().toString());
+                Glide.with(context)
+                        .load(c_message.getU_image())
+                        .into(holder.other_image);
+            }
+
         }
 
     }

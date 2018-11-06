@@ -14,7 +14,11 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
+import android.util.Log;
 
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.pixplicity.easyprefs.library.Prefs;
@@ -31,11 +35,24 @@ import java.util.List;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
-
-
     final String id = Prefs.getString("user_id", "0");
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+
+        if (remoteMessage.getData().size() > 0) {
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+
+            if (/* Check if data needs to be processed by long running job */ true) {
+                // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
+                scheduleJob();
+            } else {
+                // Handle message within 10 seconds
+                handleNow();
+            }
+
+        }
+
 
         if(remoteMessage.getData().get("title").equals("qwerty")) {
 
@@ -93,6 +110,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
 
+
+    @Override
+    public void onNewToken(String token) {
+        SharedPrefManager.getInstance(getApplicationContext()).saveDeviceToken(token);
+    }
+
+
+    private void scheduleJob() {
+        // [START dispatch_job]
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
+        Job myJob = dispatcher.newJobBuilder()
+                .setService(MyJobService.class)
+                .setTag("my-job-tag")
+                .build();
+        dispatcher.schedule(myJob);
+        // [END dispatch_job]
+    }
+
+
+    private void handleNow() {
+        Log.d(TAG, "Short lived task is done.");
+    }
 
 
     //for silent chat notification

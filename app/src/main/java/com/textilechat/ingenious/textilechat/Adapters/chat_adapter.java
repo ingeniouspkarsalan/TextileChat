@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,7 +32,7 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
 
     class chatViewHolder extends RecyclerView.ViewHolder {
         TextView message,timestamp,owner_message,owner_timestamp,username,owner_username;
-        LinearLayout layoutofother,layoutofowner;
+        RelativeLayout layoutofother,layoutofowner;
 
         public chatViewHolder(View itemView) {
             super(itemView);

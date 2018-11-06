@@ -37,7 +37,8 @@
         android:fontFamily="sans-serif-light"
         android:padding="15dp"
         android:inputType="text"
-        android:textColor="#000"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:layout_weight="1"
         android:hint="Enter Message"
         android:textSize="18sp" />

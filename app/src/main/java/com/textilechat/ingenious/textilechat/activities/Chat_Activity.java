@@ -270,7 +270,23 @@ public class Chat_Activity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String response = Utils.getResponse(responseBody);
                 if(response.equals("null")) {
-                    //Toasty.warning(Chat_Activity.this, "Response is null", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(Chat_Activity.this, "Response is null", Toast.LENGTH_SHORT).show();
+                }else {
+                    try {
+                        JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                        if(object.getBoolean("success")) {
+                            Toasty.success(Chat_Activity.this,object.getString("message"),Toast.LENGTH_LONG).show();
+                        }else {
+                            new SweetAlertDialog(Chat_Activity.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText(object.getString("message"))
+                                    .show();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("response",response);
                 }
             }
             @Override

@@ -78,21 +78,13 @@ public class Home extends AppCompatActivity
         useremail=Prefs.getString("user_email","");
 
 
-        if(isServiceRunning("Daily_service_class")){
+        if(isMyServiceRunning(Daily_service_class.class)){
             Toast.makeText(this,"yes running",Toast.LENGTH_SHORT).show();
         }else{
             startService(new Intent(getBaseContext(), Daily_service_class.class));
             Toast.makeText(this,"now running",Toast.LENGTH_SHORT).show();
         }
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -269,11 +261,11 @@ public class Home extends AppCompatActivity
         return true;
     }
 
-    public  boolean isServiceRunning(String serviceClassName){
-        final ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        final List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
-        for (ActivityManager.RunningServiceInfo runningServiceInfo : services) {
-            if (runningServiceInfo.service.getClassName().equals(serviceClassName)){
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
                 return true;
             }
         }

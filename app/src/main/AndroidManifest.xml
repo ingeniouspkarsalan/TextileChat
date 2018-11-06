@@ -6,7 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".classes.Main_class"
@@ -20,29 +21,7 @@
 
 
 
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_launcher_foreground" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
-        <!-- [END fcm_default_icon] -->
-        <!-- [START fcm_default_channel] -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="nothing" />
-        <!-- [END fcm_default_channel] -->
-
-
-
-
-
-
-
-
-
+    
 
         <activity
             android:name=".activities.Splash"
@@ -85,7 +64,7 @@
         </service>
 
        <service android:name=".classes.Daily_service_class"
-           android:exported="true"/>
+           android:exported="false"/>
 
         <activity
             android:name=".activities.Home"
@@ -99,6 +78,12 @@
         <activity android:name=".activities.Chat_Activity" />
         <activity android:name=".activities.News_Activity" />
         <activity android:name=".activities.Singal_User_Chat"></activity>
+
+        <receiver android:name="classes.BootBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

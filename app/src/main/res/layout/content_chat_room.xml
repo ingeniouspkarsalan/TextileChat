@@ -27,13 +27,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:gravity="center_horizontal"
-    android:padding="5dp"
+    android:layout_margin="10dp"
     >
     <EditText
         android:id="@+id/edit_msg"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/msg_text_box_style"
         android:fontFamily="sans-serif-light"
         android:padding="15dp"
@@ -42,10 +41,14 @@
         android:layout_weight="1"
         android:hint="Enter Message"
         android:textSize="18sp" />
+    <TextView
+        android:layout_width="5dp"
+        android:layout_height="wrap_content" />
     <Button
         android:id="@+id/btn_send"
         android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_height="52dp"
+        android:layout_gravity="center_vertical"
         android:backgroundTint="@color/colorPrimaryDark"
         android:background="@drawable/button_shape"
         android:drawableStart="@drawable/ic_send_black_24dp" />

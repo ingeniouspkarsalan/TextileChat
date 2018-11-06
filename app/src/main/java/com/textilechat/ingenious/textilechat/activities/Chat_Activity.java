@@ -278,7 +278,7 @@ public class Chat_Activity extends AppCompatActivity {
                             Toasty.success(Chat_Activity.this,object.getString("message"),Toast.LENGTH_LONG).show();
                         }else {
                             new SweetAlertDialog(Chat_Activity.this, SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Oops...")
+                                    .setTitleText("Alert Info...")
                                     .setContentText(object.getString("message"))
                                     .show();
                         }

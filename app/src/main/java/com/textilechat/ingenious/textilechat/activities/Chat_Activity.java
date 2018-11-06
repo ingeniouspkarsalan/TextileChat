@@ -105,10 +105,13 @@ public class Chat_Activity extends AppCompatActivity {
                 serialize_msg_class msg_class=(serialize_msg_class) intent.getSerializableExtra("msg");
                 chat_messages coming=new chat_messages();
 
+                final String image_owner = Prefs.getString("owner_image", "");
                 coming.setIds(msg_class.getU_id().toString());
                 coming.setUser_name(msg_class.getU_name().toString());
                 coming.setMessages(msg_class.getMassege().toString());
                 coming.setTimestamp(msg_class.getCreated_at().toString());
+                coming.setU_status("0");
+                coming.setU_image(image_owner);
 
                 if(getIntent().getStringExtra("id_name").equals("category")) {
                     if(getIntent().getStringExtra("c_id").equals(msg_class.getC_id())){

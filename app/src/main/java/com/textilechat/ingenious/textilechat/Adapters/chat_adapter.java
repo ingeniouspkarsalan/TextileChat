@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pixplicity.easyprefs.library.Prefs;
@@ -24,6 +25,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHolder> {
     private Context context;
@@ -70,8 +73,16 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
             Glide.with(context)
                     .load(c_message.getU_image())
                     .into(holder.owner_image);
+
+            Prefs.putString("owner_image",c_message.getU_image());
             if(c_message.getU_status().equals("0")){
                 holder.owner_message.setCompoundDrawablesWithIntrinsicBounds(R.drawable.for_msg_alert,0,0,0);
+                holder.owner_message.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toasty.error(context,"Wait for Admin approve", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }else {
             if(!c_message.getU_status().equals("0")){

@@ -1,15 +1,11 @@
 package com.textilechat.ingenious.textilechat.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.util.SortedList;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,11 +15,7 @@ import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.classes.chat_messages;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
@@ -101,8 +93,8 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
 
     @Override
     public chatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.chat_cards, null);
+        LayoutInflater inflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflator.inflate(R.layout.chat_cards, null);
         return new chatViewHolder(view);
     }
 

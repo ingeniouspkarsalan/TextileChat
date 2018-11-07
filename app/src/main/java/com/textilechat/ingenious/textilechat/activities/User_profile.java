@@ -165,4 +165,10 @@ public class User_profile extends AppCompatActivity {
         super.onBackPressed();
         Animation.slideLeft(User_profile.this);
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
+    }
 }

@@ -3,6 +3,7 @@ package com.textilechat.ingenious.textilechat.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -61,6 +62,7 @@ public class News_Activity extends AppCompatActivity {
                     .show();
         }
     }
+
     public void requestData(String uri) {
         final String id = Prefs.getString("user_id", "0");
         StringRequest request = new StringRequest(Request.Method.POST, uri, new Response.Listener<String>() {
@@ -69,7 +71,7 @@ public class News_Activity extends AppCompatActivity {
                 if (response.contains("null")) {
                     new SweetAlertDialog(News_Activity.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Alert...")
-                            .setContentText("Sub categories not available..")
+                            .setContentText("News not available..")
                             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
@@ -81,10 +83,10 @@ public class News_Activity extends AppCompatActivity {
                     newsClassList = JSONParser.parse_news(response);
                     new_adapter = new New_Adapter(News_Activity.this, newsClassList);
                     recyclerView.setAdapter(new_adapter);
-                    recyclerView.setLayoutManager(new GridLayoutManager(News_Activity.this,2));
+                    LinearLayoutManager llm = new LinearLayoutManager(News_Activity.this);
+                    llm.setOrientation(LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(llm);
                 }
-
-
             }
         },
                 new Response.ErrorListener() {
@@ -99,7 +101,7 @@ public class News_Activity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("req_key", "all_sub_category");
+                params.put("req_key", "get_all_news");
                 return params;
             }
         };

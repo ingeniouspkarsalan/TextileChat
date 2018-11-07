@@ -273,7 +273,7 @@ public class Chat_Activity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String response = Utils.getResponse(responseBody);
                 if(response.equals("null")) {
-                    Toasty.warning(Chat_Activity.this, "Response is null", Toast.LENGTH_SHORT).show();
+                   // Toasty.warning(Chat_Activity.this, "Response is null", Toast.LENGTH_SHORT).show();
                 }else {
                     try {
                         JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));

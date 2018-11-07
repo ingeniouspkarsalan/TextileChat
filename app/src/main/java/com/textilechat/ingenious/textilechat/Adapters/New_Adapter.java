@@ -57,7 +57,7 @@ public class New_Adapter extends RecyclerView.Adapter<New_Adapter.NewsHolder>
     @Override
     public NewsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.design_sub_catogory_list, null);
+        View view = inflater.inflate(R.layout.news_card_design, null);
         return new NewsHolder(view);
     }
 

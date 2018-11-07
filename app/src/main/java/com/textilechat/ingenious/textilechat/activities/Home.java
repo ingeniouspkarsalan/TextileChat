@@ -34,6 +34,7 @@ import com.textilechat.ingenious.textilechat.Adapters.Catergory_adapter;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.Utils.Endpoints;
 import com.textilechat.ingenious.textilechat.Utils.Utils;
+import com.textilechat.ingenious.textilechat.classes.Animation;
 import com.textilechat.ingenious.textilechat.classes.CategoryClass;
 import com.textilechat.ingenious.textilechat.classes.Daily_service_class;
 import com.textilechat.ingenious.textilechat.classes.JSONParser;
@@ -128,7 +129,7 @@ public class Home extends AppCompatActivity
 
     }
 
-
+        //fetching all categories of subcategory
     public void requestData(String uri) {
         final String id = Prefs.getString("user_id", "0");
         StringRequest request = new StringRequest(Request.Method.POST, uri, new Response.Listener<String>() {
@@ -169,6 +170,8 @@ public class Home extends AppCompatActivity
         queue.add(request);
     }
 
+
+    //initializing tablayout
     public void fortablayout(){
 
         tabLayout=findViewById(R.id.tabLayout);
@@ -181,7 +184,8 @@ public class Home extends AppCompatActivity
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if(tabLayout.getSelectedTabPosition() == 0){
-                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(Home.this,News_Activity.class));
+                    Animation.slideUp(Home.this);
                 }else if(tabLayout.getSelectedTabPosition() == 1){
                     Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
                 }else if(tabLayout.getSelectedTabPosition() == 2){
@@ -199,7 +203,8 @@ public class Home extends AppCompatActivity
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 if(tabLayout.getSelectedTabPosition() == 0){
-                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(Home.this,News_Activity.class));
+                    Animation.slideUp(Home.this);
                 }else if(tabLayout.getSelectedTabPosition() == 1){
                     Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
                 }else if(tabLayout.getSelectedTabPosition() == 2){
@@ -210,6 +215,8 @@ public class Home extends AppCompatActivity
             }
         });
     }
+
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -219,6 +226,7 @@ public class Home extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -242,6 +250,7 @@ public class Home extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -264,6 +273,7 @@ public class Home extends AppCompatActivity
     }
 
 
+    //this method checking background class is running or not
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {

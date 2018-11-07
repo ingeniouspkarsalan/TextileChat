@@ -1,9 +1,13 @@
 package com.textilechat.ingenious.textilechat.classes;
 
-public class News_Class {
+public class News_Class
+{
+
     private String news_image;
     private String news_title;
     private String news_id;
+    private String news_date;
+    private String news_des;
 
     public String getNews_id() {
         return news_id;
@@ -20,8 +24,6 @@ public class News_Class {
     public void setNews_date(String news_date) {
         this.news_date = news_date;
     }
-
-    private String news_date;
 
     public String getNews_image() {
         return news_image;
@@ -47,6 +49,5 @@ public class News_Class {
         this.news_des = news_des;
     }
 
-    private String news_des;
 
 }

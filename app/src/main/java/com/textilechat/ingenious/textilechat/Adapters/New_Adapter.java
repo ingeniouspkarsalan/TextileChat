@@ -22,7 +22,7 @@ public class New_Adapter extends RecyclerView.Adapter<New_Adapter.NewsHolder>
     private List<News_Class> newsClassList;
 
     class NewsHolder extends RecyclerView.ViewHolder {
-        CardView view;
+        View view;
         ImageView news_image;
         TextView news_title,news_des;
 

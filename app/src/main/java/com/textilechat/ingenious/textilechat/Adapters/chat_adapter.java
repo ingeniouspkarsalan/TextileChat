@@ -1,6 +1,7 @@
 package com.textilechat.ingenious.textilechat.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.R;
+import com.textilechat.ingenious.textilechat.activities.User_profile;
+import com.textilechat.ingenious.textilechat.classes.Animation;
 import com.textilechat.ingenious.textilechat.classes.chat_messages;
 
 import java.util.Calendar;
@@ -56,6 +59,18 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     public void onBindViewHolder(chatViewHolder holder, int position) {
         final chat_messages c_message = chat_messagesList.get(position);
         final String id = Prefs.getString("user_id", "0");
+
+        //when user click on other user profile picture to view user profile
+        holder.other_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //context.startActivity(new Intent(context, User_profile.class));
+                Intent i = new Intent(context, User_profile.class);
+                i.putExtra("other_user_id",c_message.getIds());
+                context.startActivity(i);
+                Animation.fade(context);
+            }
+        });
 
         if(c_message.getIds().equals(id)){
             holder.layoutofowner.setVisibility(View.VISIBLE);

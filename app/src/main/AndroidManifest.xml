@@ -36,20 +36,17 @@
             android:screenOrientation="portrait" />
 
         <!-- adding fcm services for token -->
-        <!--<service android:name=".fcm_classes.MyFirebaseInstanceIDService">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.google.firebase.INSTANCE_ID_EVENT" />-->
-            <!--</intent-filter>-->
-        <!--</service>-->
-
+        <!-- <service android:name=".fcm_classes.MyFirebaseInstanceIDService"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="com.google.firebase.INSTANCE_ID_EVENT" /> -->
+        <!-- </intent-filter> -->
+        <!-- </service> -->
 
         <service android:name=".fcm_classes.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-
         <service
             android:name=".fcm_classes.MyJobService"
             android:exported="false">
@@ -57,9 +54,9 @@
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
-
-       <service android:name=".classes.Daily_service_class"
-           android:exported="false"/>
+        <service
+            android:name=".classes.Daily_service_class"
+            android:exported="false" />
 
         <activity
             android:name=".activities.Home"
@@ -72,8 +69,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activities.Chat_Activity" />
         <activity android:name=".activities.News_Activity" />
-        <activity android:name=".activities.Singal_User_Chat"></activity>
-
+        <activity android:name=".activities.Singal_User_Chat" />
+        <activity android:name=".activities.User_profile"></activity>
     </application>
 
 </manifest>

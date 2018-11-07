@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/user_profile_background"
+    android:orientation="vertical"
+    tools:context=".activities.User_profile">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.github.florent37.shapeofview.shapes.CircleView
+            android:id="@+id/shap_of_circle_other"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:elevation="4dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@color/user_profile_background"
+            app:shape_circle_borderColor="@color/colorPrimaryDark"
+            app:shape_circle_borderWidth="1dp">
+
+            <!-- YOUR CONTENT -->
+
+            <ImageView
+                android:id="@+id/user_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_for_chat_card" />
+
+        </com.github.florent37.shapeofview.shapes.CircleView>
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dilawar Khan"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="@color/black"
+            android:textSize="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/shap_of_circle_other"
+            android:layout_marginTop="10dp" />
+
+        <ImageView
+            android:id="@+id/is_verified"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/user_name"
+            android:layout_toEndOf="@+id/user_name"
+            android:background="@drawable/verified" />
+
+        <Button
+            android:id="@+id/btn_open_single_Chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:background="@drawable/button_shape"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/user_name"
+            android:fontFamily="sans-serif-light"
+            android:text="Chat With Me   "
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:drawableRight="@drawable/ic_send_black_24dp" />
+
+        <TextView
+            android:id="@+id/profile_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile Details:"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            android:layout_below="@id/btn_open_single_Chat"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/conatct_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0347-3211610"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_below="@id/profile_detail"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/u_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ingenious.dilawar@gmail.com"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_below="@id/conatct_no"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/u_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Karachi"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_below="@id/u_email"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/u_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Company"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_below="@id/u_city"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/u_nature_busns"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nature of Bussnies"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_below="@id/u_company"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/u_company_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Company Address"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_below="@id/u_nature_busns"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"/>
+
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

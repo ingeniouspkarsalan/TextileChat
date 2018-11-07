@@ -26,7 +26,7 @@ import es.dmoral.toasty.Toasty;
 public class Singlechat_adaptor extends RecyclerView.Adapter<Singlechat_adaptor.singlechatViewHolder> {
     private Context context;
     private List<Single_user_msg_list> chat_messagesList;
-    private String other_user_id,owner_image,other_image,other_name;
+    private String other_user_id,other_image,other_name;
 
     class singlechatViewHolder extends RecyclerView.ViewHolder {
         TextView message, timestamp, owner_message, owner_timestamp, username, owner_username;
@@ -48,10 +48,9 @@ public class Singlechat_adaptor extends RecyclerView.Adapter<Singlechat_adaptor.
         }
     }
 
-    public Singlechat_adaptor(Context context, List<Single_user_msg_list> chat_messagesList,String other_user_id,String owner_image,String other_image,String other_name) {
+    public Singlechat_adaptor(Context context, List<Single_user_msg_list> chat_messagesList,String other_user_id,String other_image,String other_name) {
         this.context = context;
         this.chat_messagesList = chat_messagesList;
-        this.owner_image=owner_image;
         this.other_image=other_image;
         this.other_name=other_name;
         this.other_user_id=other_user_id;
@@ -62,7 +61,7 @@ public class Singlechat_adaptor extends RecyclerView.Adapter<Singlechat_adaptor.
         final Single_user_msg_list c_message = chat_messagesList.get(position);
         final String id = Prefs.getString("user_id", "0");
         final String owner_name = Prefs.getString("user_name", "0");
-
+        final String image_owner = Prefs.getString("owner_image", "");
         if(c_message.getFrom_user_id().equals(id) && c_message.getTo_user_id().equals(other_user_id)) {
             if (c_message.getFrom_user_id().equals(id)) {
                 holder.layoutofowner.setVisibility(View.VISIBLE);
@@ -70,7 +69,7 @@ public class Singlechat_adaptor extends RecyclerView.Adapter<Singlechat_adaptor.
                 holder.owner_message.setText(c_message.getMessages().toString());
                 holder.owner_timestamp.setText(c_message.getTimestamp().toString());
                 Glide.with(context)
-                        .load(owner_image)
+                        .load(image_owner)
                         .into(holder.owner_image);
             }
             else if(c_message.getTo_user_id().equals(other_user_id)){
@@ -101,7 +100,7 @@ public class Singlechat_adaptor extends RecyclerView.Adapter<Singlechat_adaptor.
                 holder.owner_message.setText(c_message.getMessages().toString());
                 holder.owner_timestamp.setText(c_message.getTimestamp().toString());
                 Glide.with(context)
-                        .load(owner_image)
+                        .load(image_owner)
                         .into(holder.owner_image);
             }
         }

@@ -58,7 +58,7 @@ public class Singal_User_Chat extends AppCompatActivity {
     private EditText edit_message;
     private Button btn_send;
     final String id = Prefs.getString("user_id", "0");
-    private String owner_image,other_image,to_user_id;
+    private String other_image,to_user_id;
 
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
@@ -78,7 +78,6 @@ public class Singal_User_Chat extends AppCompatActivity {
         btn_send=findViewById(R.id.btn_send);
 
         to_user_id=getIntent().getStringExtra("user_id");
-        owner_image=getIntent().getStringExtra("owner_image");
         other_image=getIntent().getStringExtra("other_image");
 
         if(Utils.isOnline(Singal_User_Chat.this))
@@ -143,7 +142,7 @@ public class Singal_User_Chat extends AppCompatActivity {
                 if (response.contains("null")) {
 
                     single_chat_message_list = new ArrayList<>();
-                    chat_adapters = new Singlechat_adaptor(Singal_User_Chat.this, single_chat_message_list,to_user_id,owner_image,other_image,getIntent().getStringExtra("user_name"));
+                    chat_adapters = new Singlechat_adaptor(Singal_User_Chat.this, single_chat_message_list,to_user_id,other_image,getIntent().getStringExtra("user_name"));
                     LinearLayoutManager layoutManager = new LinearLayoutManager(Singal_User_Chat.this);
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(layoutManager);
@@ -152,7 +151,7 @@ public class Singal_User_Chat extends AppCompatActivity {
                 } else {
                     try {
                         single_chat_message_list = JSONParser.parse_single_chatmessages(response);
-                        chat_adapters = new Singlechat_adaptor(Singal_User_Chat.this, single_chat_message_list,to_user_id,owner_image,other_image,getIntent().getStringExtra("user_name"));
+                        chat_adapters = new Singlechat_adaptor(Singal_User_Chat.this, single_chat_message_list,to_user_id,other_image,getIntent().getStringExtra("user_name"));
                         LinearLayoutManager layoutManager = new LinearLayoutManager(Singal_User_Chat.this);
                         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                         recyclerView.setHasFixedSize(true);
@@ -215,14 +214,6 @@ public class Singal_User_Chat extends AppCompatActivity {
                 String response = Utils.getResponse(responseBody);
                 if(response.equals("null")) {
                     //Toasty.warning(Chat_Activity.this, "Response is null", Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                String  response  = Utils.getResponse(responseBody);
-                if(response.equals("null")) {
-                    Toasty.warning(Singal_User_Chat.this, "Unable to Connect Server", Toast.LENGTH_SHORT).show();
-
                 }else {
                     try {
                         JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
@@ -238,6 +229,16 @@ public class Singal_User_Chat extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                String  response  = Utils.getResponse(responseBody);
+                if(response.equals("null")) {
+                    Toasty.warning(Singal_User_Chat.this, "Unable to Connect Server", Toast.LENGTH_SHORT).show();
+
+                }else {
+
                     Log.d("response",response);
                 }
             }

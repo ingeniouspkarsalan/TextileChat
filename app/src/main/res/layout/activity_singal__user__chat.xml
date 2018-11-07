@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/c1"
     tools:context=".activities.Singal_User_Chat">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

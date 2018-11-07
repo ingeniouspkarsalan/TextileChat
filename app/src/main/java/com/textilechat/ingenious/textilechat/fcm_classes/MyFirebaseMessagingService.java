@@ -25,6 +25,8 @@ import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.activities.Chat_Activity;
 import com.textilechat.ingenious.textilechat.activities.Home;
+import com.textilechat.ingenious.textilechat.activities.Singal_User_Chat;
+import com.textilechat.ingenious.textilechat.activities.User_profile;
 import com.textilechat.ingenious.textilechat.classes.Single_user_msg_list;
 import com.textilechat.ingenious.textilechat.classes.serialize_msg_class;
 
@@ -111,7 +113,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             pushNotification.putExtra("single_msg", s_u_m_l);
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
-
+            if(from_user_id.equals(id)){
+                if (!isAppIsInBackground(this)) {
+                    showNotificationsilentforsinglechat(message,to_user_id);
+                }else {
+                    showNotificationforsinglechat(message,to_user_id);
+                }
+            }else if(to_user_id.equals(id)){
+                if (!isAppIsInBackground(this)) {
+                    showNotificationsilentforsinglechat(message,from_user_id);
+                }else {
+                    showNotificationforsinglechat(message,from_user_id);
+                }
+            }
 
 
         }
@@ -275,6 +289,59 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             return null;
         }
     }
+
+
+
+
+    //for silent chat notification single
+    private void showNotificationsilentforsinglechat(String message,String id) {
+
+        Intent i = new Intent(this,User_profile.class);
+        i.putExtra("other_user_id",id);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setAutoCancel(true)
+                .setContentTitle("You have new message")
+                .setContentText(message)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentIntent(pendingIntent);
+
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        manager.notify(0,builder.build());
+    }
+
+
+    //for  chat notification with sound single
+    private void showNotificationforsinglechat(String message,String id) {
+
+        Intent i = new Intent(this,User_profile.class);
+        i.putExtra("other_user_id",id);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setAutoCancel(true)
+                .setContentTitle("You have new message")
+                .setContentText(message)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setSound(alarmSound)
+                .setVibrate(new long[] { 1000, 1000})
+                .setContentIntent(pendingIntent);
+
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        manager.notify(0,builder.build());
+    }
+
 
 
     //checking method app is alive or not

@@ -1,6 +1,11 @@
 package com.textilechat.ingenious.textilechat.activities;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,13 +29,17 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pixplicity.easyprefs.library.Prefs;
-import com.textilechat.ingenious.textilechat.Adapters.chat_adapter;
+import com.textilechat.ingenious.textilechat.Adapters.Singlechat_adaptor;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.Utils.Endpoints;
 import com.textilechat.ingenious.textilechat.Utils.Utils;
 import com.textilechat.ingenious.textilechat.classes.Animation;
 import com.textilechat.ingenious.textilechat.classes.JSONParser;
+import com.textilechat.ingenious.textilechat.classes.Single_user_msg_list;
 import com.textilechat.ingenious.textilechat.classes.chat_messages;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,18 +52,23 @@ import es.dmoral.toasty.Toasty;
 
 public class Singal_User_Chat extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private List<chat_messages> chat_message_list;
-    private chat_adapter chat_adapters;
+    private List<Single_user_msg_list> single_chat_message_list;
+    private Singlechat_adaptor chat_adapters;
     String sending_msg;
     private EditText edit_message;
     private Button btn_send;
     final String id = Prefs.getString("user_id", "0");
+    private String owner_image,other_image,to_user_id;
+
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singal__user__chat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getIntent().getStringExtra("name"));
+        toolbar.setTitle(getIntent().getStringExtra("user_name"));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -63,6 +77,9 @@ public class Singal_User_Chat extends AppCompatActivity {
         edit_message=findViewById(R.id.edit_msg);
         btn_send=findViewById(R.id.btn_send);
 
+        to_user_id=getIntent().getStringExtra("user_id");
+        owner_image=getIntent().getStringExtra("owner_image");
+        other_image=getIntent().getStringExtra("other_image");
 
         if(Utils.isOnline(Singal_User_Chat.this))
         {
@@ -90,13 +107,29 @@ public class Singal_User_Chat extends AppCompatActivity {
             public void onClick(View v) {
                 sending_msg=edit_message.getText().toString();
                 if(!sending_msg.isEmpty()){
-                        sending_chat_to_server(sending_msg,getIntent().getStringExtra("c_id")+"","0");
+                        sending_chat_to_server(sending_msg,id,to_user_id);
                         hideSoftKeyboard(Singal_User_Chat.this);
                 }else{
                     Toast.makeText(Singal_User_Chat.this,"Insert text to send",Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Single_user_msg_list msg_class=(Single_user_msg_list) intent.getSerializableExtra("single_msg");
+
+                single_chat_message_list.add(msg_class);
+                chat_adapters.notifyDataSetChanged();
+
+                if (chat_adapters.getItemCount() > 1) {
+                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                }
+
+            }
+        };
 
     }
 
@@ -109,8 +142,8 @@ public class Singal_User_Chat extends AppCompatActivity {
             public void onResponse(String response) {
                 if (response.contains("null")) {
 
-                    chat_message_list = new ArrayList<>();
-                    chat_adapters = new chat_adapter(Singal_User_Chat.this, chat_message_list);
+                    single_chat_message_list = new ArrayList<>();
+                    chat_adapters = new Singlechat_adaptor(Singal_User_Chat.this, single_chat_message_list,to_user_id,owner_image,other_image,getIntent().getStringExtra("user_name"));
                     LinearLayoutManager layoutManager = new LinearLayoutManager(Singal_User_Chat.this);
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(layoutManager);
@@ -118,8 +151,8 @@ public class Singal_User_Chat extends AppCompatActivity {
                     recyclerView.setAdapter(chat_adapters);
                 } else {
                     try {
-                        chat_message_list = JSONParser.parse_chatmessages(response);
-                        chat_adapters = new chat_adapter(Singal_User_Chat.this, chat_message_list);
+                        single_chat_message_list = JSONParser.parse_single_chatmessages(response);
+                        chat_adapters = new Singlechat_adaptor(Singal_User_Chat.this, single_chat_message_list,to_user_id,owner_image,other_image,getIntent().getStringExtra("user_name"));
                         LinearLayoutManager layoutManager = new LinearLayoutManager(Singal_User_Chat.this);
                         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                         recyclerView.setHasFixedSize(true);
@@ -148,9 +181,8 @@ public class Singal_User_Chat extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("req_key", "");
-                params.put("", "");
-                params.put("", "");
+                params.put("req_key", "get_all_singal_chat");
+
 
                 return params;
             }
@@ -161,13 +193,14 @@ public class Singal_User_Chat extends AppCompatActivity {
 
 
     // Declear the Registration Function
-    private void sending_chat_to_server(String message,String cat_id, String sc_id)
+    private void sending_chat_to_server(String message,String from_user_id, String to_user_id)
     {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.put("req_key","");
-        params.put("user_id","");
-        params.put("message","");
+        params.put("req_key","add_singal_chat");
+        params.put("to_id",to_user_id);
+        params.put("from_id",from_user_id);
+        params.put("message",message);
         client.post(Endpoints.ip_server, params, new AsyncHttpResponseHandler()
         {
             @Override
@@ -191,7 +224,20 @@ public class Singal_User_Chat extends AppCompatActivity {
                     Toasty.warning(Singal_User_Chat.this, "Unable to Connect Server", Toast.LENGTH_SHORT).show();
 
                 }else {
+                    try {
+                        JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                        if(object.getBoolean("success")) {
+                            Toasty.success(Singal_User_Chat.this,object.getString("message"),Toast.LENGTH_LONG).show();
+                        }else {
+                            new SweetAlertDialog(Singal_User_Chat.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Alert Info...")
+                                    .setContentText(object.getString("message"))
+                                    .show();
+                        }
 
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     Log.d("response",response);
                 }
             }
@@ -213,6 +259,12 @@ public class Singal_User_Chat extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("single_chat"));
+    }
 
     @Override
     public void onBackPressed() {

@@ -63,7 +63,13 @@ public class User_profile extends AppCompatActivity {
         single_chat_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(User_profile.this, user_id,Toast.LENGTH_LONG).show();
+                Intent in=new Intent(User_profile.this,Singal_User_Chat.class);
+                in.putExtra("user_id",user_id);
+                in.putExtra("user_name",u_name.getText().toString());
+                in.putExtra("owner_image",getIntent().getStringExtra("owner_image"));
+                in.putExtra("other_image",getIntent().getStringExtra("other_image"));
+                startActivity(in);
+                Animation.shrink(User_profile.this);
             }
         });
 

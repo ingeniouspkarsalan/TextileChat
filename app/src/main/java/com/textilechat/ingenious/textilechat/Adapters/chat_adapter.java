@@ -59,13 +59,11 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     public void onBindViewHolder(chatViewHolder holder, int position) {
         final chat_messages c_message = chat_messagesList.get(position);
         final String id = Prefs.getString("user_id", "0");
-
+        final Intent i = new Intent(context, User_profile.class);
         //when user click on other user profile picture to view user profile
         holder.other_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //context.startActivity(new Intent(context, User_profile.class));
-                Intent i = new Intent(context, User_profile.class);
                 i.putExtra("other_user_id",c_message.getIds());
                 context.startActivity(i);
                 Animation.fade(context);
@@ -80,7 +78,7 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
             Glide.with(context)
                     .load(c_message.getU_image())
                     .into(holder.owner_image);
-
+            i.putExtra("owner_image",c_message.getU_image());
             Prefs.putString("owner_image",c_message.getU_image());
             if(c_message.getU_status().equals("0")){
                 holder.owner_message.setCompoundDrawablesWithIntrinsicBounds(R.drawable.for_msg_alert,0,0,0);
@@ -100,6 +98,7 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
                 Glide.with(context)
                         .load(c_message.getU_image())
                         .into(holder.other_image);
+                i.putExtra("other_image",c_message.getU_image());
             }
 
         }

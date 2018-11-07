@@ -13,6 +13,7 @@ public class JSONParser
     static List<Sub_category_class> subcategoryClassList;
     static List<News_Class> news_classList;
     static List<chat_messages> chat_messages;
+    static List<Single_user_msg_list> single_chat_messages;
 
     public static List<CategoryClass> parse_category(String content)
     {
@@ -128,6 +129,38 @@ public class JSONParser
                 chat_messages.add(chat_messagess);
             }
             return chat_messages;
+        }
+        catch (JSONException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
+
+
+    public static List<Single_user_msg_list> parse_single_chatmessages(String content)
+    {
+        JSONArray jsonArray = null;
+        Single_user_msg_list chat_messagess = null;
+        try
+        {
+            jsonArray = new JSONArray(content);
+            single_chat_messages= new ArrayList<>();
+            for(int i = 0; i < jsonArray.length(); i++)
+            {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                chat_messagess = new Single_user_msg_list();
+                chat_messagess.setFrom_user_id(jsonObject.getString("from_user_id"));
+                chat_messagess.setTo_user_id(jsonObject.getString("to_user_id"));
+                chat_messagess.setMessages(jsonObject.getString("message"));
+                chat_messagess.setTimestamp(jsonObject.getString("msg_created_at"));
+
+
+
+
+                single_chat_messages.add(chat_messagess);
+            }
+            return single_chat_messages;
         }
         catch (JSONException ex) {
             ex.printStackTrace();

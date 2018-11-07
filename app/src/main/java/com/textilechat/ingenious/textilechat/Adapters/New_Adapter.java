@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.textilechat.ingenious.textilechat.R;
@@ -16,13 +17,15 @@ import com.textilechat.ingenious.textilechat.classes.News_Class;
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 public class New_Adapter extends RecyclerView.Adapter<New_Adapter.NewsHolder>
 {
     private Context context;
     private List<News_Class> newsClassList;
 
     class NewsHolder extends RecyclerView.ViewHolder {
-        CardView view;
+        View view;
         ImageView news_image;
         TextView news_title,news_des;
 
@@ -51,9 +54,14 @@ public class New_Adapter extends RecyclerView.Adapter<New_Adapter.NewsHolder>
                 .into(holder.news_image);
         holder.news_title.setText(newsClass.getNews_title());
         holder.news_des.setText(newsClass.getNews_des());
+        holder.news_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toasty.success(context, newsClass.getNews_id(), Toast.LENGTH_SHORT).show();
 
+            }
+        });
     }
-
     @Override
     public NewsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);

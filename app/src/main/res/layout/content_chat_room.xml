@@ -45,13 +45,13 @@
         android:layout_weight="1"
         android:padding="5dp"
         android:textSize="18sp" />
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:gravity="center_vertical"
-            android:drawableTint="@color/colorPrimaryDark"
-            android:drawableStart="@drawable/ic_attachment_black_24dp"/>
+            android:tint="@color/colorPrimaryDark"
+            android:src="@drawable/ic_attachment_black_24dp"/>
     </LinearLayout>
     <TextView
         android:layout_width="5dp"

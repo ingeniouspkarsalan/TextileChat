@@ -206,7 +206,7 @@ public class Home extends AppCompatActivity
                         JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                         if(object.getBoolean("success"))
                         {
-                            //Toasty.success(Home.this,object.getString("message"),Toast.LENGTH_LONG).show();
+                            Toasty.success(Home.this,object.getString("message"),Toast.LENGTH_LONG).show();
                             requestData();
 
                         }else {

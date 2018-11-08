@@ -103,6 +103,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
         }
+        //for single user chat
         else if(remoteMessage.getData().get("title").equals("single_chat")){
 
                     String message=remoteMessage.getData().get("massege"),
@@ -182,7 +183,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-    manager.notify(0,builder.build());
+    manager.notify(1,builder.build());
 }
 
 
@@ -210,7 +211,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        manager.notify(0,builder.build());
+        manager.notify(1,builder.build());
     }
 
 
@@ -236,7 +237,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        manager.notify(0,builder.build());
+        manager.notify(1,builder.build());
     }
 
 
@@ -267,7 +268,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        manager.notify(0,builder.build());
+        manager.notify(1,builder.build());
     }
 
     //for showing image in normal notification
@@ -309,7 +310,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        manager.notify(0,builder.build());
+        manager.notify(1,builder.build());
     }
 
 
@@ -335,7 +336,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        manager.notify(0,builder.build());
+        manager.notify(1,builder.build());
     }
 
 

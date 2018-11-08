@@ -78,7 +78,7 @@ public class Singal_User_Chat extends AppCompatActivity {
         btn_send=findViewById(R.id.btn_send);
 
         to_user_id=getIntent().getStringExtra("user_id");
-        other_image=getIntent().getStringExtra("other_image");
+        other_image=Prefs.getString("other_image","0");
 
         if(Utils.isOnline(Singal_User_Chat.this))
         {

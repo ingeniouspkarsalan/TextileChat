@@ -121,6 +121,7 @@ public class User_profile extends AppCompatActivity {
                             Glide.with(User_profile.this)
                                     .load(object.getString("u_image"))
                                     .into(user_image);
+                            Prefs.putString("other_image",object.getString("u_image"));
                             if (object.getString("u_is_paid").equals("1"))
                             {
                                 is_verified.setVisibility(View.VISIBLE);

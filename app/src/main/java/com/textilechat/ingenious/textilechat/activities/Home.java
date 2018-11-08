@@ -206,9 +206,8 @@ public class Home extends AppCompatActivity
                         JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                         if(object.getBoolean("success"))
                         {
-                            Toasty.success(Home.this,object.getString("message"),Toast.LENGTH_LONG).show();
+                            Prefs.putString("User_paid_status",object.getString("message"));
                             requestData();
-
                         }else {
                             Intent pac_in=new Intent(Home.this,Packge_Page.class);
                             pac_in.putExtra("msg",object.getString("message"));

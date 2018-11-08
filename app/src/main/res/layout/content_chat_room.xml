@@ -18,30 +18,39 @@
         app:shimmer_demo_child_count="10"
         android:layout_weight="1"/>
 
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/recycler_view"-->
-        <!--android:layout_weight="1"/>-->
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_margin="10dp"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/msg_text_box_style"
+        android:layout_weight="1"
+        >
     <EditText
         android:id="@+id/edit_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/msg_text_box_style"
         android:fontFamily="sans-serif-light"
         android:padding="15dp"
+        android:background="@null"
         android:inputType="text"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
-        android:layout_weight="1"
         android:hint="Enter Message"
+        android:layout_weight="1"
         android:textSize="18sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:drawableStart="@drawable/ic_attach_file_black_24dp"/>
+    </LinearLayout>
     <TextView
         android:layout_width="5dp"
         android:layout_height="wrap_content" />

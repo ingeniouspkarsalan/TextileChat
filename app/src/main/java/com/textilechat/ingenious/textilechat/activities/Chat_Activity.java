@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -61,7 +62,7 @@ public class Chat_Activity extends AppCompatActivity {
     private Button btn_send;
     final String id = Prefs.getString("user_id", "0");
 
-
+    private ImageView attachment;
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     @Override
@@ -78,6 +79,17 @@ public class Chat_Activity extends AppCompatActivity {
         edit_message=findViewById(R.id.edit_msg);
         btn_send=findViewById(R.id.btn_send);
 
+        //paid user get visible on attachment
+        attachment=findViewById(R.id.attachment);
+        if(Prefs.getString("User_paid_status","0").equals("1")){
+            attachment.setVisibility(View.VISIBLE);
+            attachment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toasty.success(Chat_Activity.this,"yes u r paid user.",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
         if(Utils.isOnline(Chat_Activity.this))
         {

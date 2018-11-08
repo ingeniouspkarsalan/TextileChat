@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -59,7 +60,7 @@ public class Singal_User_Chat extends AppCompatActivity {
     private Button btn_send;
     final String id = Prefs.getString("user_id", "0");
     private String other_image,to_user_id;
-
+    private ImageView attachment;
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
@@ -76,6 +77,18 @@ public class Singal_User_Chat extends AppCompatActivity {
         recyclerView=(RecyclerView) findViewById(R.id.recycler_view);
         edit_message=findViewById(R.id.edit_msg);
         btn_send=findViewById(R.id.btn_send);
+
+        //paid user get visible on attachment
+        attachment=findViewById(R.id.attachment);
+        if(Prefs.getString("User_paid_status","0").equals("1")){
+            attachment.setVisibility(View.VISIBLE);
+            attachment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toasty.success(Singal_User_Chat.this,"yes u r paid user.",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
         to_user_id=getIntent().getStringExtra("user_id");
         other_image=Prefs.getString("other_image","0");

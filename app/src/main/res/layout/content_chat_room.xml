@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@drawable/msg_text_box_style"
+        android:padding="5dp"
         android:layout_weight="1"
         >
     <EditText
@@ -36,28 +37,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:padding="15dp"
         android:background="@null"
         android:inputType="text"
         android:textColor="@color/black"
-        android:textColorHint="@color/black"
+        android:textColorHint="@color/hint"
         android:hint="Enter Message"
         android:layout_weight="1"
+        android:padding="5dp"
         android:textSize="18sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:drawableTint="@color/colorPrimaryDark"
-            android:drawableStart="@drawable/ic_attach_file_black_24dp"/>
+            android:drawableStart="@drawable/ic_attachment_black_24dp"/>
     </LinearLayout>
     <TextView
         android:layout_width="5dp"
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/btn_send"
-        android:layout_width="50dp"
-        android:layout_height="52dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_gravity="center_vertical"
         android:backgroundTint="@color/colorPrimaryDark"
         android:background="@drawable/button_shape"

@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,6 +29,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.pkmmte.view.CircularImageView;
 import com.textilechat.ingenious.textilechat.Adapters.Catergory_adapter;
@@ -39,16 +43,20 @@ import com.textilechat.ingenious.textilechat.classes.CategoryClass;
 import com.textilechat.ingenious.textilechat.classes.Daily_service_class;
 import com.textilechat.ingenious.textilechat.classes.JSONParser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import cz.msebera.android.httpclient.Header;
 import es.dmoral.toasty.Toasty;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private SweetAlertDialog pd;
     private TabLayout tabLayout;
     private int[] tabIcons = {
             R.drawable.news_icon,
@@ -110,7 +118,7 @@ public class Home extends AppCompatActivity
         {
             try
             {
-                requestData(Endpoints.ip_server);
+                check_user_expiry();
             }
             catch (Exception ex) {
                 new SweetAlertDialog(Home.this, SweetAlertDialog.ERROR_TYPE)
@@ -130,9 +138,9 @@ public class Home extends AppCompatActivity
     }
 
         //fetching all categories of subcategory
-    public void requestData(String uri) {
+    public void requestData() {
         final String id = Prefs.getString("user_id", "0");
-        StringRequest request = new StringRequest(Request.Method.POST, uri, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, Endpoints.ip_server, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response.contains("null")) {
@@ -168,6 +176,70 @@ public class Home extends AppCompatActivity
         };
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
+    }
+
+    // Declear the User package expiration Function
+    private void check_user_expiry()
+    {
+        final String id = Prefs.getString("user_id", "0");
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("req_key","check_user_expiration");
+        params.put("user_id",id);
+        client.post(Endpoints.ip_server, params, new AsyncHttpResponseHandler()
+        {
+            @Override
+            public void onStart()
+            {
+                super.onStart();
+                pd = Utils.showProgress(Home.this);
+                pd.show();
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response = Utils.getResponse(responseBody);
+                if(response.equals("null")) {
+                    Toasty.warning(Home.this, "Response is null", Toast.LENGTH_SHORT).show();
+                }else {
+
+                    try {
+                        JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                        if(object.getBoolean("success"))
+                        {
+                            //Toasty.success(Home.this,object.getString("message"),Toast.LENGTH_LONG).show();
+                            requestData();
+
+                        }else {
+                            new SweetAlertDialog(Home.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText(object.getString("message"))
+                                    .show();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("response",response);
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                String  response  = Utils.getResponse(responseBody);
+                if(response.equals("null")) {
+                    Toasty.warning(Home.this, "Unable to Connect Server", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    Log.d("response",response);
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                pd.dismiss();
+            }
+        });
     }
 
 

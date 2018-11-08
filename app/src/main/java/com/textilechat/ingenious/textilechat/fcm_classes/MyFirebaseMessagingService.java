@@ -104,22 +104,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         }
         else if(remoteMessage.getData().get("title").equals("single_chat")){
+
                     String message=remoteMessage.getData().get("massege"),
                             from_user_id=remoteMessage.getData().get("from_id"),
                             to_user_id=remoteMessage.getData().get("to_id"),
                             time_stamp=remoteMessage.getData().get("created_at");
+
             Single_user_msg_list s_u_m_l=new Single_user_msg_list(from_user_id,message,to_user_id,time_stamp);
             Intent pushNotification = new Intent("single_chat");
             pushNotification.putExtra("single_msg", s_u_m_l);
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
-            if(from_user_id.equals(id)){
-                if (!isAppIsInBackground(this)) {
-                    showNotificationsilentforsinglechat(message,to_user_id);
-                }else {
-                    showNotificationforsinglechat(message,to_user_id);
-                }
-            }else if(to_user_id.equals(id)){
+            if(to_user_id.equals(id)){
                 if (!isAppIsInBackground(this)) {
                     showNotificationsilentforsinglechat(message,from_user_id);
                 }else {

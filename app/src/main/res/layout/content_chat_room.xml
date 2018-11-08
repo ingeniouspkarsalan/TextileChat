@@ -64,7 +64,7 @@
         android:id="@+id/btn_send"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center_vertical|bottom"
         android:backgroundTint="@color/colorPrimaryDark"
         android:background="@drawable/button_shape"
         android:drawableStart="@drawable/ic_send_black_24dp" />

@@ -27,13 +27,13 @@ public class Daily_service_class extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-//        final Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            public void run() {
-//                Toast.makeText(Daily_service_class.this, "time changed", Toast.LENGTH_LONG).show();
-//                handler.postDelayed(this, 86400000); //now is every 2 minutes
-//            }
-//        }, 86400000); //Every 120000 ms (2 minutes)
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                Toast.makeText(Daily_service_class.this, "time changed", Toast.LENGTH_SHORT).show();
+                handler.postDelayed(this, 10000); //now is every 2 minutes
+            }
+        }, 30000); //Every 120000 ms (2 minutes)
 
 
         Calendar cal = Calendar.getInstance();

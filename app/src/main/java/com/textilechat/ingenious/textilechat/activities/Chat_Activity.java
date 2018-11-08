@@ -31,6 +31,7 @@ import com.textilechat.ingenious.textilechat.Adapters.chat_adapter;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.Utils.Endpoints;
 import com.textilechat.ingenious.textilechat.Utils.Utils;
+import com.textilechat.ingenious.textilechat.classes.Ads_class;
 import com.textilechat.ingenious.textilechat.classes.Animation;
 import com.textilechat.ingenious.textilechat.classes.JSONParser;
 import com.textilechat.ingenious.textilechat.classes.chat_messages;
@@ -63,6 +64,7 @@ public class Chat_Activity extends AppCompatActivity {
     final String id = Prefs.getString("user_id", "0");
 
     private ImageView attachment;
+    private List<Ads_class> ads_classList;
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     @Override
@@ -205,6 +207,8 @@ public class Chat_Activity extends AppCompatActivity {
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(chat_adapters);
+                    //after this calling ads
+                    requestDataforads(Endpoints.ip_server);
                 } else {
                     try {
                         chat_message_list = JSONParser.parse_chatmessages(response);
@@ -222,6 +226,9 @@ public class Chat_Activity extends AppCompatActivity {
                         if (chat_adapters.getItemCount() > 1) {
                             recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
                         }
+
+                        //after this calling ads
+                        requestDataforads(Endpoints.ip_server);
                     }catch (Exception e){
 
                     }
@@ -326,6 +333,47 @@ public class Chat_Activity extends AppCompatActivity {
     }
 
 
+    //getting ads from server one time
+    public void requestDataforads(String uri) {
+
+        StringRequest request = new StringRequest(Request.Method.POST, uri, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.contains("null")) {
+
+                } else {
+                    try {
+                        ads_classList = JSONParser.parse_ads(response);
+                        new SweetAlertDialog(Chat_Activity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("ads loading")
+                                .show();
+                    }catch (Exception e){
+
+                    }
+                }
+
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        new SweetAlertDialog(Chat_Activity.this, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("Some thing went wrong!")
+                                .show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                    params.put("req_key", "all_advertisments");
+                return params;
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(request);
+    }
 
     @Override
     public void onBackPressed() {

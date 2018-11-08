@@ -210,10 +210,10 @@ public class Home extends AppCompatActivity
                             requestData();
 
                         }else {
-                            new SweetAlertDialog(Home.this, SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Oops...")
-                                    .setContentText(object.getString("message"))
-                                    .show();
+                            Intent pac_in=new Intent(Home.this,Packge_Page.class);
+                            pac_in.putExtra("msg",object.getString("message"));
+                            startActivity(pac_in);
+                            finish();
                         }
 
                     } catch (JSONException e) {

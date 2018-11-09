@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content" android:orientation="vertical">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="10dp"
+    android:id="@+id/usr_card"
+    android:visibility="gone"
+    android:orientation="horizontal">
+    <com.github.florent37.shapeofview.shapes.CircleView
+        android:id="@+id/shap_of_circle_other"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:elevation="4dp"
+        android:background="@color/white"
+        app:shape_circle_borderColor="@color/colorPrimaryDark"
+        app:shape_circle_borderWidth="1dp">
+
+        <!-- YOUR CONTENT -->
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/user_image"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_for_chat_card"/>
+
+    </com.github.florent37.shapeofview.shapes.CircleView>
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/shap_of_circle_other"
+        android:text="User Name"
+        android:padding="10dp"
+        android:textSize="10dp" />
+</LinearLayout>
+</LinearLayout>

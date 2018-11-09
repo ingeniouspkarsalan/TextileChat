@@ -15,6 +15,7 @@ public class JSONParser
     static List<chat_messages> chat_messages;
     static List<Single_user_msg_list> single_chat_messages;
     static List<Ads_class> ads_classList;
+    static List<pc_class> pc_classList;
 
     public static List<CategoryClass> parse_category(String content)
     {
@@ -201,5 +202,36 @@ public class JSONParser
         }
 
     }
+
+
+    public static List<pc_class> parse_pc(String content)
+    {
+        JSONArray jsonArray = null;
+        pc_class pc_class = null;
+        try
+        {
+            jsonArray = new JSONArray(content);
+            pc_classList= new ArrayList<>();
+            for(int i = 0; i < jsonArray.length(); i++)
+            {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                pc_class = new pc_class();
+                pc_class.setFrom_user_id(jsonObject.getString("from_user_id"));
+                pc_class.setTo_user_id(jsonObject.getString("to_user_id"));
+                pc_class.setFrom_u_name(jsonObject.getString("from_user"));
+                pc_class.setFrom_u_image(jsonObject.getString("from_user_image"));
+                pc_class.setTo_u_name(jsonObject.getString("to_user"));
+                pc_class.setTo_u_image(jsonObject.getString("to_user_image"));
+
+
+
+                pc_classList.add(pc_class);
+            }
+            return pc_classList;
+        }
+        catch (JSONException ex) {
+            ex.printStackTrace();
+            return null;
+        }}
 
 }

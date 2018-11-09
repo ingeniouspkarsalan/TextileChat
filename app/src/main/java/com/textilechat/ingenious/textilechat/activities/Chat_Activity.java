@@ -377,7 +377,9 @@ public class Chat_Activity extends AppCompatActivity {
 
                                     }catch (Exception e){}
                                 }else{
-                                    ads_banners.setVisibility(View.GONE);
+                                    try {
+                                        ads_banners.setVisibility(View.GONE);
+                                    }catch (Exception e){}
                                 }
 
                                 handler.postDelayed(this, ads_classList.get(iterator).getAd_display_time()); //now is every 2 minutes  86400000 48 hours

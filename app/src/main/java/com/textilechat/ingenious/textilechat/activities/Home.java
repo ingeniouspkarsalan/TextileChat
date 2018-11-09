@@ -258,7 +258,8 @@ public class Home extends AppCompatActivity
                     startActivity(new Intent(Home.this,News_Activity.class));
                     Animation.slideUp(Home.this);
                 }else if(tabLayout.getSelectedTabPosition() == 1){
-                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(Home.this,Users_private_chat.class));
+                    Animation.slideUp(Home.this);
                 }else if(tabLayout.getSelectedTabPosition() == 2){
                     startActivity(new Intent(Home.this,Advertisment.class));
                     Animation.slideUp(Home.this);

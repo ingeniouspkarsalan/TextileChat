@@ -21,6 +21,13 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        android:id="@+id/ads_banners"
+        />
 
 
     <include layout="@layout/content_chat_room" />

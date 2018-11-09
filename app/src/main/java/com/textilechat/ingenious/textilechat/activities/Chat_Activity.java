@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.Adapters.chat_adapter;
 import com.textilechat.ingenious.textilechat.R;
@@ -33,12 +35,13 @@ import com.textilechat.ingenious.textilechat.Utils.Endpoints;
 import com.textilechat.ingenious.textilechat.Utils.Utils;
 import com.textilechat.ingenious.textilechat.classes.Ads_class;
 import com.textilechat.ingenious.textilechat.classes.Animation;
+import com.textilechat.ingenious.textilechat.classes.Daily_service_class;
 import com.textilechat.ingenious.textilechat.classes.JSONParser;
 import com.textilechat.ingenious.textilechat.classes.chat_messages;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -63,10 +66,11 @@ public class Chat_Activity extends AppCompatActivity {
     private Button btn_send;
     final String id = Prefs.getString("user_id", "0");
 
-    private ImageView attachment;
+    private ImageView attachment,ads_banners;
     private List<Ads_class> ads_classList;
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private int iterator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -207,7 +211,6 @@ public class Chat_Activity extends AppCompatActivity {
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(chat_adapters);
-                    //after this calling ads
                     requestDataforads(Endpoints.ip_server);
                 } else {
                     try {
@@ -227,7 +230,6 @@ public class Chat_Activity extends AppCompatActivity {
                             recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
                         }
 
-                        //after this calling ads
                         requestDataforads(Endpoints.ip_server);
                     }catch (Exception e){
 
@@ -332,7 +334,6 @@ public class Chat_Activity extends AppCompatActivity {
         });
     }
 
-
     //getting ads from server one time
     public void requestDataforads(String uri) {
 
@@ -344,10 +345,26 @@ public class Chat_Activity extends AppCompatActivity {
                 } else {
                     try {
                         ads_classList = JSONParser.parse_ads(response);
-                        new SweetAlertDialog(Chat_Activity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                .setTitleText("Oops...")
-                                .setContentText("ads loading")
-                                .show();
+                        iterator=ads_classList.size();
+                        final Handler handler = new Handler();
+                        int time;
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                if(iterator>0){
+                                    try {
+                                        iterator--;
+                                        ads_banners=findViewById(R.id.ads_banners);
+                                        ads_banners.setVisibility(View.VISIBLE);
+                                        Glide.with(Chat_Activity.this).load(ads_classList.get(iterator).getAd_image()).into(ads_banners);
+                                    }catch (Exception e){}
+                                }else{
+                                    ads_banners.setVisibility(View.GONE);
+                                }
+
+                                handler.postDelayed(this, ads_classList.get(iterator).getAd_display_time()); //now is every 2 minutes  86400000 48 hours
+                            }
+                        }, 10000); //Every 120000 ms (2 minutes)
+
                     }catch (Exception e){
 
                     }
@@ -393,4 +410,8 @@ public class Chat_Activity extends AppCompatActivity {
         Animation.swipeLeft(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

@@ -3,7 +3,7 @@ package com.textilechat.ingenious.textilechat.classes;
 public class Ads_class {
    String ad_id;
     String ad_image;
-    String ad_display_time;
+    int ad_display_time;
     String c_id;
 
     public String getAd_id() {
@@ -22,11 +22,11 @@ public class Ads_class {
         this.ad_image = ad_image;
     }
 
-    public String getAd_display_time() {
+    public int getAd_display_time() {
         return ad_display_time;
     }
 
-    public void setAd_display_time(String ad_display_time) {
+    public void setAd_display_time(int ad_display_time) {
         this.ad_display_time = ad_display_time;
     }
 

@@ -353,9 +353,28 @@ public class Chat_Activity extends AppCompatActivity {
                                 if(iterator>0){
                                     try {
                                         iterator--;
-                                        ads_banners=findViewById(R.id.ads_banners);
-                                        ads_banners.setVisibility(View.VISIBLE);
-                                        Glide.with(Chat_Activity.this).load(ads_classList.get(iterator).getAd_image()).into(ads_banners);
+
+                                        if(getIntent().getStringExtra("id_name").equals("category")) {
+
+                                            if(ads_classList.get(iterator).getC_id().equals(getIntent().getStringExtra("c_id")) && ads_classList.get(iterator).getSc_id().equals("0")) {
+
+                                                ads_banners = findViewById(R.id.ads_banners);
+                                                ads_banners.setVisibility(View.VISIBLE);
+                                                Glide.with(Chat_Activity.this).load(ads_classList.get(iterator).getAd_image()).into(ads_banners);
+
+                                            }
+                                        }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
+
+                                            if(ads_classList.get(iterator).getC_id().equals(getIntent().getStringExtra("c_id")) && ads_classList.get(iterator).getSc_id().equals(getIntent().getStringExtra("s_id"))){
+
+                                                ads_banners = findViewById(R.id.ads_banners);
+                                                ads_banners.setVisibility(View.VISIBLE);
+                                                Glide.with(Chat_Activity.this).load(ads_classList.get(iterator).getAd_image()).into(ads_banners);
+
+                                            }
+
+                                        }
+
                                     }catch (Exception e){}
                                 }else{
                                     ads_banners.setVisibility(View.GONE);

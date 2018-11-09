@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -34,6 +36,7 @@ import com.textilechat.ingenious.textilechat.Adapters.Singlechat_adaptor;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.Utils.Endpoints;
 import com.textilechat.ingenious.textilechat.Utils.Utils;
+import com.textilechat.ingenious.textilechat.classes.Ads_class;
 import com.textilechat.ingenious.textilechat.classes.Animation;
 import com.textilechat.ingenious.textilechat.classes.JSONParser;
 import com.textilechat.ingenious.textilechat.classes.Single_user_msg_list;
@@ -60,10 +63,10 @@ public class Singal_User_Chat extends AppCompatActivity {
     private Button btn_send;
     final String id = Prefs.getString("user_id", "0");
     private String other_image,to_user_id;
-    private ImageView attachment;
-
+    private ImageView attachment,ads_banners;
+    private List<Ads_class> ads_classList;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-
+    private int iterator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,6 +164,7 @@ public class Singal_User_Chat extends AppCompatActivity {
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(chat_adapters);
+                    requestDataforads(Endpoints.ip_server);
                 } else {
                     try {
                         single_chat_message_list = JSONParser.parse_single_chatmessages(response);
@@ -173,6 +177,7 @@ public class Singal_User_Chat extends AppCompatActivity {
                         if (chat_adapters.getItemCount() > 1) {
                             recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
                         }
+                        requestDataforads(Endpoints.ip_server);
                     }catch (Exception e){
 
                     }
@@ -265,7 +270,63 @@ public class Singal_User_Chat extends AppCompatActivity {
         });
     }
 
+    //getting ads from server one time
+    public void requestDataforads(String uri) {
 
+        StringRequest request = new StringRequest(Request.Method.POST, uri, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.contains("null")) {
+
+                } else {
+                    try {
+                        ads_classList = JSONParser.parse_ads(response);
+                        iterator=ads_classList.size();
+                        final Handler handler = new Handler();
+
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                if(iterator>0){
+                                    try {
+                                        iterator--;
+                                        ads_banners=findViewById(R.id.ads_banners);
+                                        ads_banners.setVisibility(View.VISIBLE);
+                                        Glide.with(Singal_User_Chat.this).load(ads_classList.get(iterator).getAd_image()).into(ads_banners);
+                                    }catch (Exception e){}
+                                }else{
+                                    ads_banners.setVisibility(View.GONE);
+                                }
+
+                                handler.postDelayed(this, ads_classList.get(iterator).getAd_display_time()); //now is every 2 minutes  86400000 48 hours
+                            }
+                        }, 10000); //Every 120000 ms (2 minutes)
+
+                    }catch (Exception e){
+
+                    }
+                }
+
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        new SweetAlertDialog(Singal_User_Chat.this, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("Some thing went wrong!")
+                                .show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("req_key", "all_advertisments");
+                return params;
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(request);
+    }
 
     //for keyboard hide
     public static void hideSoftKeyboard(Activity activity) {

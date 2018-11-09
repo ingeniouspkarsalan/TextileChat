@@ -347,7 +347,7 @@ public class Chat_Activity extends AppCompatActivity {
                         ads_classList = JSONParser.parse_ads(response);
                         iterator=ads_classList.size();
                         final Handler handler = new Handler();
-                        int time;
+
                         handler.postDelayed(new Runnable() {
                             public void run() {
                                 if(iterator>0){

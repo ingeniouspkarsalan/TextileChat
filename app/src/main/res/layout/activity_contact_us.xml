@@ -1,9 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@drawable/contact_us"
+android:orientation="vertical"
+tools:context=".activities.Contact_us">
+<android.support.design.widget.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/AppTheme.AppBarOverlay">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+</android.support.design.widget.AppBarLayout>
+
+
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.Contact_us">
 
-</android.support.constraint.ConstraintLayout>
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="Name"
+                android:textAllCaps="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/nametxt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:inputType="text"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="Subject"
+                android:textAllCaps="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+            <Spinner
+                android:id="@+id/subject"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/for_subject_spinner"
+                android:foregroundTint="@color/white"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="Email"
+                android:textAllCaps="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/emailtxt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="Phone"
+                android:textAllCaps="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/phonetxt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:inputType="phone"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="Message"
+                android:textAllCaps="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/msgtxt"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:inputType="textMultiLine"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@+id/linlay1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_bg"
+                android:fontFamily="sans-serif-medium"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:text="Submit     "
+                android:drawableRight="@drawable/ic_send_black_24dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+
+
+
+
+
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>

@@ -157,7 +157,7 @@
             android:fontFamily="sans-serif-light"
             android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
-            android:text="SING UP"/>
+            android:text="SIGN UP"/>
     </LinearLayout>
 </ScrollView>
 </LinearLayout>

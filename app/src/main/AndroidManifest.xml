@@ -71,7 +71,9 @@
         <activity android:name=".activities.News_Activity" />
         <activity android:name=".activities.Singal_User_Chat" />
         <activity android:name=".activities.User_profile" />
-        <activity android:name=".activities.Packge_Page"></activity>
+        <activity android:name=".activities.Packge_Page" />
+        <activity android:name=".activities.Contact_us" />
+        <activity android:name=".activities.Advertisment"></activity>
     </application>
 
 </manifest>

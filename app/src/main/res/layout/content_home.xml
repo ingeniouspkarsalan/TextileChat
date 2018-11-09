@@ -45,6 +45,9 @@
         android:minHeight="?attr/actionBarSize"
         android:pointerIcon="arrow"
         app:tabTextColor="@color/white"
+        app:tabSelectedTextColor="@color/white"
+        app:tabMode="scrollable"
         app:tabGravity="fill" />
+
 
 </LinearLayout>

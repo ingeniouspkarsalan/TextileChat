@@ -60,9 +60,9 @@ public class Home extends AppCompatActivity
     private TabLayout tabLayout;
     private int[] tabIcons = {
             R.drawable.news_icon,
-            R.drawable.blog_icon,
+            R.drawable.ic_chat_black_24dp,
+            R.drawable.ads_icon,
             R.drawable.contact_jcon,
-            R.drawable.about_icon,
     };
 
     String username,useremail;
@@ -247,9 +247,9 @@ public class Home extends AppCompatActivity
 
         tabLayout=findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[0]).setText("News"));
-        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[1]).setText("Blog"));
-        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[2]).setText("Contact"));
-        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[3]).setText("About"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[1]).setText("Chats"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[2]).setText("Ads"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[3]).setText("Contact"));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -260,9 +260,11 @@ public class Home extends AppCompatActivity
                 }else if(tabLayout.getSelectedTabPosition() == 1){
                     Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
                 }else if(tabLayout.getSelectedTabPosition() == 2){
-                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(Home.this,Advertisment.class));
+                    Animation.slideUp(Home.this);
                 }else if(tabLayout.getSelectedTabPosition() == 3){
-                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(Home.this,Contact_us.class));
+                    Animation.slideUp(Home.this);
                 }
             }
 

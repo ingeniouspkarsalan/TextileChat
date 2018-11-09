@@ -126,6 +126,79 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
         }
+        //for approve msg and sent to all users
+        else if(remoteMessage.getData().get("title").equals("approve_from_admin")){
+            String massege = remoteMessage.getData().get("massege"),
+                    u_id = remoteMessage.getData().get("u_id"),
+                    u_name = remoteMessage.getData().get("u_name"),
+                    created_at = remoteMessage.getData().get("created_at"),
+                    id_name = remoteMessage.getData().get("id_name"),
+                    c_id = remoteMessage.getData().get("c_id"),
+                    sc_id = remoteMessage.getData().get("sc_id"),
+                    c_name = remoteMessage.getData().get("c_name"),
+                    sc_name = remoteMessage.getData().get("sc_name");
+
+            if(!id.equals(u_id)){
+                if (!isAppIsInBackground(this)) {
+
+                    if(sc_id.equals("0")){
+
+                        showNotificationsilentforchat(massege, c_name,"category",c_id,"0");
+
+                    }else{
+
+                        showNotificationsilentforchat(massege, c_name+"->"+sc_name,"sub_category",c_id,sc_id);
+
+                    }
+
+                } else {
+
+                    if(sc_id.equals("0")){
+
+                        showNotificationforchat(massege, c_name,"category",c_id,"0");
+
+                    }else{
+
+                        showNotificationforchat(massege, c_name+"->"+sc_name,"sub_category",c_id,sc_id);
+
+                    }
+
+                }
+            }else{
+                if (!isAppIsInBackground(this)) {
+
+                    if(sc_id.equals("0")){
+
+                        showNotificationsilentforchat(massege, "Your message is approve now in "+c_name,"category",c_id,"0");
+
+                    }else{
+
+                        showNotificationsilentforchat(massege, "Your message is approve now in "+c_name+"->"+sc_name,"sub_category",c_id,sc_id);
+
+                    }
+
+                } else {
+
+                    if(sc_id.equals("0")){
+
+                        showNotificationforchat(massege, "Your message is approve now in "+c_name,"category",c_id,"0");
+
+                    }else{
+
+                        showNotificationforchat(massege, "Your message is approve now in "+c_name+"->"+sc_name,"sub_category",c_id,sc_id);
+
+                    }
+
+                }
+
+
+
+            }
+
+
+
+        }
+
         else {
             if(remoteMessage.getData().get("image").isEmpty()){
                 showNotificationwithoutimage(remoteMessage.getData().get("title"),remoteMessage.getData().get("message"));

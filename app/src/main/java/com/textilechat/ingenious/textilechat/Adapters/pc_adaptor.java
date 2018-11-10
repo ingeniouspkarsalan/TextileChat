@@ -29,7 +29,7 @@ public class pc_adaptor extends RecyclerView.Adapter< pc_adaptor.pcHolder>
 
     class pcHolder extends RecyclerView.ViewHolder {
         ImageView user_image;
-        TextView user_name,msgtxt,date;
+        TextView user_name,date;
         LinearLayout usr_card;
 
         public pcHolder(View itemView)
@@ -37,7 +37,7 @@ public class pc_adaptor extends RecyclerView.Adapter< pc_adaptor.pcHolder>
             super(itemView);
             user_image=itemView.findViewById(R.id.user_image);
             user_name=itemView.findViewById(R.id.user_name);
-            msgtxt=itemView.findViewById(R.id.msgtxt);
+
             date=itemView.findViewById(R.id.date);
             usr_card=itemView.findViewById(R.id.usr_card);
         }
@@ -58,7 +58,7 @@ public class pc_adaptor extends RecyclerView.Adapter< pc_adaptor.pcHolder>
             holder.usr_card.setVisibility(View.VISIBLE);
             Glide.with(context).load(pcClass.getTo_u_image()).into(holder.user_image);
             holder.user_name.setText(pcClass.getTo_u_name());
-            holder.msgtxt.setText(pcClass.getMessage());
+
             holder.date.setText(pcClass.getDate());
             holder.usr_card.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,7 +74,7 @@ public class pc_adaptor extends RecyclerView.Adapter< pc_adaptor.pcHolder>
             holder.usr_card.setVisibility(View.VISIBLE);
             Glide.with(context).load(pcClass.getFrom_u_image()).into(holder.user_image);
             holder.user_name.setText(pcClass.getFrom_u_name());
-            holder.msgtxt.setText(pcClass.getMessage());
+
             holder.date.setText(pcClass.getDate());
             holder.usr_card.setOnClickListener(new View.OnClickListener() {
                 @Override

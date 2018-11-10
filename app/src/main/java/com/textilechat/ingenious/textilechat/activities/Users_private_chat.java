@@ -36,9 +36,8 @@ public class Users_private_chat extends AppCompatActivity {
 
     /*
     *
-    * SELECT sc.from_user_id,sc.to_user_id,u.u_name as to_user ,u.u_image as to_user_image,uf.u_name as from_user ,uf.u_image as from_user_image from single_chat sc
-     * INNER JOIN users u ON sc.to_user_id=u.u_id INNER JOIN users uf ON sc.from_user_id= uf.u_id where from_user_id='20' OR to_user_id='20' GROUP by to_user_id
-    *
+    *SELECT DISTINCT sc.from_user_id,sc.to_user_id,u.u_name as to_user ,u.u_image as to_user_image,uf.u_name as from_user ,uf.u_image as from_user_image, sc.message,sc.msg_created_at from single_chat sc
+     *  INNER JOIN users u ON sc.to_user_id=u.u_id INNER JOIN users uf ON sc.from_user_id= uf.u_id where from_user_id='$id' OR to_user_id='$id' GROUP by u.u_id,uf.u_id
     *
     * */
 

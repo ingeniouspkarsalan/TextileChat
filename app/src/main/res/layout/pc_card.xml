@@ -13,6 +13,7 @@
     android:visibility="gone"
     android:id="@+id/usr_card"
     android:orientation="horizontal">
+
     <com.github.florent37.shapeofview.shapes.CircleView
         android:id="@+id/shap_of_circle_other"
         android:layout_width="50dp"
@@ -52,16 +53,10 @@
         android:gravity="start"
         android:lines="1"
         android:paddingStart="5dp"
-        android:id="@+id/msgtxt"
+        android:id="@+id/date"
         android:textColor="@color/hint"
         android:text="hi hello hru"/>
 </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textAlignment="viewEnd"
-        android:id="@+id/date"
-        android:text="9-8-2018 "/>
 </LinearLayout>
+
 </LinearLayout>

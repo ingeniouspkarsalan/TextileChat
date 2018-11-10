@@ -9,7 +9,6 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:padding="10dp"
-    android:visibility="gone"
     android:id="@+id/usr_card"
     android:orientation="horizontal">
 
@@ -33,16 +32,14 @@
 
     </com.github.florent37.shapeofview.shapes.CircleView>
 <LinearLayout
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="start"
-    android:layout_weight="1"
     android:orientation="vertical">
     <TextView
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/shap_of_circle_other"
         android:text="User Name"
         android:padding="5dp"
         android:textSize="20dp" />
@@ -52,7 +49,7 @@
         android:paddingStart="5dp"
         android:id="@+id/date"
         android:textColor="@color/hint"
-        android:text="hi hello hru"/>
+        android:text="hi hello hru hi hello hru hi hello hru"/>
 </LinearLayout>
 </LinearLayout>
 

@@ -22,10 +22,10 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
-public class pc_adaptor extends RecyclerView.Adapter< pc_adaptor.pcHolder>
+public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
 {
     private Context context;
-    private List<pc_class> ads_classList;
+    private List<pc_class> pc_classList;
 
     class pcHolder extends RecyclerView.ViewHolder {
         ImageView user_image;
@@ -37,32 +37,31 @@ public class pc_adaptor extends RecyclerView.Adapter< pc_adaptor.pcHolder>
             super(itemView);
             user_image=itemView.findViewById(R.id.user_image);
             user_name=itemView.findViewById(R.id.user_name);
-
             date=itemView.findViewById(R.id.date);
             usr_card=itemView.findViewById(R.id.usr_card);
         }
     }
 
-    public pc_adaptor(Context context, List<pc_class> ads_classList) {
+    public pc_adaptor(Context context, List<pc_class> pc_classList) {
         this.context = context;
-        this.ads_classList = ads_classList;
+        this.pc_classList = pc_classList;
     }
 
     @Override
     public void onBindViewHolder( pc_adaptor.pcHolder holder , int position)
     {
-        final pc_class pcClass=ads_classList.get(position);
+        final pc_class pcClass=pc_classList.get(position);
         final String id = Prefs.getString("user_id", "0");
         if(pcClass.getFrom_user_id().equals(id))
         {
             holder.usr_card.setVisibility(View.VISIBLE);
             Glide.with(context).load(pcClass.getTo_u_image()).into(holder.user_image);
             holder.user_name.setText(pcClass.getTo_u_name());
-
-            holder.date.setText(pcClass.getDate());
+            holder.date.setText(pcClass.getDate().toString());
             holder.usr_card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Toast.makeText(context,pcClass.getDate(),Toast.LENGTH_SHORT).show();
                     Intent in=new Intent(context, User_profile.class);
                     in.putExtra("other_user_id",pcClass.getTo_user_id());
                     context.startActivity(in);
@@ -74,11 +73,11 @@ public class pc_adaptor extends RecyclerView.Adapter< pc_adaptor.pcHolder>
             holder.usr_card.setVisibility(View.VISIBLE);
             Glide.with(context).load(pcClass.getFrom_u_image()).into(holder.user_image);
             holder.user_name.setText(pcClass.getFrom_u_name());
-
-            holder.date.setText(pcClass.getDate());
+            holder.date.setText(pcClass.getDate().toString());
             holder.usr_card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Toast.makeText(context,pcClass.getDate(),Toast.LENGTH_SHORT).show();
                     Intent in=new Intent(context, User_profile.class);
                     in.putExtra("other_user_id",pcClass.getFrom_user_id());
                     context.startActivity(in);
@@ -88,15 +87,15 @@ public class pc_adaptor extends RecyclerView.Adapter< pc_adaptor.pcHolder>
         }
     }
     @Override
-    public  pc_adaptor.pcHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.pc_card, null);
+    public pc_adaptor.pcHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflator.inflate(R.layout.pc_card, null);
         return new pc_adaptor.pcHolder(view);
     }
 
     @Override
     public int getItemCount() {
-        return ads_classList.size();
+        return pc_classList.size();
     }
 
 

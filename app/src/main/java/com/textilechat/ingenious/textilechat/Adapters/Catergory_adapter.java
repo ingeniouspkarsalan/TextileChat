@@ -93,6 +93,10 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
         return categoryList.size();
     }
 
-
+    public void searchedList(List<CategoryClass> _list)
+    {
+        categoryList = _list;
+        notifyDataSetChanged();
+    }
 
 }

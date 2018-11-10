@@ -14,5 +14,5 @@
 
 
     <color name="bg_bubble_self">#E1E1E1</color>
-    <color name="bgBottomNavigation">#d70909</color>
+    <color name="searchcolor">#d70909</color>
 </resources>

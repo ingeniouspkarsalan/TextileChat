@@ -9,6 +9,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +49,7 @@ import com.textilechat.ingenious.textilechat.classes.JSONParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,13 +69,16 @@ public class Home extends AppCompatActivity
             R.drawable.contact_jcon,
     };
 
-    String username,useremail;
-    private TextView usernameview,useremailview;
+    String username, useremail;
+    private TextView usernameview, useremailview;
     CircularImageView imageView;
 
     private RecyclerView recyclerView;
     private List<CategoryClass> categoryClassList;
-     Catergory_adapter catergory_adapter;
+    Catergory_adapter catergory_adapter;
+
+    private EditText searchbox;
+    private List<CategoryClass> searchlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +87,11 @@ public class Home extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        username= Prefs.getString("user_name","");
-        useremail=Prefs.getString("user_email","");
+        username = Prefs.getString("user_name", "");
+        useremail = Prefs.getString("user_email", "");
 
         //checking service class
-        if(!isMyServiceRunning(Daily_service_class.class)){
+        if (!isMyServiceRunning(Daily_service_class.class)) {
             startService(new Intent(getBaseContext(), Daily_service_class.class));
         }
 
@@ -100,44 +107,40 @@ public class Home extends AppCompatActivity
 
 
         View headerView = navigationView.getHeaderView(0);
-        usernameview=(TextView) headerView.findViewById(R.id.tv_name);
-        useremailview=(TextView) headerView.findViewById(R.id.tv_email);
+        usernameview = (TextView) headerView.findViewById(R.id.tv_name);
+        useremailview = (TextView) headerView.findViewById(R.id.tv_email);
         imageView = headerView.findViewById(R.id.avatar);
 
 
-        if (username!=null&&useremail!=null){
+        if (username != null && useremail != null) {
             usernameview.setText(username);
             useremailview.setText(useremail);
         }
 
 
-        recyclerView=(RecyclerView) findViewById(R.id.recyclerview);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 
 
-        if(Utils.isOnline(Home.this))
-        {
-            try
-            {
+        if (Utils.isOnline(Home.this)) {
+            try {
                 check_user_expiry();
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 new SweetAlertDialog(Home.this, SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Oops...")
                         .setContentText("Some thing went wrong!")
                         .show();
             }
-        } else
-        {
+        } else {
             new SweetAlertDialog(Home.this, SweetAlertDialog.ERROR_TYPE)
                     .setTitleText("Oops...")
                     .setContentText("Internet Not Found!")
                     .show();
         }
         fortablayout();
-
+        initsearch();
     }
 
-        //fetching all categories of subcategory
+    //fetching all categories of subcategory
     public void requestData() {
         final String id = Prefs.getString("user_id", "0");
         StringRequest request = new StringRequest(Request.Method.POST, Endpoints.ip_server, new Response.Listener<String>() {
@@ -153,6 +156,7 @@ public class Home extends AppCompatActivity
                     LinearLayoutManager llm = new LinearLayoutManager(Home.this);
                     llm.setOrientation(LinearLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(llm);
+
                 }
 
 
@@ -179,38 +183,35 @@ public class Home extends AppCompatActivity
     }
 
     // Declear the User package expiration Function
-    private void check_user_expiry()
-    {
+    private void check_user_expiry() {
         final String id = Prefs.getString("user_id", "0");
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.put("req_key","check_user_expiration");
-        params.put("user_id",id);
-        client.post(Endpoints.ip_server, params, new AsyncHttpResponseHandler()
-        {
+        params.put("req_key", "check_user_expiration");
+        params.put("user_id", id);
+        client.post(Endpoints.ip_server, params, new AsyncHttpResponseHandler() {
             @Override
-            public void onStart()
-            {
+            public void onStart() {
                 super.onStart();
                 pd = Utils.showProgress(Home.this);
                 pd.show();
             }
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String response = Utils.getResponse(responseBody);
-                if(response.equals("null")) {
+                if (response.equals("null")) {
                     Toasty.warning(Home.this, "Response is null", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
 
                     try {
-                        JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
-                        if(object.getBoolean("success"))
-                        {
-                            Prefs.putString("User_paid_status",object.getString("message"));
+                        JSONObject object = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                        if (object.getBoolean("success")) {
+                            Prefs.putString("User_paid_status", object.getString("message"));
                             requestData();
-                        }else {
-                            Intent pac_in=new Intent(Home.this,Packge_Page.class);
-                            pac_in.putExtra("msg",object.getString("message"));
+                        } else {
+                            Intent pac_in = new Intent(Home.this, Packge_Page.class);
+                            pac_in.putExtra("msg", object.getString("message"));
                             startActivity(pac_in);
                             finish();
                         }
@@ -218,18 +219,19 @@ public class Home extends AppCompatActivity
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    Log.d("response",response);
+                    Log.d("response", response);
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                String  response  = Utils.getResponse(responseBody);
-                if(response.equals("null")) {
+                String response = Utils.getResponse(responseBody);
+                if (response.equals("null")) {
                     Toasty.warning(Home.this, "Unable to Connect Server", Toast.LENGTH_SHORT).show();
 
-                }else {
+                } else {
 
-                    Log.d("response",response);
+                    Log.d("response", response);
                 }
             }
 
@@ -241,6 +243,43 @@ public class Home extends AppCompatActivity
         });
     }
 
+
+    //init searching
+    private void initsearch(){
+
+        searchbox = (EditText) findViewById(R.id.searchbox);
+        searchbox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searching(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    //searching from adaptor n list
+    private void searching(String words){
+        searchlist = new ArrayList<>();
+        if(searchlist != null)
+            for (CategoryClass list : categoryClassList)
+            {
+                if(list != null)
+                    if(list.getC_name().toLowerCase().contains(words))
+                    {
+                        searchlist.add(list);
+                    }
+            }
+        catergory_adapter.searchedList(searchlist);
+    }
 
     //initializing tablayout
     public void fortablayout(){
@@ -283,15 +322,25 @@ public class Home extends AppCompatActivity
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                if(tabLayout.getSelectedTabPosition() == 0){
+                if(tabLayout.getSelectedTabPosition() == 0)
+                {
                     startActivity(new Intent(Home.this,News_Activity.class));
                     Animation.slideUp(Home.this);
-                }else if(tabLayout.getSelectedTabPosition() == 1){
-                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
-                }else if(tabLayout.getSelectedTabPosition() == 2){
-                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
-                }else if(tabLayout.getSelectedTabPosition() == 3){
-                    Toast.makeText(Home.this, "Tab " + tabLayout.getSelectedTabPosition(), Toast.LENGTH_LONG).show();
+                }
+                else if(tabLayout.getSelectedTabPosition() == 1)
+                {
+                    startActivity(new Intent(Home.this,Users_private_chat.class));
+                    Animation.slideUp(Home.this);
+                }
+                else if(tabLayout.getSelectedTabPosition() == 2)
+                {
+                    startActivity(new Intent(Home.this,Advertisment.class));
+                    Animation.slideUp(Home.this);
+                }
+                else if(tabLayout.getSelectedTabPosition() == 3)
+                {
+                    startActivity(new Intent(Home.this,Contact_us.class));
+                    Animation.slideUp(Home.this);
                 }
             }
         });

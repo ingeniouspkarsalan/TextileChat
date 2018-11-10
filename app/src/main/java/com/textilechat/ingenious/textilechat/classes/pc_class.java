@@ -4,6 +4,25 @@ public class pc_class {
     String from_user_id;
     String to_user_id;
     String from_u_name;
+    String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    String date;
 
     public String getFrom_u_name() {
         return from_u_name;

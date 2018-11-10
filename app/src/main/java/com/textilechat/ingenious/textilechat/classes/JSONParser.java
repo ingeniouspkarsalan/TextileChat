@@ -222,6 +222,8 @@ public class JSONParser
                 pc_class.setFrom_u_image(jsonObject.getString("from_user_image"));
                 pc_class.setTo_u_name(jsonObject.getString("to_user"));
                 pc_class.setTo_u_image(jsonObject.getString("to_user_image"));
+                pc_class.setMessage(jsonObject.getString("message"));
+                pc_class.setDate(jsonObject.getString("date"));
 
 
 

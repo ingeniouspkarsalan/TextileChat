@@ -254,16 +254,23 @@ public class Home extends AppCompatActivity
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(tabLayout.getSelectedTabPosition() == 0){
+                if(tabLayout.getSelectedTabPosition() == 0)
+                {
                     startActivity(new Intent(Home.this,News_Activity.class));
                     Animation.slideUp(Home.this);
-                }else if(tabLayout.getSelectedTabPosition() == 1){
+                }
+                else if(tabLayout.getSelectedTabPosition() == 1)
+                {
                     startActivity(new Intent(Home.this,Users_private_chat.class));
                     Animation.slideUp(Home.this);
-                }else if(tabLayout.getSelectedTabPosition() == 2){
+                }
+                else if(tabLayout.getSelectedTabPosition() == 2)
+                {
                     startActivity(new Intent(Home.this,Advertisment.class));
                     Animation.slideUp(Home.this);
-                }else if(tabLayout.getSelectedTabPosition() == 3){
+                }
+                else if(tabLayout.getSelectedTabPosition() == 3)
+                {
                     startActivity(new Intent(Home.this,Contact_us.class));
                     Animation.slideUp(Home.this);
                 }

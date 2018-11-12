@@ -221,10 +221,6 @@ public class Chat_Activity extends AppCompatActivity {
                 } else {
                     try {
                         chat_message_list = JSONParser.parse_chatmessages(response);
-                        for (int i=0;i<chat_message_list.size();i++){
-                            Log.e("hello",chat_message_list.get(i).getMessages());
-                        }
-
                         chat_adapters = new chat_adapter(Chat_Activity.this, chat_message_list);
                         LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_Activity.this);
                         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -266,6 +262,7 @@ public class Chat_Activity extends AppCompatActivity {
                     if(sqlite_for_markers.getCategoryCount(getIntent().getStringExtra("c_id")) > 0 )
                     {
                         sqlite_for_markers.delete_cat(getIntent().getStringExtra("c_id"));
+                        
                     }
                 }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
 
@@ -277,6 +274,7 @@ public class Chat_Activity extends AppCompatActivity {
                     if(sqlite_for_markers.getSubCount(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id")) > 0)
                     {
                         sqlite_for_markers.delete_sub_cat(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id"));
+
                     }
 
                 }

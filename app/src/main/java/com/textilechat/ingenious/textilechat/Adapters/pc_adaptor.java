@@ -102,7 +102,7 @@ public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
             holder.usr_card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,pcClass.getDate(),Toast.LENGTH_SHORT).show();
+
                     Intent in=new Intent(context, User_profile.class);
                     in.putExtra("other_user_id",pcClass.getFrom_user_id());
                     context.startActivity(in);

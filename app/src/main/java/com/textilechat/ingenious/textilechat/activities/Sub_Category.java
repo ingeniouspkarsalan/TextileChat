@@ -129,13 +129,6 @@ public class Sub_Category extends AppCompatActivity {
         return super.onSupportNavigateUp();
     }
 
-    @Override
-    protected void onResume() {
-        try {
-            recyclerView.notify();
-        }catch (Exception e){}
-        super.onResume();
-    }
 
     @Override
     public void finish() {

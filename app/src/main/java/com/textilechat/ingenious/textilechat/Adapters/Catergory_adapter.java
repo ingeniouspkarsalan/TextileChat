@@ -76,6 +76,7 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
 
                     Intent in=new Intent(context, Sub_Category.class);
                     in.putExtra("c_id",category.getC_id());
+
                     context.startActivity(in);
 
                 }else if(check.equals("0")){

@@ -132,13 +132,7 @@ public class Users_private_chat extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    @Override
-    protected void onResume() {
-      try{
-          recyclerView.notify();
-      }catch (Exception e){}
-        super.onResume();
-    }
+
 
     @Override
     public boolean onSupportNavigateUp() {

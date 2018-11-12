@@ -6,6 +6,11 @@ public class pc_class {
     String from_u_name;
     String message;
 
+    String from_u_image;
+    String to_u_name;
+    String to_u_image;
+    String date;
+
     public String getMessage() {
         return message;
     }
@@ -22,7 +27,7 @@ public class pc_class {
         this.date = date;
     }
 
-    String date;
+
 
     public String getFrom_u_name() {
         return from_u_name;
@@ -56,9 +61,7 @@ public class pc_class {
         this.to_u_image = to_u_image;
     }
 
-    String from_u_image;
-    String to_u_name;
-    String to_u_image;
+
 
     public String getFrom_user_id() {
         return from_user_id;

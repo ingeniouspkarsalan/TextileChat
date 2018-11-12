@@ -37,7 +37,7 @@ public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
             super(itemView);
             user_image=itemView.findViewById(R.id.user_image);
             user_name=itemView.findViewById(R.id.user_name);
-            date=itemView.findViewById(R.id.date);
+            date=itemView.findViewById(R.id.dates);
             usr_card=itemView.findViewById(R.id.usr_card);
         }
     }
@@ -57,7 +57,7 @@ public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
             holder.usr_card.setVisibility(View.VISIBLE);
             Glide.with(context).load(pcClass.getTo_u_image()).into(holder.user_image);
             holder.user_name.setText(pcClass.getTo_u_name());
-            holder.date.setText(pcClass.getDate().toString());
+            holder.date.setText(pcClass.getDate());
             holder.usr_card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -73,7 +73,7 @@ public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
             holder.usr_card.setVisibility(View.VISIBLE);
             Glide.with(context).load(pcClass.getFrom_u_image()).into(holder.user_image);
             holder.user_name.setText(pcClass.getFrom_u_name());
-            holder.date.setText(pcClass.getDate().toString());
+            holder.date.setText(pcClass.getDate());
             holder.usr_card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

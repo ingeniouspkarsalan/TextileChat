@@ -13,9 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.florent37.shapeofview.shapes.CircleView;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.activities.User_profile;
+import com.textilechat.ingenious.textilechat.classes.Sqlite_for_markers;
 import com.textilechat.ingenious.textilechat.classes.pc_class;
 
 import java.util.List;
@@ -29,8 +31,10 @@ public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
 
     class pcHolder extends RecyclerView.ViewHolder {
         ImageView user_image;
-        TextView user_name,date;
+        TextView user_name,date,markers_count;
         LinearLayout usr_card;
+        CircleView marker;
+        Sqlite_for_markers sqlite_for_markers;
 
         public pcHolder(View itemView)
         {
@@ -39,6 +43,9 @@ public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
             user_name=itemView.findViewById(R.id.user_name);
             date=itemView.findViewById(R.id.dates);
             usr_card=itemView.findViewById(R.id.usr_card);
+            markers_count=itemView.findViewById(R.id.markers_count);
+            marker=itemView.findViewById(R.id.mark_show);
+            sqlite_for_markers=new Sqlite_for_markers(context);
         }
     }
 
@@ -58,10 +65,19 @@ public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
             Glide.with(context).load(pcClass.getTo_u_image()).into(holder.user_image);
             holder.user_name.setText(pcClass.getTo_u_name());
             holder.date.setText(pcClass.getDate());
+
+            try {
+                int i = holder.sqlite_for_markers.getpersonalCount(pcClass.getFrom_user_id());
+                if (i > 0) {
+                    holder.marker.setVisibility(View.VISIBLE);
+                    holder.markers_count.setText(i + "");
+                }
+            }catch (Exception e){}
+
+
             holder.usr_card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,pcClass.getDate(),Toast.LENGTH_SHORT).show();
                     Intent in=new Intent(context, User_profile.class);
                     in.putExtra("other_user_id",pcClass.getTo_user_id());
                     context.startActivity(in);
@@ -74,6 +90,15 @@ public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
             Glide.with(context).load(pcClass.getFrom_u_image()).into(holder.user_image);
             holder.user_name.setText(pcClass.getFrom_u_name());
             holder.date.setText(pcClass.getDate());
+
+            try {
+                int i = holder.sqlite_for_markers.getpersonalCount(pcClass.getFrom_user_id());
+                if (i > 0) {
+                    holder.marker.setVisibility(View.VISIBLE);
+                    holder.markers_count.setText(i + "");
+                }
+            }catch (Exception e){}
+
             holder.usr_card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

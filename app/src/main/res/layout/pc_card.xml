@@ -33,8 +33,9 @@
     </com.github.florent37.shapeofview.shapes.CircleView>
 
 <LinearLayout
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_weight="1"
     android:orientation="vertical">
     <TextView
         android:id="@+id/user_name"
@@ -52,6 +53,28 @@
         android:singleLine="true"
         android:text="hi hello hru hi hello hru hi hello hru"/>
 </LinearLayout>
+
+    <com.github.florent37.shapeofview.shapes.CircleView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:elevation="4dp"
+        android:id="@+id/mark_show"
+        android:layout_weight="1"
+        android:visibility="gone"
+        android:layout_gravity="right|center_vertical"
+        android:background="@color/searchcolor"
+        app:shape_circle_borderColor="@color/colorAccent"
+        app:shape_circle_borderWidth="2dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="3"
+            android:id="@+id/markers_count"
+            android:padding="5dp"
+            android:layout_gravity="center|center_vertical"
+            android:textColor="@color/white"/>
+    </com.github.florent37.shapeofview.shapes.CircleView>
 </LinearLayout>
 
 </LinearLayout>

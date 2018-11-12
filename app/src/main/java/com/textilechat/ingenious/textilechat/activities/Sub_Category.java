@@ -130,6 +130,14 @@ public class Sub_Category extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        try {
+            recyclerView.notify();
+        }catch (Exception e){}
+        super.onResume();
+    }
+
+    @Override
     public void finish() {
         super.finish();
         Animation.swipeLeft(this);

@@ -347,6 +347,14 @@ public class Home extends AppCompatActivity
 
 
     @Override
+    protected void onResume() {
+        try {
+            recyclerView.notify();
+        }catch (Exception e){}
+        super.onResume();
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {

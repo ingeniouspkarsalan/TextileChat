@@ -128,6 +128,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     showNotificationsilentforsinglechat(message,from_user_id);
                 }else {
                     showNotificationforsinglechat(message,from_user_id);
+                    try {
+                        sqlite_for_markers.insert_per_marks(from_user_id);
+                    }catch (Exception e){}
                 }
             }
 

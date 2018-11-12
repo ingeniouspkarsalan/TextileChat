@@ -1,6 +1,7 @@
 package com.textilechat.ingenious.textilechat.fcm_classes;
 
 import android.app.ActivityManager;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -43,6 +44,7 @@ import java.util.List;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
     final String id = Prefs.getString("user_id", "0");
+
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -144,13 +146,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             if(!id.equals(u_id)){
                 try {
-                    JSONArray jsonArray = new JSONArray();
-                    JSONObject Obj = new JSONObject();
-                    Obj.put("c_id", c_id);
-                    Obj.put("sc_id", sc_id);
-                    jsonArray.put(Obj);
-                    String str = jsonArray.toString();
-                    SharedPrefManager.getInstance(getApplicationContext()).savemsgsid(str);
+
 
 
                 }catch (Exception e){}
@@ -273,6 +269,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             .setContentIntent(pendingIntent);
 
     NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("default",
+                    "YOUR_CHANNEL_NAME",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("");
+            manager.createNotificationChannel(channel);
+        }
+
 
     manager.notify(1,builder.build());
 }

@@ -9,21 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.activities.Chat_Activity;
 import com.textilechat.ingenious.textilechat.activities.Sub_Category;
 import com.textilechat.ingenious.textilechat.classes.CategoryClass;
-import com.textilechat.ingenious.textilechat.fcm_classes.SharedPrefManager;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
 
 public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.CategoryViewHolder>
 {
@@ -58,23 +53,7 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
                 .load(category.getC_image())
                 .into(holder.banner_image);
         holder.categor_name.setText(category.getC_name());
-        String markers= SharedPrefManager.getInstance(context).getmsgjson();
-        int count=0;
-        try {
-        JSONArray jsonArr = new JSONArray(markers);
-        if(jsonArr.length()>0){
-            for (int i = 0; i < jsonArr.length(); i++)
-            {
-                JSONObject jsonObj = jsonArr.getJSONObject(i);
-                if(jsonObj.get("c_id").equals(category.getC_id())){
-                    count++;
-                    holder.item_count.setVisibility(View.VISIBLE);
-                    holder.item_count.setText(count+" unread");
-                }
 
-            }
-        }
-        }catch (Exception e){}
         holder.for_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

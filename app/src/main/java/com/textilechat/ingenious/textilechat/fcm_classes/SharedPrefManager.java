@@ -36,4 +36,25 @@ public class SharedPrefManager {
         return  sharedPreferences.getString(TAG_TOKEN, null);
     }
 
+
+    //saving msgs for marker
+    public boolean savemsgsid(String json){
+        SharedPreferences sharedPref = mCtx.getSharedPreferences("appData",Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = sharedPref.edit();
+        prefEditor.putString("pref_json_key", json);
+        prefEditor.apply();
+        return true;
+    }
+
+    //getting msgs markers
+    public String getmsgjson(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences("appData", Context.MODE_PRIVATE);
+        return  sharedPreferences.getString("pref_json_key", null);
+    }
+
+    //clearing all markers
+    public void clearjson(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences("appData", Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear();
+    }
 }

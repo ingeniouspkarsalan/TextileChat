@@ -16,6 +16,10 @@ import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.activities.Chat_Activity;
 import com.textilechat.ingenious.textilechat.activities.Sub_Category;
 import com.textilechat.ingenious.textilechat.classes.CategoryClass;
+import com.textilechat.ingenious.textilechat.fcm_classes.SharedPrefManager;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -28,7 +32,7 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
 
     class CategoryViewHolder extends RecyclerView.ViewHolder {
         ImageView banner_image;
-        TextView categor_name;
+        TextView categor_name,item_count;
         CardView for_click;
 
         public CategoryViewHolder(View itemView)
@@ -36,6 +40,7 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
             super(itemView);
             banner_image = (ImageView) itemView.findViewById(R.id.banner_image);
             categor_name = (TextView) itemView.findViewById(R.id.categor_name);
+            item_count = (TextView) itemView.findViewById(R.id.item_count);
             for_click = (CardView) itemView.findViewById(R.id.card_view);
         }
     }
@@ -53,7 +58,23 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
                 .load(category.getC_image())
                 .into(holder.banner_image);
         holder.categor_name.setText(category.getC_name());
+        String markers= SharedPrefManager.getInstance(context).getmsgjson();
+        int count=0;
+        try {
+        JSONArray jsonArr = new JSONArray(markers);
+        if(jsonArr.length()>0){
+            for (int i = 0; i < jsonArr.length(); i++)
+            {
+                JSONObject jsonObj = jsonArr.getJSONObject(i);
+                if(jsonObj.get("c_id").equals(category.getC_id())){
+                    count++;
+                    holder.item_count.setVisibility(View.VISIBLE);
+                    holder.item_count.setText(count+" unread");
+                }
 
+            }
+        }
+        }catch (Exception e){}
         holder.for_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
@@ -29,6 +30,9 @@ import com.textilechat.ingenious.textilechat.activities.Singal_User_Chat;
 import com.textilechat.ingenious.textilechat.activities.User_profile;
 import com.textilechat.ingenious.textilechat.classes.Single_user_msg_list;
 import com.textilechat.ingenious.textilechat.classes.serialize_msg_class;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -137,6 +141,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     sc_id = remoteMessage.getData().get("sc_id"),
                     c_name = remoteMessage.getData().get("c_name"),
                     sc_name = remoteMessage.getData().get("sc_name");
+
+            if(!id.equals(u_id)){
+                try {
+                    JSONArray jsonArray = new JSONArray();
+                    JSONObject Obj = new JSONObject();
+                    Obj.put("c_id", c_id);
+                    Obj.put("sc_id", sc_id);
+                    jsonArray.put(Obj);
+                    String str = jsonArray.toString();
+                    SharedPrefManager.getInstance(getApplicationContext()).savemsgsid(str);
+
+
+                }catch (Exception e){}
+            }
 
             if(!id.equals(u_id)){
                 if (!isAppIsInBackground(this)) {

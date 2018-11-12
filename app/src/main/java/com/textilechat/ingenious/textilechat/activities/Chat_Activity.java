@@ -37,6 +37,7 @@ import com.textilechat.ingenious.textilechat.classes.Ads_class;
 import com.textilechat.ingenious.textilechat.classes.Animation;
 import com.textilechat.ingenious.textilechat.classes.Daily_service_class;
 import com.textilechat.ingenious.textilechat.classes.JSONParser;
+import com.textilechat.ingenious.textilechat.classes.Sqlite_for_markers;
 import com.textilechat.ingenious.textilechat.classes.chat_messages;
 
 
@@ -69,6 +70,8 @@ public class Chat_Activity extends AppCompatActivity {
     private ImageView attachment,ads_banners;
     private List<Ads_class> ads_classList;
 
+    Sqlite_for_markers sqlite_for_markers;
+
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private int iterator;
     @Override
@@ -84,6 +87,9 @@ public class Chat_Activity extends AppCompatActivity {
         recyclerView=(RecyclerView) findViewById(R.id.recycler_view);
         edit_message=findViewById(R.id.edit_msg);
         btn_send=findViewById(R.id.btn_send);
+
+        //init database
+        sqlite_for_markers=new Sqlite_for_markers(Chat_Activity.this);
 
         //paid user get visible on attachment
         attachment=findViewById(R.id.attachment);
@@ -256,11 +262,22 @@ public class Chat_Activity extends AppCompatActivity {
                     params.put("req_key", "retrive_category_masseges");
                     params.put("c_id", getIntent().getStringExtra("c_id")+"");
 
+                    //deleting category marks
+                    if(sqlite_for_markers.getCategoryCount(getIntent().getStringExtra("c_id")) > 0 )
+                    {
+                        sqlite_for_markers.delete_cat(getIntent().getStringExtra("c_id"));
+                    }
                 }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
 
                     params.put("req_key", "retrive_sub_category_masseges");
                     params.put("c_id", getIntent().getStringExtra("c_id")+"");
                     params.put("sc_id", getIntent().getStringExtra("s_id")+"");
+
+                    //deleting sub category marks
+                    if(sqlite_for_markers.getSubCount(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id")) > 0)
+                    {
+                        sqlite_for_markers.delete_sub_cat(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id"));
+                    }
 
                 }
                 return params;

@@ -30,6 +30,7 @@ import com.textilechat.ingenious.textilechat.activities.Home;
 import com.textilechat.ingenious.textilechat.activities.Singal_User_Chat;
 import com.textilechat.ingenious.textilechat.activities.User_profile;
 import com.textilechat.ingenious.textilechat.classes.Single_user_msg_list;
+import com.textilechat.ingenious.textilechat.classes.Sqlite_for_markers;
 import com.textilechat.ingenious.textilechat.classes.serialize_msg_class;
 
 import org.json.JSONArray;
@@ -44,7 +45,7 @@ import java.util.List;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
     final String id = Prefs.getString("user_id", "0");
-
+    private Sqlite_for_markers sqlite_for_markers=new Sqlite_for_markers(this);
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -138,7 +139,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     u_id = remoteMessage.getData().get("u_id"),
                     u_name = remoteMessage.getData().get("u_name"),
                     created_at = remoteMessage.getData().get("created_at"),
-                    id_name = remoteMessage.getData().get("id_name"),
+                    msg_id = remoteMessage.getData().get("msg_id"),
                     c_id = remoteMessage.getData().get("c_id"),
                     sc_id = remoteMessage.getData().get("sc_id"),
                     c_name = remoteMessage.getData().get("c_name"),
@@ -146,9 +147,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             if(!id.equals(u_id)){
                 try {
-
-
-
+                    sqlite_for_markers.insert_marks(Integer.parseInt(msg_id),c_id,sc_id);
                 }catch (Exception e){}
             }
 

@@ -15,6 +15,7 @@ import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.activities.Chat_Activity;
 import com.textilechat.ingenious.textilechat.activities.Sub_Category;
 import com.textilechat.ingenious.textilechat.classes.CategoryClass;
+import com.textilechat.ingenious.textilechat.classes.Sqlite_for_markers;
 
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
         ImageView banner_image;
         TextView categor_name,item_count;
         CardView for_click;
+        Sqlite_for_markers sqlite_for_markers;
 
         public CategoryViewHolder(View itemView)
         {
@@ -37,6 +39,7 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
             categor_name = (TextView) itemView.findViewById(R.id.categor_name);
             item_count = (TextView) itemView.findViewById(R.id.item_count);
             for_click = (CardView) itemView.findViewById(R.id.card_view);
+            sqlite_for_markers=new Sqlite_for_markers(context);
         }
     }
 
@@ -53,7 +56,16 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
                 .load(category.getC_image())
                 .into(holder.banner_image);
         holder.categor_name.setText(category.getC_name());
+        try {
+            int i = holder.sqlite_for_markers.getCategoryCount(category.getC_id());
+            if(i>0){
+                holder.item_count.setVisibility(View.VISIBLE);
+                holder.item_count.setText(i + " Unread");
+            }
 
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         holder.for_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

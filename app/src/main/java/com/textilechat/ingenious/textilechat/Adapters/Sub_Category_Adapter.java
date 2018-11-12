@@ -12,8 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.github.florent37.shapeofview.shapes.CircleView;
+import com.pkmmte.view.CircularImageView;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.activities.Chat_Activity;
+import com.textilechat.ingenious.textilechat.classes.Sqlite_for_markers;
 import com.textilechat.ingenious.textilechat.classes.Sub_category_class;
 
 import java.util.List;
@@ -25,9 +28,11 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
     private String c_id;
 
     class Sub_CategoryHolder extends RecyclerView.ViewHolder {
-        TextView sc_name;
+        TextView sc_name,markers_count;
         ImageView sc_icon;
         CardView for_click;
+        CircleView marker;
+        Sqlite_for_markers sqlite_for_markers;
 
         public Sub_CategoryHolder(View itemView)
         {
@@ -35,6 +40,9 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
             sc_name=itemView.findViewById(R.id.categor_name);
             sc_icon=itemView.findViewById(R.id.banner_image);
             for_click=itemView.findViewById(R.id.card_view);
+            markers_count=itemView.findViewById(R.id.markers_count);
+            marker=itemView.findViewById(R.id.mark_show);
+            sqlite_for_markers=new Sqlite_for_markers(context);
         }
     }
 
@@ -52,6 +60,14 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
                 .load(sub_category.getSc_image())
                 .into(holder.sc_icon);
         holder.sc_name.setText(sub_category.getSc_name());
+
+        try {
+            int i = holder.sqlite_for_markers.getSubCount(c_id, sub_category.getSc_id());
+            if (i > 0) {
+                holder.marker.setVisibility(View.VISIBLE);
+                holder.markers_count.setText(i + "");
+            }
+        }catch (Exception e){}
 
         holder.for_click.setOnClickListener(new View.OnClickListener() {
             @Override

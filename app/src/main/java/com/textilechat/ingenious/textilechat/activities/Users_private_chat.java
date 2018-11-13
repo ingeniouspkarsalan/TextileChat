@@ -85,7 +85,7 @@ public class Users_private_chat extends AppCompatActivity {
     }
 
 
-    //getting ads from server one time
+    //getting data from server one time
     public void requestData(String uri) {
 
         StringRequest request = new StringRequest(Request.Method.POST, uri, new Response.Listener<String>() {
@@ -133,29 +133,7 @@ public class Users_private_chat extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        if(Utils.isOnline(Users_private_chat.this))
-        {
-            try
-            {
-                requestData(Endpoints.ip_server);
-            }
-            catch (Exception ex) {
-                new SweetAlertDialog(Users_private_chat.this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Oops...")
-                        .setContentText("Some thing went wrong!")
-                        .show();
-            }
-        } else
-        {
-            new SweetAlertDialog(Users_private_chat.this, SweetAlertDialog.ERROR_TYPE)
-                    .setTitleText("Oops...")
-                    .setContentText("Internet Not Found!")
-                    .show();
-        }
-        super.onResume();
-    }
+
 
     @Override
     public boolean onSupportNavigateUp() {

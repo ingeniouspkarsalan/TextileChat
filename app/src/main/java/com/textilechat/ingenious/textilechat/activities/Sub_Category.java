@@ -118,30 +118,6 @@ public class Sub_Category extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        if(Utils.isOnline(Sub_Category.this))
-        {
-            try
-            {
-                requestData(Endpoints.ip_server);
-            }
-            catch (Exception ex) {
-                new SweetAlertDialog(Sub_Category.this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Oops...")
-                        .setContentText("Some thing went wrong!")
-                        .show();
-            }
-        } else
-        {
-            new SweetAlertDialog(Sub_Category.this, SweetAlertDialog.ERROR_TYPE)
-                    .setTitleText("Oops...")
-                    .setContentText("Internet Not Found!")
-                    .show();
-        }
-
-        super.onResume();
-    }
 
     @Override
     public void onBackPressed() {

@@ -345,25 +345,6 @@ public class Home extends AppCompatActivity
         });
     }
 
-    @Override
-    protected void onResume() {
-        if (Utils.isOnline(Home.this)) {
-            try {
-                check_user_expiry();
-            } catch (Exception ex) {
-                new SweetAlertDialog(Home.this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Oops...")
-                        .setContentText("Some thing went wrong!")
-                        .show();
-            }
-        } else {
-            new SweetAlertDialog(Home.this, SweetAlertDialog.ERROR_TYPE)
-                    .setTitleText("Oops...")
-                    .setContentText("Internet Not Found!")
-                    .show();
-        }
-        super.onResume();
-    }
 
     @Override
     public void onBackPressed() {

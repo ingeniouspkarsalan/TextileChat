@@ -349,7 +349,7 @@ public class Home extends AppCompatActivity
     protected void onResume() {
         if (Utils.isOnline(Home.this)) {
             try {
-                requestData();
+                check_user_expiry();
             } catch (Exception ex) {
                 new SweetAlertDialog(Home.this, SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Oops...")

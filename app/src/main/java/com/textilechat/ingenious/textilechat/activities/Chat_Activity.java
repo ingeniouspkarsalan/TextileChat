@@ -172,13 +172,13 @@ public class Chat_Activity extends AppCompatActivity {
                 sending_msg=edit_message.getText().toString();
                 if(!sending_msg.isEmpty()){
                     if(getIntent().getStringExtra("id_name").equals("category")) {
-
+                        btn_send.setEnabled(false);
                         sending_chat_to_server(sending_msg,getIntent().getStringExtra("c_id")+"","0");
 
                         hideSoftKeyboard(Chat_Activity.this);
 
                     }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
-
+                        btn_send.setEnabled(false);
                         sending_chat_to_server(sending_msg,getIntent().getStringExtra("c_id")+"",getIntent().getStringExtra("s_id")+"");
                         hideSoftKeyboard(Chat_Activity.this);
                     }
@@ -314,6 +314,7 @@ public class Chat_Activity extends AppCompatActivity {
                     try {
                         JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                         if(object.getBoolean("success")) {
+                            btn_send.setEnabled(true);
                             Toasty.success(Chat_Activity.this,object.getString("message"),Toast.LENGTH_LONG).show();
                         }else {
                             new SweetAlertDialog(Chat_Activity.this, SweetAlertDialog.ERROR_TYPE)

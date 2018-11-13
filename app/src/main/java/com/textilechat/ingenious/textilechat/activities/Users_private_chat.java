@@ -133,6 +133,29 @@ public class Users_private_chat extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        if(Utils.isOnline(Users_private_chat.this))
+        {
+            try
+            {
+                requestData(Endpoints.ip_server);
+            }
+            catch (Exception ex) {
+                new SweetAlertDialog(Users_private_chat.this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Some thing went wrong!")
+                        .show();
+            }
+        } else
+        {
+            new SweetAlertDialog(Users_private_chat.this, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Oops...")
+                    .setContentText("Internet Not Found!")
+                    .show();
+        }
+        super.onResume();
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

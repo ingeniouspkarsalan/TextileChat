@@ -262,7 +262,7 @@ public class Chat_Activity extends AppCompatActivity {
                     if(sqlite_for_markers.getCategoryCount(getIntent().getStringExtra("c_id")) > 0 )
                     {
                         sqlite_for_markers.delete_cat(getIntent().getStringExtra("c_id"));
-                        
+
                     }
                 }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
 

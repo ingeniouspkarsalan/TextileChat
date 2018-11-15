@@ -304,7 +304,7 @@ public class Chat_Activity extends AppCompatActivity {
                                   int msg_id =  sqlite_for_markers.get_position(getIntent().getStringExtra("c_id"),"0");
                                     sqlite_for_markers.delete_cat(getIntent().getStringExtra("c_id"));
                                     recyclerView.scrollToPosition(chat_adapters.getItemPosition(msg_id));
-                                   
+
 
                                 }else{
                                     recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);

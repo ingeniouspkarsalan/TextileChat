@@ -20,6 +20,11 @@ public class Sqlite_for_markers extends SQLiteOpenHelper {
     public static final String COLUMN_from_id = "from_user_id";
 
 
+    public static final String TABLE_NAME_Notif = "m_un_notification";
+    public static final String COLUMN_notif_c_id = "notif_c_id";
+    public static final String COLUMN_notif_sc_id = "notif_sc_id";
+
+
     // Create table SQL query for markers
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + "("
@@ -30,14 +35,20 @@ public class Sqlite_for_markers extends SQLiteOpenHelper {
                     + ")";
 
 
-    // Create table SQL query for carts
+    // Create table SQL query for personal chat markers
     public static final String CREATE_TABLE_Personal =
             "CREATE TABLE " + TABLE_NAME_Personal + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_from_id + " TEXT"
                     + ")";
 
-
+    // Create table SQL query for mute un mute notif
+    public static final String Create_NAME_Notif =
+            "CREATE TABLE " + TABLE_NAME_Notif + "("
+                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_notif_c_id + " TEXT,"
+                    + COLUMN_notif_sc_id + " TEXT"
+                    + ")";
 
 
     public Sqlite_for_markers(Context context) {
@@ -48,12 +59,14 @@ public class Sqlite_for_markers extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE);
         db.execSQL(CREATE_TABLE_Personal);
+        db.execSQL(Create_NAME_Notif);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_Personal);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_Notif);
         onCreate(db);
     }
 
@@ -79,51 +92,6 @@ public class Sqlite_for_markers extends SQLiteOpenHelper {
         return id;
     }
 
-
-    //inserting personal_marker
-    public long insert_per_marks(String from_id) {
-        // get writable database as we want to write data
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        // `id` and `timestamp` will be inserted automatically.
-        // no need to add them
-        values.put(COLUMN_from_id, from_id);
-
-        // insert row
-        long id = db.insert(TABLE_NAME_Personal, null, values);
-
-        // close db connection
-        db.close();
-
-        // return newly inserted row id
-        return id;
-    }
-
-
-    //getting all personal count
-    public int getpersonalCount(String from_id) {
-        String countQuery = "SELECT  * FROM " + TABLE_NAME_Personal+ " WHERE "+COLUMN_from_id+"="+from_id;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-
-        int count = cursor.getCount();
-        cursor.close();
-
-db.close();
-        // return count
-        return count;
-    }
-
-    //deleting personal
-    public void delete_personal(String from_id){
-        String deletequery = "Delete  FROM " + TABLE_NAME_Personal+ " WHERE "+COLUMN_from_id+"="+from_id;
-        SQLiteDatabase db=this.getWritableDatabase();
-        db.execSQL(deletequery);
-        db.close();
-    }
-
-
     //getting all category count
     public int getCategoryCount(String c_id) {
         String countQuery = "SELECT  * FROM " + TABLE_NAME+ " WHERE "+COLUMN_c_id+"="+c_id;
@@ -133,7 +101,7 @@ db.close();
         int count = cursor.getCount();
         cursor.close();
 
-db.close();
+        db.close();
         // return count
         return count;
     }
@@ -147,7 +115,7 @@ db.close();
         int count = cursor.getCount();
         cursor.close();
 
-db.close();
+        db.close();
         // return count
         return count;
     }
@@ -183,4 +151,97 @@ db.close();
         db.close();
         return msg_id;
     }
+
+
+
+
+    //inserting personal_marker
+    public long insert_per_marks(String from_id) {
+        // get writable database as we want to write data
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        // `id` and `timestamp` will be inserted automatically.
+        // no need to add them
+        values.put(COLUMN_from_id, from_id);
+
+        // insert row
+        long id = db.insert(TABLE_NAME_Personal, null, values);
+
+        // close db connection
+        db.close();
+
+        // return newly inserted row id
+        return id;
+    }
+
+    //getting all personal count
+    public int getpersonalCount(String from_id) {
+        String countQuery = "SELECT  * FROM " + TABLE_NAME_Personal+ " WHERE "+COLUMN_from_id+"="+from_id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        int count = cursor.getCount();
+        cursor.close();
+
+db.close();
+        // return count
+        return count;
+    }
+
+    //deleting personal
+    public void delete_personal(String from_id){
+        String deletequery = "Delete  FROM " + TABLE_NAME_Personal+ " WHERE "+COLUMN_from_id+"="+from_id;
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.execSQL(deletequery);
+        db.close();
+    }
+
+
+    //inserting mute notif ids
+    public long insert_notif(String c_id, String sc_id) {
+        // get writable database as we want to write data
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        // `id` and `timestamp` will be inserted automatically.
+        // no need to add them
+
+        values.put(COLUMN_notif_c_id, c_id);
+        values.put(COLUMN_notif_sc_id, sc_id);
+
+        // insert row
+        long id = db.insert(TABLE_NAME_Notif, null, values);
+
+        // close db connection
+        db.close();
+
+        // return newly inserted row id
+        return id;
+    }
+
+
+    //getting  notif ids count
+    public int getnotifCount(String c_id, String sc_id) {
+        String countQuery = "SELECT  * FROM " + TABLE_NAME_Notif+ " WHERE "+COLUMN_notif_c_id+"="+c_id+" AND "+COLUMN_notif_sc_id+"="+sc_id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        int count = cursor.getCount();
+        cursor.close();
+
+        db.close();
+        // return count
+        return count;
+    }
+
+
+    //deleting notif ids
+    public void delete_notif_ids(String c_id,String sc_id){
+        String deletequery = "Delete  FROM " + TABLE_NAME_Notif+ " WHERE "+COLUMN_notif_c_id+"="+c_id+" AND "+COLUMN_notif_sc_id+"="+sc_id;
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.execSQL(deletequery);
+        db.close();
+    }
+
 }

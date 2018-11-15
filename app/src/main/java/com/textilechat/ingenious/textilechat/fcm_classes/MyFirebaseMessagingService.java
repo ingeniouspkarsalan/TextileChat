@@ -41,13 +41,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
     final String id = Prefs.getString("user_id", "0");
     private Sqlite_for_markers sqlite_for_markers=new Sqlite_for_markers(this);
-
+    int uniqueinteger= (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
@@ -283,7 +284,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
 
-    manager.notify(1,builder.build());
+    manager.notify(uniqueinteger,builder.build());
 }
 
 
@@ -310,8 +311,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(pendingIntent);
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        manager.notify(1,builder.build());
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("default",
+                    "YOUR_CHANNEL_NAME",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("");
+            manager.createNotificationChannel(channel);
+        }
+        manager.notify(uniqueinteger,builder.build());
     }
 
 
@@ -336,8 +343,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(pendingIntent);
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        manager.notify(1,builder.build());
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("default",
+                    "YOUR_CHANNEL_NAME",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("");
+            manager.createNotificationChannel(channel);
+        }
+        manager.notify(uniqueinteger,builder.build());
     }
 
 
@@ -367,8 +380,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(pendingIntent);
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        manager.notify(1,builder.build());
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("default",
+                    "YOUR_CHANNEL_NAME",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("");
+            manager.createNotificationChannel(channel);
+        }
+        manager.notify(uniqueinteger,builder.build());
     }
 
     //for showing image in normal notification
@@ -409,8 +428,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(pendingIntent);
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        manager.notify(1,builder.build());
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("default",
+                    "YOUR_CHANNEL_NAME",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("");
+            manager.createNotificationChannel(channel);
+        }
+        manager.notify(uniqueinteger,builder.build());
     }
 
 
@@ -436,7 +461,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        manager.notify(1,builder.build());
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("default",
+                    "YOUR_CHANNEL_NAME",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("");
+            manager.createNotificationChannel(channel);
+        }
+
+        manager.notify(uniqueinteger,builder.build());
     }
 
 

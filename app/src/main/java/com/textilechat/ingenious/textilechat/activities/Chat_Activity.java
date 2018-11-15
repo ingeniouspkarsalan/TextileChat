@@ -16,8 +16,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -53,6 +56,7 @@ import com.textilechat.ingenious.textilechat.classes.serialize_msg_class;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import cz.msebera.android.httpclient.Header;
@@ -72,6 +76,8 @@ public class Chat_Activity extends AppCompatActivity {
 
     Sqlite_for_markers sqlite_for_markers;
 
+    TextView toolbar_title;
+    Switch aSwitch;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private int iterator;
     @Override
@@ -79,8 +85,9 @@ public class Chat_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getIntent().getStringExtra("name"));
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar_title=toolbar.findViewById(R.id.title);
+        toolbar_title.setText(getIntent().getStringExtra("name"));
+        aSwitch=toolbar.findViewById(R.id.on_off_switch);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -90,6 +97,66 @@ public class Chat_Activity extends AppCompatActivity {
 
         //init database
         sqlite_for_markers=new Sqlite_for_markers(Chat_Activity.this);
+
+
+        //for notification mute unmute
+        try {
+            if (getIntent().getStringExtra("id_name").equals("category")) {
+
+                if (sqlite_for_markers.getnotifCount(getIntent().getStringExtra("c_id"), "0") > 0) {
+                    aSwitch.setChecked(true);
+                }
+
+            } else if (getIntent().getStringExtra("id_name").equals("sub_category")) {
+
+                if (sqlite_for_markers.getnotifCount(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id")) > 0) {
+                    aSwitch.setChecked(true);
+                }
+
+            }
+        }catch (Exception e){}
+
+
+
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               if(isChecked==true){
+                   if (getIntent().getStringExtra("id_name").equals("category")) {
+
+                       if (sqlite_for_markers.insert_notif(getIntent().getStringExtra("c_id"), "0") == 1) {
+                           aSwitch.setChecked(true);
+                       }
+
+                   } else if (getIntent().getStringExtra("id_name").equals("sub_category")) {
+
+                       if (sqlite_for_markers.insert_notif(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id")) ==1) {
+                           aSwitch.setChecked(true);
+                       }
+
+                   }
+               }else if(isChecked==false){
+                   if (getIntent().getStringExtra("id_name").equals("category")) {
+
+                       if (sqlite_for_markers.getnotifCount(getIntent().getStringExtra("c_id"), "0") > 0) {
+                           sqlite_for_markers.delete_notif_ids(getIntent().getStringExtra("c_id"), "0");
+                           aSwitch.setChecked(false);
+                       }
+
+                   } else if (getIntent().getStringExtra("id_name").equals("sub_category")) {
+
+                       if (sqlite_for_markers.getnotifCount(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id")) > 0) {
+                           sqlite_for_markers.delete_notif_ids(getIntent().getStringExtra("c_id"),  getIntent().getStringExtra("s_id"));
+                           aSwitch.setChecked(false);
+                       }
+
+                   }
+               }
+            }
+
+        });
+
 
         //paid user get visible on attachment
         attachment=findViewById(R.id.attachment);

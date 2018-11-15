@@ -117,7 +117,7 @@ public class Chat_Activity extends AppCompatActivity {
         }catch (Exception e){}
 
 
-
+        //user doing mute unmute
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -303,7 +303,8 @@ public class Chat_Activity extends AppCompatActivity {
                                 {
                                   int msg_id =  sqlite_for_markers.get_position(getIntent().getStringExtra("c_id"),"0");
                                     sqlite_for_markers.delete_cat(getIntent().getStringExtra("c_id"));
-                                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemPosition(msg_id));
+                                    recyclerView.scrollToPosition(chat_adapters.getItemPosition(msg_id));
+                                   
 
                                 }else{
                                     recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
@@ -315,7 +316,7 @@ public class Chat_Activity extends AppCompatActivity {
                                 {
                                     int msg_id =  sqlite_for_markers.get_position(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id"));
                                     sqlite_for_markers.delete_sub_cat(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id"));
-                                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null,  chat_adapters.getItemPosition(msg_id));
+                                    recyclerView.scrollToPosition(chat_adapters.getItemPosition(msg_id));
 
                                 }else{
                                     recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);

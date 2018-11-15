@@ -2,6 +2,7 @@ package com.textilechat.ingenious.textilechat.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     private List<chat_messages> chat_messagesList;
     private static String today;
 
-    class chatViewHolder extends RecyclerView.ViewHolder {
+    public class chatViewHolder extends RecyclerView.ViewHolder {
         TextView message,timestamp,owner_message,owner_timestamp,username,owner_username;
         RelativeLayout layoutofother,layoutofowner;
         ImageView owner_image,other_image;
@@ -56,7 +57,7 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     }
 
     @Override
-    public void onBindViewHolder(chatViewHolder holder, int position) {
+    public void onBindViewHolder(chatViewHolder holder, final int position) {
         final chat_messages c_message = chat_messagesList.get(position);
         final String id = Prefs.getString("user_id", "0");
         final Intent i = new Intent(context, User_profile.class);
@@ -94,6 +95,13 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
                 holder.layoutofother.setVisibility(View.VISIBLE);
                 holder.username.setText(c_message.getUser_name().toString());
                 holder.message.setText(c_message.getMessages().toString());
+                //for testing
+                holder.message.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(context,position+"",Toast.LENGTH_SHORT).show();
+                    }
+                });
                 holder.timestamp.setText(c_message.getTimestamp().toString());
                 Glide.with(context)
                         .load(c_message.getU_image())

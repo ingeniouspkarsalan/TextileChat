@@ -228,8 +228,33 @@ public class Chat_Activity extends AppCompatActivity {
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setAdapter(chat_adapters);
 
-                        if (chat_adapters.getItemCount() > 1) {
-                            recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                        if (chat_adapters.getItemCount() > 1 || chat_adapters.getItemCount() == 1) {
+
+                            if(getIntent().getStringExtra("id_name").equals("category")) {
+
+                                if(sqlite_for_markers.getCategoryCount(getIntent().getStringExtra("c_id")) > 0 )
+                                {
+                                  int msg_id =  sqlite_for_markers.get_position(getIntent().getStringExtra("c_id"),"0");
+                                    sqlite_for_markers.delete_cat(getIntent().getStringExtra("c_id"));
+                                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemPosition(msg_id));
+
+                                }else{
+                                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                                }
+                            }
+                            else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
+
+                                if(sqlite_for_markers.getSubCount(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id")) > 0)
+                                {
+                                    int msg_id =  sqlite_for_markers.get_position(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id"));
+                                    sqlite_for_markers.delete_sub_cat(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id"));
+                                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null,  chat_adapters.getItemPosition(msg_id));
+
+                                }else{
+                                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                                }
+
+                            }
                         }
 
                         requestDataforads(Endpoints.ip_server);
@@ -259,11 +284,11 @@ public class Chat_Activity extends AppCompatActivity {
                     params.put("c_id", getIntent().getStringExtra("c_id")+"");
 
                     //deleting category marks
-                    if(sqlite_for_markers.getCategoryCount(getIntent().getStringExtra("c_id")) > 0 )
-                    {
-                        sqlite_for_markers.delete_cat(getIntent().getStringExtra("c_id"));
-
-                    }
+//                    if(sqlite_for_markers.getCategoryCount(getIntent().getStringExtra("c_id")) > 0 )
+//                    {
+//                        sqlite_for_markers.delete_cat(getIntent().getStringExtra("c_id"));
+//
+//                    }
                 }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
 
                     params.put("req_key", "retrive_sub_category_masseges");
@@ -271,11 +296,11 @@ public class Chat_Activity extends AppCompatActivity {
                     params.put("sc_id", getIntent().getStringExtra("s_id")+"");
 
                     //deleting sub category marks
-                    if(sqlite_for_markers.getSubCount(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id")) > 0)
-                    {
-                        sqlite_for_markers.delete_sub_cat(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id"));
-
-                    }
+//                    if(sqlite_for_markers.getSubCount(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id")) > 0)
+//                    {
+//                        sqlite_for_markers.delete_sub_cat(getIntent().getStringExtra("c_id"), getIntent().getStringExtra("s_id"));
+//
+//                    }
 
                 }
                 return params;

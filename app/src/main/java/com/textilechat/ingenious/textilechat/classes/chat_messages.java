@@ -7,6 +7,7 @@ public class chat_messages {
     private String timestamp;
     private String u_status;
     private String u_image;
+    private String m_id;
 
     public String getU_status() {
         return u_status;
@@ -57,6 +58,11 @@ public class chat_messages {
     }
 
 
+    public String getM_id() {
+        return m_id;
+    }
 
-
+    public void setM_id(String m_id) {
+        this.m_id = m_id;
+    }
 }

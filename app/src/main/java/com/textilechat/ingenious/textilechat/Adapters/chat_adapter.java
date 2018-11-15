@@ -119,13 +119,24 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
 
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(int position)
+    {
         return position;
     }
 
     @Override
     public int getItemViewType(int position) {
         return position;
+    }
+
+
+
+    public int getItemPosition(int id)
+    {
+        for (int position=0; position<chat_messagesList.size(); position++)
+            if (chat_messagesList.get(position).getM_id().equals(String.valueOf(id)))
+                return position;
+        return 0;
     }
 
 

@@ -118,6 +118,7 @@ public class JSONParser
             {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 chat_messagess = new chat_messages();
+                chat_messagess.setM_id(jsonObject.getString("message_id"));
                 chat_messagess.setIds(jsonObject.getString("u_id"));
                 chat_messagess.setUser_name(jsonObject.getString("u_name"));
                 chat_messagess.setMessages(jsonObject.getString("message"));

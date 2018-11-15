@@ -17,6 +17,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
@@ -150,6 +151,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             if(!id.equals(u_id)){
                 try {
+                    Log.e("yesyes",c_id+" "+sc_id);
                     sqlite_for_markers.insert_marks(Integer.parseInt(msg_id),c_id,sc_id);
                 }catch (Exception e){}
             }

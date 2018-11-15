@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 public class Sqlite_for_markers extends SQLiteOpenHelper {
 
@@ -108,7 +110,7 @@ public class Sqlite_for_markers extends SQLiteOpenHelper {
         int count = cursor.getCount();
         cursor.close();
 
-
+db.close();
         // return count
         return count;
     }
@@ -131,7 +133,7 @@ public class Sqlite_for_markers extends SQLiteOpenHelper {
         int count = cursor.getCount();
         cursor.close();
 
-
+db.close();
         // return count
         return count;
     }
@@ -145,7 +147,7 @@ public class Sqlite_for_markers extends SQLiteOpenHelper {
         int count = cursor.getCount();
         cursor.close();
 
-
+db.close();
         // return count
         return count;
     }
@@ -164,5 +166,21 @@ public class Sqlite_for_markers extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
         db.execSQL(deletequery);
         db.close();
+    }
+
+
+
+    //getting unread msg id
+    public int get_position(String c_id,String sc_id)
+    {
+        String countQuery = "SELECT  * FROM " + TABLE_NAME+ " WHERE "+COLUMN_c_id+"="+c_id+" AND "+COLUMN_sc_id+"="+sc_id;// +" LIMIT 1,1";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        int msg_id=cursor.getInt(cursor.getColumnIndex(COLUMN_msg_id));
+        cursor.close();
+        db.close();
+        return msg_id;
     }
 }

@@ -80,7 +80,6 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
                     context.startActivity(in);
 
                 }else if(check.equals("0")){
-
                     Intent in=new Intent(context, Chat_Activity.class);
                     in.putExtra("c_id",category.getC_id());
                     in.putExtra("id_name","category");

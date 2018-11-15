@@ -413,4 +413,11 @@ public class Home extends AppCompatActivity
         return false;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        try {
+        requestData();
+    }catch (Exception e){}
+    }
 }

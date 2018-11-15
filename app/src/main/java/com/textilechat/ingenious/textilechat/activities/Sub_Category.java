@@ -91,6 +91,7 @@ public class Sub_Category extends AppCompatActivity {
                     sub_category_adapter = new Sub_Category_Adapter(Sub_Category.this, sub_category_classList,getIntent().getStringExtra("c_id"));
                     recyclerView.setAdapter(sub_category_adapter);
                     recyclerView.setLayoutManager(new GridLayoutManager(Sub_Category.this,2));
+
                 }
 
 
@@ -117,7 +118,13 @@ public class Sub_Category extends AppCompatActivity {
         queue.add(request);
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        try {
+            requestData(Endpoints.ip_server);
+        }catch (Exception e){}
+    }
 
     @Override
     public void onBackPressed() {
@@ -137,5 +144,6 @@ public class Sub_Category extends AppCompatActivity {
         super.finish();
         Animation.swipeLeft(this);
     }
+
 
 }

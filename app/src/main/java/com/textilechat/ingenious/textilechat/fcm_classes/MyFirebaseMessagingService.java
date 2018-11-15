@@ -161,25 +161,27 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 if (!isAppIsInBackground(this)) {
 
                     if(sc_id.equals("0")){
+                        if(sqlite_for_markers.getnotifCount(c_id,"0") < 1){
+                            showNotificationsilentforchat(massege, c_name,"category",c_id,"0");
+                        }
 
-                        showNotificationsilentforchat(massege, c_name,"category",c_id,"0");
 
                     }else{
-
-                        showNotificationsilentforchat(massege, c_name+"->"+sc_name,"sub_category",c_id,sc_id);
-
+                        if(sqlite_for_markers.getnotifCount(c_id,sc_id) < 1) {
+                            showNotificationsilentforchat(massege, c_name + "->" + sc_name, "sub_category", c_id, sc_id);
+                        }
                     }
 
                 } else {
 
                     if(sc_id.equals("0")){
-
-                        showNotificationforchat(massege, c_name,"category",c_id,"0");
-
+                        if(sqlite_for_markers.getnotifCount(c_id,"0") < 1) {
+                            showNotificationforchat(massege, c_name, "category", c_id, "0");
+                        }
                     }else{
-
-                        showNotificationforchat(massege, c_name+"->"+sc_name,"sub_category",c_id,sc_id);
-
+                        if(sqlite_for_markers.getnotifCount(c_id,sc_id) < 1) {
+                            showNotificationforchat(massege, c_name + "->" + sc_name, "sub_category", c_id, sc_id);
+                        }
                     }
 
                 }

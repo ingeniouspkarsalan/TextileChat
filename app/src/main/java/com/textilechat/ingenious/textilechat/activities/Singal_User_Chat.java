@@ -131,6 +131,7 @@ public class Singal_User_Chat extends AppCompatActivity {
                 sending_msg=edit_message.getText().toString();
                 if(!sending_msg.isEmpty()){
                         sending_chat_to_server(sending_msg,id,to_user_id);
+                    btn_send.setEnabled(false);
                         hideSoftKeyboard(Singal_User_Chat.this);
                 }else{
                     Toast.makeText(Singal_User_Chat.this,"Insert text to send",Toast.LENGTH_SHORT).show();
@@ -245,6 +246,7 @@ public class Singal_User_Chat extends AppCompatActivity {
                         JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                         if(object.getBoolean("success")) {
                             Toasty.success(Singal_User_Chat.this,object.getString("message"),Toast.LENGTH_LONG).show();
+                            btn_send.setEnabled(true);
                         }else {
                             new SweetAlertDialog(Singal_User_Chat.this, SweetAlertDialog.ERROR_TYPE)
                                     .setTitleText("Alert Info...")

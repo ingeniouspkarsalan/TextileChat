@@ -35,7 +35,7 @@ public class User_profile extends AppCompatActivity {
     private TextView u_name, u_conatct, u_city, u_email, u_company, u_nature_bsns, u_comp_address;
     private Button single_chat_btn;
     private SweetAlertDialog pd;
-    Sqlite_for_markers sqlite_for_markers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +49,6 @@ public class User_profile extends AppCompatActivity {
         //Get User id With Intent Extra
         final String user_id = getIntent().getStringExtra("other_user_id");
 
-        //init database
-        sqlite_for_markers=new Sqlite_for_markers(User_profile.this);
-        try {
-            sqlite_for_markers.delete_personal(user_id);
-        }catch (Exception e){}
-
         //Init All Views
         single_chat_btn = findViewById(R.id.btn_open_single_Chat);
         user_image = findViewById(R.id.user_image);
@@ -66,6 +60,12 @@ public class User_profile extends AppCompatActivity {
         u_company = findViewById(R.id.u_company);
         u_nature_bsns = findViewById(R.id.u_nature_busns);
         u_comp_address = findViewById(R.id.u_company_address);
+
+        //for chat disable if this profile call from home
+        try{
+        if(!getIntent().getStringExtra("not_show_chat_button").isEmpty()){
+            single_chat_btn.setVisibility(View.GONE);
+        }}catch (Exception e){}
 
         // Set Click Listner on Single Chat Button To Open Single Chat Activity
         single_chat_btn.setOnClickListener(new View.OnClickListener() {

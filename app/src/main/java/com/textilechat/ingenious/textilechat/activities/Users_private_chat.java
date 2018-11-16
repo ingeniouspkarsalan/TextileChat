@@ -132,8 +132,12 @@ public class Users_private_chat extends AppCompatActivity {
         super.onBackPressed();
     }
 
-
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        try{
+        requestData(Endpoints.ip_server);}catch (Exception e){}
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

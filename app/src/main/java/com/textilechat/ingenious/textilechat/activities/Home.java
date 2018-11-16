@@ -65,7 +65,9 @@ public class Home extends AppCompatActivity
             R.drawable.ic_chat_black_24dp,
             R.drawable.ads_icon,
             R.drawable.contact_jcon,
-            R.drawable.blog_icon
+            R.drawable.blog_icon,
+            R.drawable.about_icon,
+            R.drawable.ic_person_black_24dp
     };
 
     String username, useremail;
@@ -78,7 +80,7 @@ public class Home extends AppCompatActivity
 
     private EditText searchbox;
     private List<CategoryClass> searchlist;
-
+    final String id = Prefs.getString("user_id", "0");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -289,7 +291,9 @@ public class Home extends AppCompatActivity
         tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[1]).setText("Chats"));
         tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[4]).setText("Blogs"));
         tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[2]).setText("Ads"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[6]).setText("Profile"));
         tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[3]).setText("Contact"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[5]).setText("about us"));
 
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -307,7 +311,8 @@ public class Home extends AppCompatActivity
                 }
                 else if(tabLayout.getSelectedTabPosition() == 2)
                 {
-
+                    startActivity(new Intent(Home.this,Blogs.class));
+                    Animation.slideUp(Home.this);
                 }
                 else if(tabLayout.getSelectedTabPosition() == 3)
                 {
@@ -316,8 +321,22 @@ public class Home extends AppCompatActivity
                 }
                 else if(tabLayout.getSelectedTabPosition() == 4)
                 {
+                    Intent in=new Intent(Home.this,User_profile.class);
+                    in.putExtra("not_show_chat_button","yes");
+                    in.putExtra("other_user_id",id);
+                    startActivity(in);
+                    Animation.slideUp(Home.this);
+                }
+                else if(tabLayout.getSelectedTabPosition() == 5)
+                {
                     startActivity(new Intent(Home.this,Contact_us.class));
                     Animation.slideUp(Home.this);
+                }
+                else if(tabLayout.getSelectedTabPosition() == 6)
+                {
+                    //about us
+//                    startActivity(new Intent(Home.this,Contact_us.class));
+//                    Animation.slideUp(Home.this);
                 }
             }
 
@@ -350,8 +369,22 @@ public class Home extends AppCompatActivity
                 }
                 else if(tabLayout.getSelectedTabPosition() == 4)
                 {
+                    Intent in=new Intent(Home.this,User_profile.class);
+                    in.putExtra("not_show_chat_button","yes");
+                    in.putExtra("other_user_id",id);
+                    startActivity(in);
+                    Animation.slideUp(Home.this);
+                }
+                else if(tabLayout.getSelectedTabPosition() == 5)
+                {
                     startActivity(new Intent(Home.this,Contact_us.class));
                     Animation.slideUp(Home.this);
+                }
+                else if(tabLayout.getSelectedTabPosition() == 6)
+                {
+                    //about us
+//                    startActivity(new Intent(Home.this,Contact_us.class));
+//                    Animation.slideUp(Home.this);
                 }
             }
         });

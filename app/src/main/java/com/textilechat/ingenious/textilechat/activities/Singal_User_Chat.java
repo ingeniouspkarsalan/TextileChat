@@ -40,6 +40,7 @@ import com.textilechat.ingenious.textilechat.classes.Ads_class;
 import com.textilechat.ingenious.textilechat.classes.Animation;
 import com.textilechat.ingenious.textilechat.classes.JSONParser;
 import com.textilechat.ingenious.textilechat.classes.Single_user_msg_list;
+import com.textilechat.ingenious.textilechat.classes.Sqlite_for_markers;
 import com.textilechat.ingenious.textilechat.classes.chat_messages;
 
 import org.json.JSONException;
@@ -67,6 +68,7 @@ public class Singal_User_Chat extends AppCompatActivity {
     private List<Ads_class> ads_classList;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private int iterator;
+    Sqlite_for_markers sqlite_for_markers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +97,12 @@ public class Singal_User_Chat extends AppCompatActivity {
 
         to_user_id=getIntent().getStringExtra("user_id");
         other_image=Prefs.getString("other_image","0");
+
+        //init database
+        sqlite_for_markers=new Sqlite_for_markers(Singal_User_Chat.this);
+        try {
+            sqlite_for_markers.delete_personal(to_user_id);
+        }catch (Exception e){}
 
         if(Utils.isOnline(Singal_User_Chat.this))
         {

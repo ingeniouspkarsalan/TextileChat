@@ -65,6 +65,7 @@ public class Home extends AppCompatActivity
             R.drawable.ic_chat_black_24dp,
             R.drawable.ads_icon,
             R.drawable.contact_jcon,
+            R.drawable.blog_icon
     };
 
     String username, useremail;
@@ -286,8 +287,10 @@ public class Home extends AppCompatActivity
         tabLayout=findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[0]).setText("News"));
         tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[1]).setText("Chats"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[4]).setText("Blogs"));
         tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[2]).setText("Ads"));
         tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[3]).setText("Contact"));
+
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -304,10 +307,14 @@ public class Home extends AppCompatActivity
                 }
                 else if(tabLayout.getSelectedTabPosition() == 2)
                 {
+
+                }
+                else if(tabLayout.getSelectedTabPosition() == 3)
+                {
                     startActivity(new Intent(Home.this,Advertisment.class));
                     Animation.slideUp(Home.this);
                 }
-                else if(tabLayout.getSelectedTabPosition() == 3)
+                else if(tabLayout.getSelectedTabPosition() == 4)
                 {
                     startActivity(new Intent(Home.this,Contact_us.class));
                     Animation.slideUp(Home.this);
@@ -333,10 +340,15 @@ public class Home extends AppCompatActivity
                 }
                 else if(tabLayout.getSelectedTabPosition() == 2)
                 {
-                    startActivity(new Intent(Home.this,Advertisment.class));
+                    startActivity(new Intent(Home.this,Blogs.class));
                     Animation.slideUp(Home.this);
                 }
                 else if(tabLayout.getSelectedTabPosition() == 3)
+                {
+                    startActivity(new Intent(Home.this,Advertisment.class));
+                    Animation.slideUp(Home.this);
+                }
+                else if(tabLayout.getSelectedTabPosition() == 4)
                 {
                     startActivity(new Intent(Home.this,Contact_us.class));
                     Animation.slideUp(Home.this);

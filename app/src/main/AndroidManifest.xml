@@ -74,7 +74,8 @@
         <activity android:name=".activities.Packge_Page" />
         <activity android:name=".activities.Contact_us" />
         <activity android:name=".activities.Advertisment" />
-        <activity android:name=".activities.Users_private_chat"></activity>
+        <activity android:name=".activities.Users_private_chat" />
+        <activity android:name=".activities.Blogs"></activity>
     </application>
 
 </manifest>

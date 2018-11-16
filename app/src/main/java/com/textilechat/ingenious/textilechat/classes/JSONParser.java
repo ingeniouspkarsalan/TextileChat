@@ -189,6 +189,8 @@ public class JSONParser
                 ads_class.setAd_display_time(jsonObject.getInt("ad_display_time"));
                 ads_class.setC_id(jsonObject.getString("c_id"));
                 ads_class.setSc_id(jsonObject.getString("sc_id"));
+                ads_class.setCat_name(jsonObject.getString("c_name"));
+                ads_class.setSub_name(jsonObject.getString("sc_name")+"");
 
 
 

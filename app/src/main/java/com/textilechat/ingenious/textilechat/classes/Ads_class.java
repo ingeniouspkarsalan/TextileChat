@@ -5,6 +5,7 @@ public class Ads_class {
     String ad_image;
     int ad_display_time;
     String c_id;
+    String cat_name,sub_name;
 
     public String getAd_id() {
         return ad_id;
@@ -48,5 +49,19 @@ public class Ads_class {
 
     String sc_id;
 
+    public String getCat_name() {
+        return cat_name;
+    }
 
+    public void setCat_name(String cat_name) {
+        this.cat_name = cat_name;
+    }
+
+    public String getSub_name() {
+        return sub_name;
+    }
+
+    public void setSub_name(String sub_name) {
+        this.sub_name = sub_name;
+    }
 }

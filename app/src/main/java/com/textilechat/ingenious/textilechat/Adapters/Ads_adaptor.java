@@ -50,8 +50,8 @@ public class Ads_adaptor extends RecyclerView.Adapter<Ads_adaptor.AdsHolder>
         Glide.with(context)
                 .load(ads_class.getAd_image())
                 .into(holder.news_image);
-        holder.news_title.setText(ads_class.getC_id());
-        holder.news_des.setText(ads_class.getSc_id());
+        holder.news_title.setText(ads_class.getCat_name());
+        holder.news_des.setText(ads_class.getSub_name());
         holder.news_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

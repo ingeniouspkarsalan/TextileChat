@@ -28,9 +28,10 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     private Context context;
     private List<chat_messages> chat_messagesList;
     private static String today;
+    private int for_unread=0;
 
     public class chatViewHolder extends RecyclerView.ViewHolder {
-        TextView message,timestamp,owner_message,owner_timestamp,username,owner_username;
+        TextView message,timestamp,owner_message,owner_timestamp,username,owner_username,new_msg;
         RelativeLayout layoutofother,layoutofowner;
         ImageView owner_image,other_image;
 
@@ -46,6 +47,7 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
             layoutofowner=itemView.findViewById(R.id.layoutofowner);
             owner_image=itemView.findViewById(R.id.owner_image);
             other_image=itemView.findViewById(R.id.other_image);
+            new_msg=itemView.findViewById(R.id.new_msg);
         }
     }
 
@@ -93,6 +95,11 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
         }else {
             if(!c_message.getU_status().equals("0")){
                 holder.layoutofother.setVisibility(View.VISIBLE);
+                if(for_unread!=0){
+                    if(for_unread==position){
+                       holder.new_msg.setVisibility(View.VISIBLE);
+                    }
+                }
                 holder.username.setText(c_message.getUser_name().toString());
                 holder.message.setText(c_message.getMessages().toString());
                 //for testing
@@ -142,8 +149,11 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     public int getItemPosition(int id)
     {
         for (int position=0; position<chat_messagesList.size(); position++)
-            if (chat_messagesList.get(position).getM_id().equals(String.valueOf(id)))
+            if (chat_messagesList.get(position).getM_id().equals(String.valueOf(id))){
+                for_unread=position;
                 return position;
+            }
+
         return 0;
     }
 

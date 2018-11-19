@@ -49,6 +49,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     final String id = Prefs.getString("user_id", "0");
     private Sqlite_for_markers sqlite_for_markers=new Sqlite_for_markers(this);
     int uniqueinteger= (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+
+    public static final String NOTIFICATION_CHANNEL_ID = "4655";
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
@@ -431,7 +433,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("default",
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
                     "abcd",
                     NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription("abcd");
@@ -464,7 +466,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("default",
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
                     "abcd",
                     NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription("abcd");

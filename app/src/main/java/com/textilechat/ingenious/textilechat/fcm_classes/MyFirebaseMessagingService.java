@@ -438,6 +438,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription("abcd");
             manager.createNotificationChannel(channel);
+            builder.setChannelId(NOTIFICATION_CHANNEL_ID);
         }
         manager.notify(uniqueinteger,builder.build());
     }
@@ -471,6 +472,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription("abcd");
             manager.createNotificationChannel(channel);
+            builder.setChannelId(NOTIFICATION_CHANNEL_ID);
         }
 
         manager.notify(uniqueinteger,builder.build());

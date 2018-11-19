@@ -35,7 +35,7 @@ public class User_profile extends AppCompatActivity {
     private TextView u_name, u_conatct, u_city, u_email, u_company, u_nature_bsns, u_comp_address;
     private Button single_chat_btn;
     private SweetAlertDialog pd;
-
+    String user_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +47,7 @@ public class User_profile extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Get User id With Intent Extra
-        final String user_id = getIntent().getStringExtra("other_user_id");
+        user_id = getIntent().getStringExtra("other_user_id");
 
         //Init All Views
         single_chat_btn = findViewById(R.id.btn_open_single_Chat);
@@ -133,7 +133,13 @@ public class User_profile extends AppCompatActivity {
                             if (object.getString("u_is_paid").equals("1"))
                             {
                                 is_verified.setVisibility(View.VISIBLE);
+                                u_conatct.setVisibility(View.GONE);
                             }
+                            final String id = Prefs.getString("user_id", "0");
+                            if(user_id.equals(id)){
+                                u_conatct.setVisibility(View.VISIBLE);
+                            }
+
 
                         }else {
                             new SweetAlertDialog(User_profile.this, SweetAlertDialog.ERROR_TYPE)

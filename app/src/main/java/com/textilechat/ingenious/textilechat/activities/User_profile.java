@@ -133,7 +133,7 @@ public class User_profile extends AppCompatActivity {
                             if (object.getString("u_is_paid").equals("1"))
                             {
                                 is_verified.setVisibility(View.VISIBLE);
-                                u_conatct.setVisibility(View.GONE);
+                                u_conatct.setVisibility(View.VISIBLE);
                             }
                             final String id = Prefs.getString("user_id", "0");
                             if(user_id.equals(id)){

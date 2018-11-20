@@ -69,7 +69,9 @@ public class User_profile extends AppCompatActivity {
             edit_profile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                Intent in=new Intent(User_profile.this,Edit_profile.class);
+                in.putExtra("user_id",user_id);
+                startActivity(in);
                 }
             });
         }}catch (Exception e){}

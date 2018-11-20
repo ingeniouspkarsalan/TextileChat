@@ -78,7 +78,8 @@
         <activity android:name=".activities.Contact_us" />
         <activity android:name=".activities.Advertisment" />
         <activity android:name=".activities.Users_private_chat_placeholder" />
-        <activity android:name=".activities.Blogs"></activity>
+        <activity android:name=".activities.Blogs" />
+        <activity android:name=".activities.Edit_profile"></activity>
     </application>
 
 </manifest>

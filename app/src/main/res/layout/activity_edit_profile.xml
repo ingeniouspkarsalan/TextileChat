@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/blur"
+    tools:context=".activities.Edit_profile">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </android.support.design.widget.AppBarLayout>
+
+    <com.github.florent37.shapeofview.shapes.CircleView
+        android:id="@+id/shap_of_circle_other"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:elevation="4dp"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        app:shape_circle_borderColor="@color/white"
+        app:shape_circle_borderWidth="1dp">
+
+        <!-- YOUR CONTENT -->
+
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_for_chat_card" />
+
+    </com.github.florent37.shapeofview.shapes.CircleView>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+            <EditText
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/txt_style"
+                android:layout_marginStart="10dp"
+                android:inputType="text"
+                android:layout_marginEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:hint="Name"/>
+
+            <EditText
+                android:id="@+id/tv_contact"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/txt_style"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:inputType="phone"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:layout_marginEnd="10dp"
+                android:paddingStart="10dp"
+                android:hint="Contact"/>
+
+
+
+
+
+            <EditText
+                android:id="@+id/tv_city"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/txt_style"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:layout_marginStart="10dp"
+                android:inputType="text"
+                android:layout_marginEnd="10dp"
+                android:paddingStart="10dp"
+                android:hint="City"/>
+            <EditText
+                android:id="@+id/tv_company"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:background="@drawable/txt_style"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:inputType="text"
+                android:layout_marginEnd="10dp"
+                android:paddingStart="10dp"
+                android:hint="Company"/>
+
+            <EditText
+                android:id="@+id/tv_c_nature"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/txt_style"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:layout_marginStart="10dp"
+                android:inputType="text"
+                android:layout_marginEnd="10dp"
+                android:paddingStart="10dp"
+                android:hint="Company Nature"/>
+
+            <EditText
+                android:id="@+id/tv_c_address"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:textColor="@color/white"
+                android:background="@drawable/txt_style"
+                android:textColorHint="@color/white"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:inputType="text"
+                android:layout_marginEnd="10dp"
+                android:paddingStart="10dp"
+                android:hint="Company Address"/>
+
+            <Button
+                android:id="@+id/tv_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:background="@drawable/btn_style_sing_up"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:inputType="text"
+                android:layout_marginEnd="10dp"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:padding="10dp"
+                android:textAllCaps="true"
+                android:textSize="18dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal"
+                android:text="Update"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

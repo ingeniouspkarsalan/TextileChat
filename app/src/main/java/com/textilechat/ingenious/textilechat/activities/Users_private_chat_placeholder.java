@@ -1,12 +1,10 @@
 package com.textilechat.ingenious.textilechat.activities;
 
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -15,7 +13,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.Adapters.pc_adaptor;
 import com.textilechat.ingenious.textilechat.R;
@@ -32,7 +29,7 @@ import java.util.Map;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
-public class Users_private_chat extends AppCompatActivity {
+public class Users_private_chat_placeholder extends AppCompatActivity {
 
     /*
     *
@@ -62,21 +59,21 @@ public class Users_private_chat extends AppCompatActivity {
 
 
         recyclerView=(RecyclerView) findViewById(R.id.recycler_view);
-        if(Utils.isOnline(Users_private_chat.this))
+        if(Utils.isOnline(Users_private_chat_placeholder.this))
         {
             try
             {
                 requestData(Endpoints.ip_server);
             }
             catch (Exception ex) {
-                new SweetAlertDialog(Users_private_chat.this, SweetAlertDialog.ERROR_TYPE)
+                new SweetAlertDialog(Users_private_chat_placeholder.this, SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Oops...")
                         .setContentText("Some thing went wrong!")
                         .show();
             }
         } else
         {
-            new SweetAlertDialog(Users_private_chat.this, SweetAlertDialog.ERROR_TYPE)
+            new SweetAlertDialog(Users_private_chat_placeholder.this, SweetAlertDialog.ERROR_TYPE)
                     .setTitleText("Oops...")
                     .setContentText("Internet Not Found!")
                     .show();
@@ -95,8 +92,8 @@ public class Users_private_chat extends AppCompatActivity {
 
                 } else {
                     pc_classList=JSONParser.parse_pc(response);
-                    pc_adaptor=new pc_adaptor(Users_private_chat.this,pc_classList);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(Users_private_chat.this);
+                    pc_adaptor=new pc_adaptor(Users_private_chat_placeholder.this,pc_classList);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(Users_private_chat_placeholder.this);
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setHasFixedSize(true);
@@ -108,7 +105,7 @@ public class Users_private_chat extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        new SweetAlertDialog(Users_private_chat.this, SweetAlertDialog.ERROR_TYPE)
+                        new SweetAlertDialog(Users_private_chat_placeholder.this, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Oops...")
                                 .setContentText("Some thing went wrong!")
                                 .show();

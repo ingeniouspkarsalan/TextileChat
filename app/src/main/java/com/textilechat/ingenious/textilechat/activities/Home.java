@@ -306,7 +306,7 @@ public class Home extends AppCompatActivity
                 }
                 else if(tabLayout.getSelectedTabPosition() == 1)
                 {
-                    startActivity(new Intent(Home.this,Users_private_chat.class));
+                    startActivity(new Intent(Home.this,Users_private_chat_placeholder.class));
                     Animation.slideUp(Home.this);
                 }
                 else if(tabLayout.getSelectedTabPosition() == 2)
@@ -354,7 +354,7 @@ public class Home extends AppCompatActivity
                 }
                 else if(tabLayout.getSelectedTabPosition() == 1)
                 {
-                    startActivity(new Intent(Home.this,Users_private_chat.class));
+                    startActivity(new Intent(Home.this,Users_private_chat_placeholder.class));
                     Animation.slideUp(Home.this);
                 }
                 else if(tabLayout.getSelectedTabPosition() == 2)

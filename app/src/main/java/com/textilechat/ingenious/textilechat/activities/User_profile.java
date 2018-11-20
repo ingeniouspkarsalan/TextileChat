@@ -31,7 +31,7 @@ import es.dmoral.toasty.Toasty;
 
 public class User_profile extends AppCompatActivity {
 
-    private ImageView user_image, is_verified;
+    private ImageView user_image, is_verified,edit_profile;
     private TextView u_name, u_conatct, u_city, u_email, u_company, u_nature_bsns, u_comp_address;
     private Button single_chat_btn;
     private SweetAlertDialog pd;
@@ -60,11 +60,18 @@ public class User_profile extends AppCompatActivity {
         u_company = findViewById(R.id.u_company);
         u_nature_bsns = findViewById(R.id.u_nature_busns);
         u_comp_address = findViewById(R.id.u_company_address);
-
+        edit_profile=findViewById(R.id.edit_profiles);
         //for chat disable if this profile call from home
         try{
         if(!getIntent().getStringExtra("not_show_chat_button").isEmpty()){
             single_chat_btn.setVisibility(View.GONE);
+            edit_profile.setVisibility(View.VISIBLE);
+            edit_profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }}catch (Exception e){}
 
         // Set Click Listner on Single Chat Button To Open Single Chat Activity
@@ -135,6 +142,8 @@ public class User_profile extends AppCompatActivity {
                                 is_verified.setVisibility(View.VISIBLE);
                                 u_conatct.setVisibility(View.VISIBLE);
                             }
+
+                            //for only call from home for profile
                             final String id = Prefs.getString("user_id", "0");
                             if(user_id.equals(id)){
                                 u_conatct.setVisibility(View.VISIBLE);

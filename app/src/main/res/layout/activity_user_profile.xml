@@ -20,12 +20,22 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/shap_of_circle_other"
+            app:srcCompat="@android:drawable/ic_menu_edit"
+            android:id="@+id/edit_profiles"
+            android:visibility="gone"
+            android:padding="10dp"
+            />
         <com.github.florent37.shapeofview.shapes.CircleView
             android:id="@+id/shap_of_circle_other"
             android:layout_width="150dp"

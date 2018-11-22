@@ -175,6 +175,7 @@
             android:fontFamily="sans-serif-light"
             android:textColor="@color/black"
             android:textSize="20dp"
+            android:visibility="gone"
             android:layout_below="@id/u_nature_busns"
             android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"/>

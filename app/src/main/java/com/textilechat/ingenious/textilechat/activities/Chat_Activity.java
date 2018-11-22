@@ -617,8 +617,6 @@ public class Chat_Activity extends AppCompatActivity {
             }else{
                 search.setTitle("Search");
                 searchbox.setVisibility(View.GONE);
-                searchbox.setText("");
-                searching("");
             }
 
         }

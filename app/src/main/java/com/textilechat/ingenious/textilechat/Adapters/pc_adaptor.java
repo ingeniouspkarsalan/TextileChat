@@ -82,6 +82,7 @@ public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
                     Intent in=new Intent(context, Singal_User_Chat.class);
                     in.putExtra("user_id",pcClass.getTo_user_id());
                     in.putExtra("user_name",pcClass.getTo_u_name().toString());
+                    in.putExtra("other_image",pcClass.getTo_u_image());
                     context.startActivity(in);
                 }
             });
@@ -108,6 +109,7 @@ public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
                     Intent in=new Intent(context, Singal_User_Chat.class);
                     in.putExtra("user_id",pcClass.getFrom_user_id());
                     in.putExtra("user_name",pcClass.getFrom_u_name().toString());
+                    in.putExtra("other_image",pcClass.getFrom_u_image());
                     context.startActivity(in);
                 }
             });

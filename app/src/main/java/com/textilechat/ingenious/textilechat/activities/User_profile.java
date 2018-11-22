@@ -30,7 +30,8 @@ import cz.msebera.android.httpclient.Header;
 import es.dmoral.toasty.Toasty;
 
 public class User_profile extends AppCompatActivity {
-
+    final String id = Prefs.getString("user_id", "0");
+    String own_user_profile_status="no";
     private ImageView user_image, is_verified,edit_profile;
     private TextView u_name, u_conatct, u_city, u_email, u_company, u_nature_bsns, u_comp_address;
     private Button single_chat_btn;
@@ -61,6 +62,7 @@ public class User_profile extends AppCompatActivity {
         u_nature_bsns = findViewById(R.id.u_nature_busns);
         u_comp_address = findViewById(R.id.u_company_address);
         edit_profile=findViewById(R.id.edit_profiles);
+
         //for chat disable if this profile call from home
         try{
         if(!getIntent().getStringExtra("not_show_chat_button").isEmpty()){
@@ -98,9 +100,68 @@ public class User_profile extends AppCompatActivity {
             }
         });
 
+
         //Call the function of User Profile Detail
         get_user_profile_detail(user_id);
     }
+
+    //getting own user profile status
+    private String get_own_status(String u_id)
+    {
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("req_key","get_user_profile_detail_by_id");
+        params.put("u_id",u_id);
+        client.post(Endpoints.ip_server, params, new AsyncHttpResponseHandler()
+        {
+            @Override
+            public void onStart()
+            {
+                super.onStart();
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response = Utils.getResponse(responseBody);
+                if(response.equals("null")) {
+                    Toasty.warning(User_profile.this, "Response is null", Toast.LENGTH_SHORT).show();
+                }else {
+
+                    try {
+                        JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                        if(object.getBoolean("success")) {
+
+                            if (object.getString("u_is_paid").equals("1"))
+                            {
+                                own_user_profile_status= "yes";
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("response",response);
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                String  response  = Utils.getResponse(responseBody);
+                if(response.equals("null")) {
+                    Toasty.warning(User_profile.this, "Unable to Connect Server", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    Log.d("response",response);
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+            }
+        });
+        return own_user_profile_status;
+    }
+
 
     // Declear the User Profile Detail Function
     private void get_user_profile_detail(String u_id)
@@ -109,6 +170,7 @@ public class User_profile extends AppCompatActivity {
         RequestParams params = new RequestParams();
         params.put("req_key","get_user_profile_detail_by_id");
         params.put("u_id",u_id);
+        params.put("own_id",id);
         client.post(Endpoints.ip_server, params, new AsyncHttpResponseHandler()
         {
             @Override
@@ -141,14 +203,21 @@ public class User_profile extends AppCompatActivity {
                             Prefs.putString("other_image",object.getString("u_image"));
                             if (object.getString("u_is_paid").equals("1"))
                             {
-                                is_verified.setVisibility(View.VISIBLE);
+                                    is_verified.setVisibility(View.VISIBLE);
+                                    if(object.getString("own_user").equals("1")){
+                                        u_conatct.setVisibility(View.VISIBLE);
+                                        u_comp_address.setVisibility(View.VISIBLE);
+                                    }
+                            }else if(object.getString("own_user").equals("1")){
                                 u_conatct.setVisibility(View.VISIBLE);
+                                u_comp_address.setVisibility(View.VISIBLE);
                             }
 
                             //for only call from home for profile
                             final String id = Prefs.getString("user_id", "0");
                             if(user_id.equals(id)){
                                 u_conatct.setVisibility(View.VISIBLE);
+                                u_comp_address.setVisibility(View.VISIBLE);
                             }
 
 

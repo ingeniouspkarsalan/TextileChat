@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -154,10 +155,10 @@ public class Home extends AppCompatActivity
                     categoryClassList = JSONParser.parse_category(response);
                     catergory_adapter = new Catergory_adapter(Home.this, categoryClassList);
                     recyclerView.setAdapter(catergory_adapter);
-//                    recyclerView.setLayoutManager(new GridLayoutManager(Home.this,1));
-                    LinearLayoutManager llm = new LinearLayoutManager(Home.this);
-                    llm.setOrientation(LinearLayoutManager.VERTICAL);
-                    recyclerView.setLayoutManager(llm);
+                    recyclerView.setLayoutManager(new GridLayoutManager(Home.this,2));
+//                    LinearLayoutManager llm = new LinearLayoutManager(Home.this);
+//                    llm.setOrientation(LinearLayoutManager.VERTICAL);
+//                    recyclerView.setLayoutManager(llm);
 
                 }
 

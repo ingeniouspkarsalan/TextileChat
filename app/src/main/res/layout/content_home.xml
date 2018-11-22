@@ -23,6 +23,7 @@
         android:background="@drawable/btn_stlye"
         android:layout_margin="5dp"
         android:inputType="text"
+        android:visibility="gone"
         android:textColor="@color/searchcolor"
         android:textColorHint="@color/white"
         android:drawableEnd="@drawable/ic_search_24dp"

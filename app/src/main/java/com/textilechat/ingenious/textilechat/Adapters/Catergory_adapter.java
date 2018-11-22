@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.github.florent37.shapeofview.shapes.CircleView;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.activities.Chat_Activity;
 import com.textilechat.ingenious.textilechat.activities.Sub_Category;
@@ -27,18 +28,30 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
     private List<CategoryClass> categoryList;
 
     class CategoryViewHolder extends RecyclerView.ViewHolder {
-        ImageView banner_image;
-        TextView categor_name,item_count;
+//        ImageView banner_image;
+//        TextView categor_name,item_count;
+//        CardView for_click;
+
+        TextView sc_name,markers_count;
+        ImageView sc_icon;
         CardView for_click;
+        CircleView marker;
         Sqlite_for_markers sqlite_for_markers;
 
         public CategoryViewHolder(View itemView)
         {
             super(itemView);
-            banner_image = (ImageView) itemView.findViewById(R.id.banner_image);
-            categor_name = (TextView) itemView.findViewById(R.id.categor_name);
-            item_count = (TextView) itemView.findViewById(R.id.item_count);
-            for_click = (CardView) itemView.findViewById(R.id.card_view);
+//            banner_image = (ImageView) itemView.findViewById(R.id.banner_image);
+//            categor_name = (TextView) itemView.findViewById(R.id.categor_name);
+//            item_count = (TextView) itemView.findViewById(R.id.item_count);
+//            for_click = (CardView) itemView.findViewById(R.id.card_view);
+
+
+            sc_name=itemView.findViewById(R.id.categor_name);
+            sc_icon=itemView.findViewById(R.id.banner_image);
+            for_click=itemView.findViewById(R.id.card_view);
+            markers_count=itemView.findViewById(R.id.markers_count);
+            marker=itemView.findViewById(R.id.mark_show);
             sqlite_for_markers=new Sqlite_for_markers(context);
         }
     }
@@ -54,13 +67,13 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
         final CategoryClass category = categoryList.get(position);
         Glide.with(context)
                 .load(category.getC_image())
-                .into(holder.banner_image);
-        holder.categor_name.setText(category.getC_name());
+                .into(holder.sc_icon);
+        holder.sc_name.setText(category.getC_name());
         try {
             int i = holder.sqlite_for_markers.getCategoryCount(category.getC_id());
             if(i>0){
-                holder.item_count.setVisibility(View.VISIBLE);
-                holder.item_count.setText(i + " Unread");
+                holder.marker.setVisibility(View.VISIBLE);
+                holder.markers_count.setText(i + "");
             }
 
         }catch (Exception e){
@@ -96,7 +109,8 @@ public class Catergory_adapter extends RecyclerView.Adapter<Catergory_adapter.Ca
     @Override
     public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.desing_category_list, null);
+        //View view = inflater.inflate(R.layout.desing_category_list, null);
+        View view = inflater.inflate(R.layout.design_sub_catogory_list, null);
         return new CategoryViewHolder(view);
     }
 

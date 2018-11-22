@@ -17,61 +17,68 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical">
-            <com.github.florent37.shapeofview.shapes.CircleView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:elevation="4dp"
-                android:id="@+id/mark_show"
-                android:layout_gravity="right"
-                android:visibility="gone"
-                android:background="@color/searchcolor"
-                app:shape_circle_borderColor="@color/colorAccent"
-                app:shape_circle_borderWidth="2dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="3"
-                    android:id="@+id/markers_count"
-                    android:padding="5dp"
-                    android:layout_gravity="center|center_vertical"
-                    android:textColor="@color/white"/>
-            </com.github.florent37.shapeofview.shapes.CircleView>
+                <com.github.florent37.shapeofview.shapes.CircleView
+                    android:layout_width="25dp"
+                    android:layout_height="30dp"
+                    android:elevation="4dp"
+                    android:id="@+id/mark_show"
+                    android:layout_marginStart="2dp"
+                    android:visibility="invisible"
+                    android:layout_toRightOf="@id/help_image"
+                    android:background="@color/searchcolor"
+                    app:shape_circle_borderColor="@color/colorAccent"
+                    app:shape_circle_borderWidth="2dp">
 
-        <com.github.florent37.shapeofview.shapes.CircleView
-            android:id="@+id/help_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:elevation="4dp"
-            android:layout_gravity="center"
-            app:shape_circle_borderColor="@color/colorAccent"
-            app:shape_circle_borderWidth="2dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:id="@+id/markers_count"
+                        android:padding="5dp"
+                        android:layout_gravity="center|center_vertical"
+                        android:textColor="@color/white"/>
+                </com.github.florent37.shapeofview.shapes.CircleView>
 
-            <!-- YOUR CONTENT -->
-            <ImageView
-                android:id="@+id/banner_image"
-                android:layout_width="wrap_content"
+                <com.github.florent37.shapeofview.shapes.CircleView
+                    android:id="@+id/help_image"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:elevation="4dp"
+                    android:layout_centerHorizontal="true"
+                    app:shape_circle_borderColor="@color/colorAccent"
+                    app:shape_circle_borderWidth="2dp">
+
+                    <!-- YOUR CONTENT -->
+                    <ImageView
+                        android:id="@+id/banner_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:background="@color/white" />
+
+                </com.github.florent37.shapeofview.shapes.CircleView>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/categor_name"
+                android:layout_width="170dp"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:background="@color/white" />
-
-        </com.github.florent37.shapeofview.shapes.CircleView>
-
-        <TextView
-            android:id="@+id/categor_name"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:textAlignment="center"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="4dp"
-            android:fontFamily="sans-serif-light"
-            android:text="Hello"
-            android:textColor="@color/colorAccent"
-            android:textSize="20dp" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/cutive_mono"
+                android:lines="1"
+                android:text="Hello"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="15dp" />
 
 
 

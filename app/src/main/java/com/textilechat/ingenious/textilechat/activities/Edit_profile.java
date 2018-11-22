@@ -27,6 +27,8 @@ import com.textilechat.ingenious.textilechat.classes.Animation;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import cz.msebera.android.httpclient.Header;
 import es.dmoral.toasty.Toasty;
@@ -35,7 +37,7 @@ public class Edit_profile extends AppCompatActivity {
     String user_id;
     public static final int PICK_IMAGE = 1;
     private SweetAlertDialog pd;
-    private String photoPath = "";
+    private String photoPath = "",orignal;
     private ImageView profile_image;
     private EditText name,contact,city,company,c_nature,c_address;
     @Override
@@ -76,7 +78,12 @@ public class Edit_profile extends AppCompatActivity {
             public void onClick(View v) {
                 if(Utils.isOnline(Edit_profile.this))
                 {
-                   // scaningallfields();
+                    if(photoPath.isEmpty()){
+                        update_profile(name.getText().toString(),contact.getText().toString(),city.getText().toString(),company.getText().toString(),c_nature.getText().toString(),c_address.getText().toString(),orignal);
+                    }else {
+                        update_profile(name.getText().toString(),contact.getText().toString(),city.getText().toString(),company.getText().toString(),c_nature.getText().toString(),c_address.getText().toString(),photoPath);
+                    }
+
                 }
                 else
                 {
@@ -137,6 +144,7 @@ public class Edit_profile extends AppCompatActivity {
                         JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                         if(object.getBoolean("success")) {
                             if(!object.getString("u_image").isEmpty()){
+                                orignal=object.getString("u_image");
                                 Glide.with(Edit_profile.this)
                                         .load(object.getString("u_image"))
                                         .into(profile_image);
@@ -199,5 +207,77 @@ public class Edit_profile extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return super.onSupportNavigateUp();
+    }
+
+
+    private void update_profile(String name,String contact,String city, String company,String nature,String address,String photo)
+    {
+        String id= Prefs.getPreferences().getString("user_id","");
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("req_key","create_event");
+
+        try{
+
+            params.put("file_name",new File(photo));
+
+        }catch (Exception e){}
+
+        client.post(Endpoints.ip_server, params, new AsyncHttpResponseHandler()
+        {
+            @Override
+            public void onStart()
+            {
+                super.onStart();
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response = Utils.getResponse(responseBody);
+                if(response.equals("null")) {
+                    Toasty.warning(Edit_profile.this, "Response is null", Toast.LENGTH_SHORT).show();
+                }else {
+
+                    try {
+                        JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                        if(object.getBoolean("success")) {
+                            Toasty.success(Edit_profile.this,object.getString("message"),Toast.LENGTH_LONG).show();
+                            //startActivity(new Intent(Sign_up.this, Home.class));
+                            finish();
+                            Animation.slideUp(Edit_profile.this);
+
+                        }else {
+
+                            new SweetAlertDialog(Edit_profile.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText(object.getString("message"))
+                                    .show();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("response",response);
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                String  response  = Utils.getResponse(responseBody);
+                if(response.equals("null")) {
+                    Toasty.warning(Edit_profile.this, "Unable to Connect Server", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    Log.d("response",response);
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+
+            }
+
+
+        });
     }
 }

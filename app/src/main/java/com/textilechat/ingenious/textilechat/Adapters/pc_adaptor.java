@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.github.florent37.shapeofview.shapes.CircleView;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.R;
+import com.textilechat.ingenious.textilechat.activities.Singal_User_Chat;
 import com.textilechat.ingenious.textilechat.activities.User_profile;
 import com.textilechat.ingenious.textilechat.classes.Sqlite_for_markers;
 import com.textilechat.ingenious.textilechat.classes.pc_class;
@@ -78,8 +79,9 @@ public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
             holder.usr_card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent in=new Intent(context, User_profile.class);
-                    in.putExtra("other_user_id",pcClass.getTo_user_id());
+                    Intent in=new Intent(context, Singal_User_Chat.class);
+                    in.putExtra("user_id",pcClass.getTo_user_id());
+                    in.putExtra("user_name",pcClass.getTo_u_name().toString());
                     context.startActivity(in);
                 }
             });
@@ -103,8 +105,9 @@ public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
                 @Override
                 public void onClick(View v) {
 
-                    Intent in=new Intent(context, User_profile.class);
-                    in.putExtra("other_user_id",pcClass.getFrom_user_id());
+                    Intent in=new Intent(context, Singal_User_Chat.class);
+                    in.putExtra("user_id",pcClass.getFrom_user_id());
+                    in.putExtra("user_name",pcClass.getFrom_u_name().toString());
                     context.startActivity(in);
                 }
             });

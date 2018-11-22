@@ -68,6 +68,19 @@
         android:id="@+id/ads_banners"
         />
 
+    <EditText
+        android:id="@+id/searchbox"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/btn_stlye"
+        android:layout_margin="5dp"
+        android:inputType="text"
+        android:visibility="gone"
+        android:textColor="@color/searchcolor"
+        android:textColorHint="@color/white"
+        android:drawableEnd="@drawable/ic_search_24dp"
+        android:padding="10dp"
+        android:hint="Search"/>
 
     <include layout="@layout/content_chat_room" />
 

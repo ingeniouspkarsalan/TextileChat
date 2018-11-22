@@ -17,6 +17,7 @@ import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.R;
 import com.textilechat.ingenious.textilechat.activities.User_profile;
 import com.textilechat.ingenious.textilechat.classes.Animation;
+import com.textilechat.ingenious.textilechat.classes.CategoryClass;
 import com.textilechat.ingenious.textilechat.classes.chat_messages;
 
 import java.util.Calendar;
@@ -156,6 +157,10 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
 
         return 0;
     }
-
+    public void searchedList(List<chat_messages> _list)
+    {
+        chat_messagesList = _list;
+        notifyDataSetChanged();
+    }
 
 }

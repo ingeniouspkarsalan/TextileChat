@@ -12,7 +12,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -38,6 +42,7 @@ import com.textilechat.ingenious.textilechat.Utils.Endpoints;
 import com.textilechat.ingenious.textilechat.Utils.Utils;
 import com.textilechat.ingenious.textilechat.classes.Ads_class;
 import com.textilechat.ingenious.textilechat.classes.Animation;
+import com.textilechat.ingenious.textilechat.classes.CategoryClass;
 import com.textilechat.ingenious.textilechat.classes.Daily_service_class;
 import com.textilechat.ingenious.textilechat.classes.JSONParser;
 import com.textilechat.ingenious.textilechat.classes.Sqlite_for_markers;
@@ -65,9 +70,10 @@ import es.dmoral.toasty.Toasty;
 public class Chat_Activity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<chat_messages> chat_message_list;
+    private List<chat_messages> searchlist;
     private chat_adapter chat_adapters;
     String sending_msg;
-    private EditText edit_message;
+    private EditText edit_message,searchbox;
     private Button btn_send;
     final String id = Prefs.getString("user_id", "0");
 
@@ -80,6 +86,9 @@ public class Chat_Activity extends AppCompatActivity {
     Switch aSwitch;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private int iterator;
+
+    private Menu menu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -254,7 +263,7 @@ public class Chat_Activity extends AppCompatActivity {
                 }
             }
         });
-
+        initsearch();
     }
 
     public static void hideSoftKeyboard(Activity activity) {
@@ -543,5 +552,77 @@ public class Chat_Activity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private void searching(String words){
+        searchlist = new ArrayList<>();
+        if(searchlist != null)
+            for (chat_messages list : chat_message_list)
+            {
+                if(list != null)
+                    if(list.getMessages().toLowerCase().contains(words))
+                    {
+                        searchlist.add(list);
+                    }
+            }
+        chat_adapters.searchedList(searchlist);
+    }
+
+    //init searching
+    private void initsearch(){
+
+        searchbox = (EditText) findViewById(R.id.searchbox);
+        try{
+            searchbox.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    searching(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+        }catch (Exception e){}
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.home, menu);
+        this.menu=menu;
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        MenuItem search = menu.findItem(R.id.search);
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.search) {
+            if(search.getTitle().equals("Search")){
+                search.setTitle("cancel search");
+                searchbox.setVisibility(View.VISIBLE);
+            }else{
+                search.setTitle("Search");
+                searchbox.setVisibility(View.GONE);
+                searchbox.setText("");
+                searching("");
+            }
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

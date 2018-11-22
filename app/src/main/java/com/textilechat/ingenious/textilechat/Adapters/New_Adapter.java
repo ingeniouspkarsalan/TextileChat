@@ -25,15 +25,13 @@ public class New_Adapter extends RecyclerView.Adapter<New_Adapter.NewsHolder>
     private List<News_Class> newsClassList;
 
     class NewsHolder extends RecyclerView.ViewHolder {
-        View view;
-        ImageView news_image;
+        CardView view;
         TextView news_title,news_des;
 
         public NewsHolder(View itemView)
         {
             super(itemView);
             view=itemView.findViewById(R.id.news_card_view);
-            news_image=itemView.findViewById(R.id.news_image);
             news_title=itemView.findViewById(R.id.news_title);
             news_des=itemView.findViewById(R.id.news_desc);
 
@@ -49,18 +47,10 @@ public class New_Adapter extends RecyclerView.Adapter<New_Adapter.NewsHolder>
     public void onBindViewHolder(NewsHolder holder , int position)
     {
         final News_Class newsClass = newsClassList.get(position);
-        Glide.with(context)
-                .load(newsClass.getNews_image())
-                .into(holder.news_image);
+
         holder.news_title.setText(newsClass.getNews_title());
         holder.news_des.setText(newsClass.getNews_des());
-        holder.news_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toasty.success(context, newsClass.getNews_id(), Toast.LENGTH_SHORT).show();
 
-            }
-        });
     }
     @Override
     public NewsHolder onCreateViewHolder(ViewGroup parent, int viewType) {

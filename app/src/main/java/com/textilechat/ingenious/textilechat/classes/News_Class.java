@@ -3,7 +3,6 @@ package com.textilechat.ingenious.textilechat.classes;
 public class News_Class
 {
 
-    private String news_image;
     private String news_title;
     private String news_id;
     private String news_date;
@@ -25,13 +24,6 @@ public class News_Class
         this.news_date = news_date;
     }
 
-    public String getNews_image() {
-        return news_image;
-    }
-
-    public void setNews_image(String news_image) {
-        this.news_image = news_image;
-    }
 
     public String getNews_title() {
         return news_title;

@@ -89,7 +89,6 @@ public class JSONParser
             {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 news_class = new News_Class();
-                news_class.setNews_image(jsonObject.getString("n_image"));
                 news_class.setNews_title(jsonObject.getString("n_title"));
                 news_class.setNews_des(jsonObject.getString("n_desc"));
                 news_class.setNews_id(jsonObject.getString("n_id"));

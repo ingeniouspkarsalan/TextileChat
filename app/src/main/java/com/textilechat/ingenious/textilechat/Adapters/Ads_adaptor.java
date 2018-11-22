@@ -63,7 +63,7 @@ public class Ads_adaptor extends RecyclerView.Adapter<Ads_adaptor.AdsHolder>
     @Override
     public Ads_adaptor.AdsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.news_card_design, null);
+        View view = inflater.inflate(R.layout.for_ads, null);
         return new Ads_adaptor.AdsHolder(view);
     }
 

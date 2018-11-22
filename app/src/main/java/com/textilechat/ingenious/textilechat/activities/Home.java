@@ -81,7 +81,6 @@ public class Home extends AppCompatActivity
             R.drawable.ads_icon,
             R.drawable.contact_jcon,
             R.drawable.about_icon
-
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {

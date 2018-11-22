@@ -77,8 +77,8 @@ public class Home extends AppCompatActivity
     private int[] tabIcons = {
             R.drawable.news_icon,
             R.drawable.ic_chat_black_24dp,
-            R.drawable.ic_person_black_24dp,
             R.drawable.ads_icon,
+            R.drawable.ic_person_black_24dp,
             R.drawable.contact_jcon,
             R.drawable.about_icon
     };

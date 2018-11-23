@@ -44,7 +44,6 @@
                 android:layout_height="match_parent"
                 android:padding="5dp"
                 android:checked="false"
-                    android:layout_weight=""
                 android:layout_alignParentEnd="true"
                 android:text="Notification  "
                 android:textColor="@color/white"

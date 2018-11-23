@@ -34,12 +34,12 @@ import cz.msebera.android.httpclient.Header;
 import es.dmoral.toasty.Toasty;
 
 public class Edit_profile extends AppCompatActivity {
-    String user_id;
     public static final int PICK_IMAGE = 1;
     private SweetAlertDialog pd;
     private String photoPath = "",orignal;
     private ImageView profile_image;
     private EditText name,contact,city,company,c_nature,c_address;
+    String id= Prefs.getPreferences().getString("user_id","");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +48,7 @@ public class Edit_profile extends AppCompatActivity {
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        user_id = getIntent().getStringExtra("user_id");
+
         get_user_profile_detail();
         init();
     }
@@ -78,11 +78,9 @@ public class Edit_profile extends AppCompatActivity {
             public void onClick(View v) {
                 if(Utils.isOnline(Edit_profile.this))
                 {
-                    if(photoPath.isEmpty()){
-                        update_profile(name.getText().toString(),contact.getText().toString(),city.getText().toString(),company.getText().toString(),c_nature.getText().toString(),c_address.getText().toString(),orignal);
-                    }else {
-                        update_profile(name.getText().toString(),contact.getText().toString(),city.getText().toString(),company.getText().toString(),c_nature.getText().toString(),c_address.getText().toString(),photoPath);
-                    }
+
+                  update_profile(name.getText().toString(),contact.getText().toString(),city.getText().toString(),company.getText().toString(),c_nature.getText().toString(),c_address.getText().toString(),photoPath);
+
 
                 }
                 else
@@ -123,7 +121,7 @@ public class Edit_profile extends AppCompatActivity {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("req_key","get_user_profile_detail_by_id");
-        params.put("u_id",user_id);
+        params.put("u_id",id);
         client.post(Endpoints.ip_server, params, new AsyncHttpResponseHandler()
         {
             @Override
@@ -144,7 +142,6 @@ public class Edit_profile extends AppCompatActivity {
                         JSONObject object  = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                         if(object.getBoolean("success")) {
                             if(!object.getString("u_image").isEmpty()){
-                                orignal=object.getString("u_image");
                                 Glide.with(Edit_profile.this)
                                         .load(object.getString("u_image"))
                                         .into(profile_image);
@@ -212,14 +209,22 @@ public class Edit_profile extends AppCompatActivity {
 
     private void update_profile(String name,String contact,String city, String company,String nature,String address,String photo)
     {
-        String id= Prefs.getPreferences().getString("user_id","");
+
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.put("req_key","create_event");
+        params.put("req_key","update_user_detail");
+        params.put("u_id",id);
+        params.put("u_name",name);
+        params.put("u_contact",contact);
+        params.put("u_city",city);
+        params.put("u_company",company);
+        params.put("u_nature",nature);
+        params.put("u_address",address);
 
         try{
 
             params.put("file_name",new File(photo));
+            Toast.makeText(this,photo+"",Toast.LENGTH_SHORT).show();
 
         }catch (Exception e){}
 

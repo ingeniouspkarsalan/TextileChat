@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,9 +62,9 @@ import cz.msebera.android.httpclient.Header;
 import es.dmoral.toasty.Toasty;
 
 public class Home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, PopupMenu.OnMenuItemClickListener {
     private SweetAlertDialog pd;
-    private TabLayout tabLayout;
+
 
     String username, useremail;
     private TextView usernameview, useremailview;
@@ -74,14 +78,6 @@ public class Home extends AppCompatActivity
     private List<CategoryClass> searchlist;
     final String id = Prefs.getString("user_id", "0");
 
-    private int[] tabIcons = {
-            R.drawable.news_icon,
-            R.drawable.ic_chat_black_24dp,
-            R.drawable.ads_icon,
-            R.drawable.ic_person_black_24dp,
-            R.drawable.contact_jcon,
-            R.drawable.about_icon
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,8 +135,49 @@ public class Home extends AppCompatActivity
                     .setContentText("Internet Not Found!")
                     .show();
         }
-        fortablayout();
+
         initsearch();
+        bottommenus();
+    }
+
+    private void bottommenus() {
+        findViewById(R.id.news).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this,News_Activity.class));
+                Animation.slideUp(Home.this);
+            }
+        });
+        findViewById(R.id.chats).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this,Users_private_chat_placeholder.class));
+                Animation.slideUp(Home.this);
+            }
+        });
+        findViewById(R.id.ads).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this,Advertisment.class));
+                Animation.slideUp(Home.this);
+            }
+        });
+        findViewById(R.id.profile).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in=new Intent(Home.this,User_profile.class);
+                in.putExtra("not_show_chat_button","yes");
+                in.putExtra("other_user_id",id);
+                startActivity(in);
+                Animation.slideUp(Home.this);
+            }
+        });
+        findViewById(R.id.more).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopup(v);
+            }
+        });
     }
 
     //fetching all categories of subcategory
@@ -155,7 +192,7 @@ public class Home extends AppCompatActivity
                     categoryClassList = JSONParser.parse_category(response);
                     catergory_adapter = new Catergory_adapter(Home.this, categoryClassList);
                     recyclerView.setAdapter(catergory_adapter);
-                    recyclerView.setLayoutManager(new GridLayoutManager(Home.this,2));
+                    recyclerView.setLayoutManager(new GridLayoutManager(Home.this, 2));
 //                    LinearLayoutManager llm = new LinearLayoutManager(Home.this);
 //                    llm.setOrientation(LinearLayoutManager.VERTICAL);
 //                    recyclerView.setLayoutManager(llm);
@@ -248,7 +285,7 @@ public class Home extends AppCompatActivity
 
 
     //init searching
-    private void initsearch(){
+    private void initsearch() {
 
         searchbox = (EditText) findViewById(R.id.searchbox);
         searchbox.addTextChangedListener(new TextWatcher() {
@@ -270,114 +307,16 @@ public class Home extends AppCompatActivity
     }
 
     //searching from adaptor n list
-    private void searching(String words){
+    private void searching(String words) {
         searchlist = new ArrayList<>();
-        if(searchlist != null)
-            for (CategoryClass list : categoryClassList)
-            {
-                if(list != null)
-                    if(list.getC_name().toLowerCase().contains(words))
-                    {
+        if (searchlist != null)
+            for (CategoryClass list : categoryClassList) {
+                if (list != null)
+                    if (list.getC_name().toLowerCase().contains(words)) {
                         searchlist.add(list);
                     }
             }
         catergory_adapter.searchedList(searchlist);
-    }
-
-    //initializing tablayout
-    public void fortablayout(){
-
-        tabLayout=findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[0]).setText("News"));
-        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[1]).setText("Chats"));
-        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[2]).setText("Ads"));
-        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[3]).setText("Profile"));
-        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[4]).setText("Contact"));
-        tabLayout.addTab(tabLayout.newTab().setIcon(tabIcons[5]).setText("about us"));
-
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if(tabLayout.getSelectedTabPosition() == 0)
-                {
-                    startActivity(new Intent(Home.this,News_Activity.class));
-                    Animation.slideUp(Home.this);
-                }
-                else if(tabLayout.getSelectedTabPosition() == 1)
-                {
-                    startActivity(new Intent(Home.this,Users_private_chat_placeholder.class));
-                    Animation.slideUp(Home.this);
-                }
-                else if(tabLayout.getSelectedTabPosition() == 2)
-                {
-                    startActivity(new Intent(Home.this,Advertisment.class));
-                    Animation.slideUp(Home.this);
-                }
-                else if(tabLayout.getSelectedTabPosition() == 3)
-                {
-                    Intent in=new Intent(Home.this,User_profile.class);
-                    in.putExtra("not_show_chat_button","yes");
-                    in.putExtra("other_user_id",id);
-                    startActivity(in);
-                    Animation.slideUp(Home.this);
-                }
-                else if(tabLayout.getSelectedTabPosition() == 4)
-                {
-                    startActivity(new Intent(Home.this,Contact_us.class));
-                    Animation.slideUp(Home.this);
-                }
-                else if(tabLayout.getSelectedTabPosition() == 5)
-                {
-                    //about us
-//                    startActivity(new Intent(Home.this,Contact_us.class));
-//                    Animation.slideUp(Home.this);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                if(tabLayout.getSelectedTabPosition() == 0)
-                {
-                    startActivity(new Intent(Home.this,News_Activity.class));
-                    Animation.slideUp(Home.this);
-                }
-                else if(tabLayout.getSelectedTabPosition() == 1)
-                {
-                    startActivity(new Intent(Home.this,Users_private_chat_placeholder.class));
-                    Animation.slideUp(Home.this);
-                }
-                else if(tabLayout.getSelectedTabPosition() == 2)
-                {
-                    startActivity(new Intent(Home.this,Advertisment.class));
-                    Animation.slideUp(Home.this);
-                }
-                else if(tabLayout.getSelectedTabPosition() == 3)
-                {
-                    Intent in=new Intent(Home.this,User_profile.class);
-                    in.putExtra("not_show_chat_button","yes");
-                    in.putExtra("other_user_id",id);
-                    startActivity(in);
-                    Animation.slideUp(Home.this);
-                }
-                else if(tabLayout.getSelectedTabPosition() == 4)
-                {
-                    startActivity(new Intent(Home.this,Contact_us.class));
-                    Animation.slideUp(Home.this);
-                }
-                else if(tabLayout.getSelectedTabPosition() == 5)
-                {
-                    //about us
-//                    startActivity(new Intent(Home.this,Contact_us.class));
-//                    Animation.slideUp(Home.this);
-                }
-            }
-        });
     }
 
 
@@ -390,28 +329,6 @@ public class Home extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -450,7 +367,32 @@ public class Home extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         try {
-        requestData();
-    }catch (Exception e){}
+            requestData();
+        } catch (Exception e) {
+        }
     }
+
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        // This activity implements OnMenuItemClickListener
+        popup.setOnMenuItemClickListener((PopupMenu.OnMenuItemClickListener) this);
+        popup.inflate(R.menu.more_menu);
+        popup.show();
+    }
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.contact:
+                startActivity(new Intent(Home.this, Contact_us.class));
+                Animation.slideUp(Home.this);
+                return true;
+            case R.id.about:
+                Toast.makeText(this, "about us", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return false;
+        }
+
+    }
+
 }

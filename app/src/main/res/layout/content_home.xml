@@ -37,17 +37,70 @@
         android:layout_weight="1"
         app:shimmer_demo_child_count="10" />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         android:background="@color/colorPrimaryDark"
-        android:minHeight="?attr/actionBarSize"
-        android:pointerIcon="arrow"
-        app:tabTextColor="@color/white"
-        app:tabSelectedTextColor="@color/white"
-        app:tabMode="scrollable"
-        app:tabGravity="fill" />
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/news_icon"
+            android:id="@+id/news"
+            android:fontFamily="@font/cutive_mono"
+            android:background="@null"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:text="News"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/chats_icon"
+            android:id="@+id/chats"
+            android:background="@null"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:fontFamily="@font/cutive_mono"
+            android:text="Chats"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/adss_icon"
+            android:id="@+id/ads"
+            android:background="@null"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:fontFamily="@font/cutive_mono"
+            android:text="Ads"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_person_black_24dp"
+            android:id="@+id/profile"
+            android:background="@null"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:fontFamily="@font/cutive_mono"
+            android:text="Profile"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/more_icon"
+            android:id="@+id/more"
+            android:background="@null"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:fontFamily="@font/cutive_mono"
+            android:text="More"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>

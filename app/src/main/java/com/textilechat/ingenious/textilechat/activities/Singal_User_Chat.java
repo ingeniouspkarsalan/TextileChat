@@ -130,8 +130,8 @@ public class Singal_User_Chat extends AppCompatActivity {
             public void onClick(View v) {
                 sending_msg=edit_message.getText().toString();
                 if(!sending_msg.isEmpty()){
-                        sending_chat_to_server(sending_msg,id,to_user_id);
                     btn_send.setEnabled(false);
+                        sending_chat_to_server(sending_msg,id,to_user_id);
                         hideSoftKeyboard(Singal_User_Chat.this);
                 }else{
                     Toast.makeText(Singal_User_Chat.this,"Insert text to send",Toast.LENGTH_SHORT).show();
@@ -276,6 +276,7 @@ public class Singal_User_Chat extends AppCompatActivity {
                 super.onFinish();
 //                pd.dismiss();
                 edit_message.setText("");
+                btn_send.setEnabled(true);
             }
         });
     }

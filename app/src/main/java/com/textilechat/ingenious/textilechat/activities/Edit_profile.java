@@ -36,7 +36,7 @@ import es.dmoral.toasty.Toasty;
 public class Edit_profile extends AppCompatActivity {
     public static final int PICK_IMAGE = 1;
     private SweetAlertDialog pd;
-    private String photoPath = "",orignal;
+    private String photoPath = "";
     private ImageView profile_image;
     private EditText name,contact,city,company,c_nature,c_address;
     String id= Prefs.getPreferences().getString("user_id","");

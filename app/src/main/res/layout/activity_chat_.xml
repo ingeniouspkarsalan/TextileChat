@@ -23,7 +23,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
@@ -33,6 +32,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="20dp"
                     android:maxEms="7"
+                    android:layout_weight="1"
                     android:textStyle="bold"
                     android:layout_alignParentStart="true"/>
 
@@ -44,6 +44,7 @@
                 android:layout_height="match_parent"
                 android:padding="5dp"
                 android:checked="false"
+                    android:layout_weight=""
                 android:layout_alignParentEnd="true"
                 android:text="Notification  "
                 android:textColor="@color/white"
@@ -51,7 +52,7 @@
                 android:textOn="ON"
                 android:thumbTint="@color/white"
                 android:trackTint="@color/white" />
-
+ 
             </RelativeLayout>
 
 

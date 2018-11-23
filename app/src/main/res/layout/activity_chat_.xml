@@ -52,7 +52,7 @@
                 android:textOn="ON"
                 android:thumbTint="@color/white"
                 android:trackTint="@color/white" />
- 
+
             </RelativeLayout>
 
 

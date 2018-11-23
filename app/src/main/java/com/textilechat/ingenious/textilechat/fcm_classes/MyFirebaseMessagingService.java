@@ -89,11 +89,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                 if(sendclass.getSc_id().equals("0")){
 
-                    showNotificationsilentforchat(massege, sendclass.getC_id(),"category",sendclass.getC_id(),"0");
+                    showNotificationsilentforchat(massege, sendclass.getC_id(),"category",sendclass.getC_id(),"0","");
 
                 }else{
 
-                    showNotificationsilentforchat(massege, sendclass.getC_id()+"->"+sendclass.getSc_id(),"sub_category",sendclass.getC_id(),sendclass.getSc_id());
+                    showNotificationsilentforchat(massege, sendclass.getC_id()+"->"+sendclass.getSc_id(),"sub_category",sendclass.getC_id(),sendclass.getSc_id(),"");
 
                 }
 
@@ -101,11 +101,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                 if(sendclass.getSc_id().equals("0")){
 
-                    showNotificationforchat(massege, sendclass.getC_id(),"category",sendclass.getC_id(),"0");
+                    showNotificationforchat(massege, sendclass.getC_id(),"category",sendclass.getC_id(),"0","");
 
                 }else{
 
-                    showNotificationforchat(massege, sendclass.getC_id()+"->"+sendclass.getSc_id(),"sub_category",sendclass.getC_id(),sendclass.getSc_id());
+                    showNotificationforchat(massege, sendclass.getC_id()+"->"+sendclass.getSc_id(),"sub_category",sendclass.getC_id(),sendclass.getSc_id(),"");
 
                 }
 
@@ -164,13 +164,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                     if(sc_id.equals("0")){
                         if(sqlite_for_markers.getnotifCount(c_id,"0") < 1){
-                            showNotificationsilentforchat(massege, c_name,"category",c_id,"0");
+                            showNotificationsilentforchat(massege, c_name,"category",c_id,"0",c_name);
                         }
 
 
                     }else{
                         if(sqlite_for_markers.getnotifCount(c_id,sc_id) < 1) {
-                            showNotificationsilentforchat(massege, c_name + "->" + sc_name, "sub_category", c_id, sc_id);
+                            showNotificationsilentforchat(massege, c_name + "->" + sc_name, "sub_category", c_id, sc_id,sc_name);
                         }
                     }
 
@@ -178,11 +178,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                     if(sc_id.equals("0")){
                         if(sqlite_for_markers.getnotifCount(c_id,"0") < 1) {
-                            showNotificationforchat(massege, c_name, "category", c_id, "0");
+                            showNotificationforchat(massege, c_name, "category", c_id, "0",c_name);
                         }
                     }else{
                         if(sqlite_for_markers.getnotifCount(c_id,sc_id) < 1) {
-                            showNotificationforchat(massege, c_name + "->" + sc_name, "sub_category", c_id, sc_id);
+                            showNotificationforchat(massege, c_name + "->" + sc_name, "sub_category", c_id, sc_id,sc_name);
                         }
                     }
 
@@ -192,11 +192,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                     if(sc_id.equals("0")){
 
-                        showNotificationsilentforchat(massege, "Your message is approve now in "+c_name,"category",c_id,"0");
+                        showNotificationsilentforchat(massege, "Your message is approve now in "+c_name,"category",c_id,"0",c_name);
 
                     }else{
 
-                        showNotificationsilentforchat(massege, "Your message is approve now in "+c_name+"->"+sc_name,"sub_category",c_id,sc_id);
+                        showNotificationsilentforchat(massege, "Your message is approve now in "+c_name+"->"+sc_name,"sub_category",c_id,sc_id,sc_name);
 
                     }
 
@@ -204,11 +204,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                     if(sc_id.equals("0")){
 
-                        showNotificationforchat(massege, "Your message is approve now in "+c_name,"category",c_id,"0");
+                        showNotificationforchat(massege, "Your message is approve now in "+c_name,"category",c_id,"0",c_name);
 
                     }else{
 
-                        showNotificationforchat(massege, "Your message is approve now in "+c_name+"->"+sc_name,"sub_category",c_id,sc_id);
+                        showNotificationforchat(massege, "Your message is approve now in "+c_name+"->"+sc_name,"sub_category",c_id,sc_id,sc_name);
 
                     }
 
@@ -258,10 +258,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
     //for silent chat notification
-    private void showNotificationsilentforchat(String title,String message,String id_name,String c_id,String sc_id) {
+    private void showNotificationsilentforchat(String title,String message,String id_name,String c_id,String sc_id,String name) {
 
     Intent i = new Intent(this,Chat_Activity.class);
     i.putExtra("id_name",id_name);
+    i.putExtra("name",name);
     i.putExtra("c_id",c_id);
     i.putExtra("s_id",sc_id);
     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -294,10 +295,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
     //for  chat notification with sound
-    private void showNotificationforchat(String title,String message,String id_name,String c_id,String sc_id) {
+    private void showNotificationforchat(String title,String message,String id_name,String c_id,String sc_id,String name) {
 
         Intent i = new Intent(this,Chat_Activity.class);
         i.putExtra("id_name",id_name);
+        i.putExtra("name",name);
         i.putExtra("c_id",c_id);
         i.putExtra("s_id",sc_id);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

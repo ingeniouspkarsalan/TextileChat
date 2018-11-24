@@ -387,7 +387,8 @@ public class Home extends AppCompatActivity
                 Animation.slideUp(Home.this);
                 return true;
             case R.id.about:
-                Toast.makeText(this, "about us", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Home.this, About_us.class));
+                Animation.slideUp(Home.this);
                 return true;
             default:
                 return false;

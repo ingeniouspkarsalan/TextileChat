@@ -175,6 +175,7 @@ public class Chat_Activity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Toasty.success(Chat_Activity.this,"yes u r paid user.",Toast.LENGTH_SHORT).show();
+                    
                 }
             });
         }

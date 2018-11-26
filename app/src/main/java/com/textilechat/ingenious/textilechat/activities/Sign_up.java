@@ -133,7 +133,7 @@ public class Sign_up extends AppCompatActivity {
                         }else {
                             new SweetAlertDialog(Sign_up.this, SweetAlertDialog.ERROR_TYPE)
                                     .setTitleText("Oops...")
-                                    .setContentText("Try Again")
+                                    .setContentText(object.getString("message"))
                                     .show();
                         }
 

@@ -103,13 +103,6 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
                 }
                 holder.username.setText(c_message.getUser_name().toString());
                 holder.message.setText(c_message.getMessages().toString());
-                //for testing
-                holder.message.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context,position+"",Toast.LENGTH_SHORT).show();
-                    }
-                });
                 holder.timestamp.setText(c_message.getTimestamp().toString());
                 Glide.with(context)
                         .load(c_message.getU_image())

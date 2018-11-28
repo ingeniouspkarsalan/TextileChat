@@ -96,7 +96,7 @@ public class Singal_User_Chat extends AppCompatActivity {
 //        }
 
         to_user_id=getIntent().getStringExtra("user_id");
-        other_image=Prefs.getString("other_image","0");
+        other_image=getIntent().getStringExtra("other_image");
 
         //init database
         sqlite_for_markers=new Sqlite_for_markers(Singal_User_Chat.this);

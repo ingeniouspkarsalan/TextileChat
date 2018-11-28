@@ -61,7 +61,8 @@ public class Singlechat_adaptor extends RecyclerView.Adapter<Singlechat_adaptor.
         final Single_user_msg_list c_message = chat_messagesList.get(position);
         final String id = Prefs.getString("user_id", "0");
         final String owner_name = Prefs.getString("user_name", "0");
-        final String image_owner = Prefs.getString("owner_image", "");
+        final String image_owner = Prefs.getString("owner_image", "0");
+
         if(c_message.getFrom_user_id().equals(id) && c_message.getTo_user_id().equals(other_user_id)) {
             if (c_message.getFrom_user_id().equals(id)) {
                 holder.layoutofowner.setVisibility(View.VISIBLE);

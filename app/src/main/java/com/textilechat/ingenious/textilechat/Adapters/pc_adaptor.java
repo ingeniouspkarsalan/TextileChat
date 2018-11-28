@@ -111,6 +111,9 @@ public class pc_adaptor extends RecyclerView.Adapter<pc_adaptor.pcHolder>
                     in.putExtra("user_name",pcClass.getFrom_u_name().toString());
                     in.putExtra("other_image",pcClass.getFrom_u_image());
                     context.startActivity(in);
+
+
+
                 }
             });
 

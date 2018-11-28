@@ -85,15 +85,15 @@ public class Singal_User_Chat extends AppCompatActivity {
 
         //paid user get visible on attachment
         attachment=findViewById(R.id.attachment);
-        if(Prefs.getString("User_paid_status","0").equals("1")){
-            attachment.setVisibility(View.VISIBLE);
-            attachment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toasty.success(Singal_User_Chat.this,"yes u r paid user.",Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+//        if(Prefs.getString("User_paid_status","0").equals("1")){
+//            attachment.setVisibility(View.VISIBLE);
+//            attachment.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toasty.success(Singal_User_Chat.this,"yes u r paid user.",Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
 
         to_user_id=getIntent().getStringExtra("user_id");
         other_image=Prefs.getString("other_image","0");

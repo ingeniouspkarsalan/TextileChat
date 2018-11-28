@@ -34,7 +34,7 @@
             android:layout_below="@id/btn_open_single_Chat"
             app:srcCompat="@android:drawable/ic_menu_edit"
             android:id="@+id/edit_profiles"
-            android:visibility="visible"
+            android:visibility="gone"
             android:padding="10dp"
             />
         <com.github.florent37.shapeofview.shapes.CircleView

@@ -576,7 +576,7 @@ public class Chat_Activity extends AppCompatActivity {
             for (chat_messages list : chat_message_list)
             {
                 if(list != null)
-                    if(list.getMessages().toLowerCase().contains(words))
+                    if(list.getMessages().toLowerCase().contains(words) || list.getMessages().toUpperCase().contains(words))
                     {
                         searchlist.add(list);
                     }

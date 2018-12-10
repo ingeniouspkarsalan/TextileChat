@@ -318,7 +318,8 @@ public class Chat_Activity extends AppCompatActivity {
 
 
                                 }else{
-                                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                                    //recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                                    recyclerView.getLayoutManager().scrollToPosition(chat_adapters.getItemCount() - 1);
                                 }
                             }
                             else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
@@ -330,7 +331,8 @@ public class Chat_Activity extends AppCompatActivity {
                                     recyclerView.scrollToPosition(chat_adapters.getItemPosition(msg_id));
 
                                 }else{
-                                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                                    //recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, chat_adapters.getItemCount() - 1);
+                                    recyclerView.getLayoutManager().scrollToPosition(chat_adapters.getItemCount() - 1);
                                 }
 
                             }

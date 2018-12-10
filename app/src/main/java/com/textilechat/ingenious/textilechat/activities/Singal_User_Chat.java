@@ -301,7 +301,7 @@ public class Singal_User_Chat extends AppCompatActivity {
                                     try {
                                         iterator--;
                                         ads_banners=findViewById(R.id.ads_banners);
-                                        ads_banners.setVisibility(View.VISIBLE);
+                                        //ads_banners.setVisibility(View.VISIBLE);
                                         Glide.with(Singal_User_Chat.this).load(ads_classList.get(iterator).getAd_image()).into(ads_banners);
                                     }catch (Exception e){}
                                 }else{

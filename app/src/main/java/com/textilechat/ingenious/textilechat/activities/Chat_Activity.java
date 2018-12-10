@@ -483,6 +483,12 @@ public class Chat_Activity extends AppCompatActivity {
                                                 ads_banners = findViewById(R.id.ads_banners);
                                                 ads_banners.setVisibility(View.VISIBLE);
                                                 Glide.with(Chat_Activity.this).load(ads_classList.get(iterator).getAd_image()).into(ads_banners);
+                                                ads_banners.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        startActivity(new Intent(Chat_Activity.this,Ads_image_show.class).putExtra("image",ads_classList.get(iterator).getAd_image()));
+                                                    }
+                                                });
 
                                             }
                                         }else if(getIntent().getStringExtra("id_name").equals("sub_category")) {
@@ -492,6 +498,12 @@ public class Chat_Activity extends AppCompatActivity {
                                                 ads_banners = findViewById(R.id.ads_banners);
                                                 ads_banners.setVisibility(View.VISIBLE);
                                                 Glide.with(Chat_Activity.this).load(ads_classList.get(iterator).getAd_image()).into(ads_banners);
+                                                ads_banners.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        startActivity(new Intent(Chat_Activity.this,Ads_image_show.class).putExtra("image",ads_classList.get(iterator).getAd_image()));
+                                                    }
+                                                });
 
                                             }
 

@@ -1,6 +1,7 @@
 package com.textilechat.ingenious.textilechat.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.textilechat.ingenious.textilechat.R;
+import com.textilechat.ingenious.textilechat.activities.Ads_image_show;
+import com.textilechat.ingenious.textilechat.activities.Chat_Activity;
 import com.textilechat.ingenious.textilechat.classes.Ads_class;
 
 import java.util.List;
@@ -55,7 +58,7 @@ public class Ads_adaptor extends RecyclerView.Adapter<Ads_adaptor.AdsHolder>
         holder.news_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toasty.success(context, ads_class.getAd_id(), Toast.LENGTH_SHORT).show();
+                context.startActivity(new Intent(context,Ads_image_show.class).putExtra("image",ads_class.getAd_image()));
 
             }
         });

@@ -382,6 +382,13 @@ public class Home extends AppCompatActivity
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.profile:
+                Intent in=new Intent(Home.this,User_profile.class);
+                in.putExtra("not_show_chat_button","yes");
+                in.putExtra("other_user_id",id);
+                startActivity(in);
+                Animation.slideUp(Home.this);
+                return true;
             case R.id.contact:
                 startActivity(new Intent(Home.this, Contact_us.class));
                 Animation.slideUp(Home.this);

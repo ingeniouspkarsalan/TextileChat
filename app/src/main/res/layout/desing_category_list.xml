@@ -4,12 +4,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
 
         <com.github.florent37.shapeofview.shapes.CircleView
             android:id="@+id/help_image"
@@ -18,6 +19,7 @@
             android:elevation="4dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
+            android:visibility="gone"
             app:shape_circle_borderColor="@color/colorAccent"
             app:shape_circle_borderWidth="2dp">
 
@@ -33,41 +35,39 @@
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_view"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginEnd="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:contentPaddingRight="30dp"
+            card_view:contentPaddingLeft="30dp"
+            card_view:contentPaddingTop="5dp"
+            card_view:contentPaddingBottom="5dp"
             android:layout_marginTop="25dp"
-            android:layout_marginStart="70dp"
             android:elevation="8dp"
             card_view:cardCornerRadius="8dp">
 
             <TextView
                 android:id="@+id/categor_name"
-                android:layout_width="137dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:lines="2"
-                android:layout_marginStart="50dp"
-                android:ellipsize="end"
-                android:layout_marginTop="10dp"
-                android:fontFamily="sans-serif-light"
-                android:text="Hellos"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="24dp" />
-
-            <TextView
-                android:id="@+id/item_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="40dp"
-                android:fontFamily="sans-serif-light"
-                android:text="10 item"
-                android:visibility="gone"
-                android:textColor="@color/white"
-                android:background="@color/colorAccent"
-                android:textSize="22dp" />
+                android:ellipsize="end"
+                android:fontFamily="@font/cutive_mono"
+                android:text="Hellos"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/item_count"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="top"-->
+                <!--android:layout_marginStart="50dp"-->
+                <!--android:layout_marginTop="40dp"-->
+                <!--android:fontFamily="sans-serif-light"-->
+                <!--android:text="10 item"-->
+                <!--android:visibility="gone"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:background="@color/colorAccent"-->
+                <!--android:textSize="22dp" />-->
 
         </android.support.v7.widget.CardView>
 
@@ -79,6 +79,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="40dp"
+            android:visibility="gone"
             app:shape_circle_borderColor="@color/colorAccent"
             app:shape_circle_borderWidth="2dp">
 
@@ -91,6 +92,29 @@
 
         </com.github.florent37.shapeofview.shapes.CircleView>
 
+
+
+        <com.github.florent37.shapeofview.shapes.CircleView
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:elevation="4dp"
+            android:id="@+id/mark_show"
+            android:visibility="invisible"
+            android:layout_margin="5dp"
+            android:layout_alignRight="@+id/card_view"
+            android:background="@color/searchcolor"
+            app:shape_circle_borderColor="@color/colorAccent"
+            app:shape_circle_borderWidth="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00"
+                android:id="@+id/markers_count"
+                android:padding="5dp"
+                android:layout_gravity="center|center_vertical"
+                android:textColor="@color/white"/>
+        </com.github.florent37.shapeofview.shapes.CircleView>
 
     </RelativeLayout>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,109 +9,125 @@
     android:orientation="vertical"
     tools:showIn="@layout/app_bar_home">
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="100dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="@color/colorAccent">-->
-    <!--</LinearLayout>-->
 
-    <EditText
-        android:id="@+id/searchbox"
+    <VideoView
+        android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/btn_stlye"
-        android:layout_margin="5dp"
-        android:inputType="text"
-        android:visibility="gone"
-        android:textColor="@color/searchcolor"
-        android:textColorHint="@color/white"
-        android:drawableEnd="@drawable/ic_search_24dp"
-        android:padding="10dp"
-        android:hint="Search"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="15dp"/>
-
-
-    <com.cooltechworks.views.shimmer.ShimmerRecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/recyclerview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        app:shimmer_demo_angle="20"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:layout_weight="1"
-        app:shimmer_demo_child_count="10" />
-
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:background="@color/colorPrimaryDark"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/blur"
+        android:layout_alignTop="@+id/videoView"
+        >
+
+        <EditText
+            android:id="@+id/searchbox"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_stlye"
+            android:layout_margin="5dp"
+            android:inputType="text"
+            android:visibility="gone"
+            android:textColor="@color/searchcolor"
+            android:textColorHint="@color/white"
+            android:drawableEnd="@drawable/ic_search_24dp"
+            android:padding="10dp"
+            android:hint="Search"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/news_icon"
-            android:id="@+id/news"
-            android:fontFamily="@font/cutive_mono"
-            android:background="@null"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:text="News"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:src="@drawable/ic_launcher"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"/>
+
+
+        <com.cooltechworks.views.shimmer.ShimmerRecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/recyclerview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/chats_icon"
-            android:id="@+id/chats"
-            android:background="@null"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:fontFamily="@font/cutive_mono"
-            android:text="Chats"/>
-        <TextView
-            android:layout_width="0dp"
+            android:layout_gravity="center_horizontal"
+            app:shimmer_demo_angle="20"
+            android:layout_margin="10dp"
+            android:padding="10dp"
             android:layout_weight="1"
+            app:shimmer_demo_child_count="10" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/adss_icon"
-            android:id="@+id/ads"
-            android:background="@null"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:fontFamily="@font/cutive_mono"
-            android:text="Ads"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_insert_chart_black_24dp"
-            android:id="@+id/subs"
-            android:background="@null"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:fontFamily="@font/cutive_mono"
-            android:text="Packages"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/more_icon"
-            android:id="@+id/more"
-            android:background="@null"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:fontFamily="@font/cutive_mono"
-            android:text="More"/>
+            android:padding="5dp"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/news_icon"
+                android:id="@+id/news"
+                android:fontFamily="@font/cutive_mono"
+                android:background="@null"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:text="News"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/chats_icon"
+                android:id="@+id/chats"
+                android:background="@null"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:fontFamily="@font/cutive_mono"
+                android:text="Chats"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/adss_icon"
+                android:id="@+id/ads"
+                android:background="@null"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:fontFamily="@font/cutive_mono"
+                android:text="Ads"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_insert_chart_black_24dp"
+                android:id="@+id/subs"
+                android:background="@null"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:fontFamily="@font/cutive_mono"
+                android:text="Packages"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/more_icon"
+                android:id="@+id/more"
+                android:background="@null"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:fontFamily="@font/cutive_mono"
+                android:text="More"/>
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 
 
-</LinearLayout>
+
+</RelativeLayout>

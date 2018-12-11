@@ -3,6 +3,7 @@ package com.textilechat.ingenious.textilechat.activities;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.view.menu.MenuBuilder;
@@ -27,6 +28,7 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -77,13 +79,19 @@ public class Home extends AppCompatActivity
     private EditText searchbox;
     private List<CategoryClass> searchlist;
     final String id = Prefs.getString("user_id", "0");
-
+    VideoView videoview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        videoview = (VideoView) findViewById(R.id.videoView);
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.textile);
+        videoview.setVideoURI(uri);
+        videoview.start();
+
 
 
         username = Prefs.getString("user_name", "");
@@ -280,6 +288,17 @@ public class Home extends AppCompatActivity
                 pd.dismiss();
             }
         });
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // to restart the video after coming from other activity like Sing up
+        videoview.start();
+
+
     }
 
 

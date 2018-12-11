@@ -191,10 +191,10 @@ public class Home extends AppCompatActivity
                     categoryClassList = JSONParser.parse_category(response);
                     catergory_adapter = new Catergory_adapter(Home.this, categoryClassList);
                     recyclerView.setAdapter(catergory_adapter);
-                    recyclerView.setLayoutManager(new GridLayoutManager(Home.this, 2));
-//                    LinearLayoutManager llm = new LinearLayoutManager(Home.this);
-//                    llm.setOrientation(LinearLayoutManager.VERTICAL);
-//                    recyclerView.setLayoutManager(llm);
+                    //recyclerView.setLayoutManager(new GridLayoutManager(Home.this, 2));
+                    LinearLayoutManager llm = new LinearLayoutManager(Home.this);
+                    llm.setOrientation(LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(llm);
 
                 }
 

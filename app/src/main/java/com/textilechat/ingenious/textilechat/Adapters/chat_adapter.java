@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.textilechat.ingenious.textilechat.R;
+import com.textilechat.ingenious.textilechat.activities.Singal_User_Chat;
 import com.textilechat.ingenious.textilechat.activities.User_profile;
 import com.textilechat.ingenious.textilechat.classes.Animation;
 import com.textilechat.ingenious.textilechat.classes.CategoryClass;
@@ -103,6 +104,17 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
                 }
                 holder.username.setText(c_message.getUser_name().toString());
                 holder.message.setText(c_message.getMessages().toString());
+                holder.message.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent in=new Intent(context,Singal_User_Chat.class);
+                        in.putExtra("user_id",c_message.getIds());
+                        in.putExtra("user_name",c_message.getUser_name());
+                        in.putExtra("other_image",c_message.getU_image());
+                        context.startActivity(in);
+                        Animation.shrink(context);
+                    }
+                });
                 holder.timestamp.setText(c_message.getTimestamp().toString());
                 Glide.with(context)
                         .load(c_message.getU_image())

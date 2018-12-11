@@ -53,7 +53,7 @@ public class Sub_Category extends AppCompatActivity {
         videoview = (VideoView) findViewById(R.id.videoView);
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.textile);
         videoview.setVideoURI(uri);
-       
+
         videoview.start();
 
         videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {

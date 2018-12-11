@@ -81,13 +81,13 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_person_black_24dp"
-            android:id="@+id/profile"
+            android:drawableTop="@drawable/ic_insert_chart_black_24dp"
+            android:id="@+id/subs"
             android:background="@null"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:fontFamily="@font/cutive_mono"
-            android:text="Profile"/>
+            android:text="Packages"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"

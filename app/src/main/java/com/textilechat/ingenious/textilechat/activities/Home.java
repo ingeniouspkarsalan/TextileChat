@@ -162,12 +162,11 @@ public class Home extends AppCompatActivity
                 Animation.slideUp(Home.this);
             }
         });
-        findViewById(R.id.profile).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.subs).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in=new Intent(Home.this,User_profile.class);
-                in.putExtra("not_show_chat_button","yes");
-                in.putExtra("other_user_id",id);
+                Intent in=new Intent(Home.this,Packge_Page.class);
+                in.putExtra("msg","yes");
                 startActivity(in);
                 Animation.slideUp(Home.this);
             }

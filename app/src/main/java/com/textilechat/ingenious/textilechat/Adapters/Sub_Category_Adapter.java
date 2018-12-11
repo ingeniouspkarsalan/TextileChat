@@ -29,7 +29,7 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
 
     class Sub_CategoryHolder extends RecyclerView.ViewHolder {
         TextView sc_name,markers_count;
-        ImageView sc_icon;
+        //ImageView sc_icon;
         CardView for_click;
         CircleView marker;
         Sqlite_for_markers sqlite_for_markers;
@@ -38,7 +38,7 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
         {
             super(itemView);
             sc_name=itemView.findViewById(R.id.categor_name);
-            sc_icon=itemView.findViewById(R.id.banner_image);
+            //sc_icon=itemView.findViewById(R.id.banner_image);
             for_click=itemView.findViewById(R.id.card_view);
             markers_count=itemView.findViewById(R.id.markers_count);
             marker=itemView.findViewById(R.id.mark_show);
@@ -56,9 +56,9 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
     public void onBindViewHolder(Sub_CategoryHolder holder , int position)
     {
         final Sub_category_class sub_category = subcategoryList.get(position);
-        Glide.with(context)
-                .load(sub_category.getSc_image())
-                .into(holder.sc_icon);
+//        Glide.with(context)
+//                .load(sub_category.getSc_image())
+//                .into(holder.sc_icon);
         holder.sc_name.setText(sub_category.getSc_name());
 
         try {
@@ -86,7 +86,7 @@ public class Sub_Category_Adapter extends RecyclerView.Adapter<Sub_Category_Adap
     @Override
     public Sub_CategoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.design_sub_catogory_list, null);
+        View view = inflater.inflate(R.layout.desing_category_list, null);
         return new Sub_CategoryHolder(view);
     }
 

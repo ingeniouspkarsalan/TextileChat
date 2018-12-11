@@ -3,6 +3,7 @@ package com.textilechat.ingenious.textilechat.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
@@ -90,8 +91,10 @@ public class Sub_Category extends AppCompatActivity {
                     sub_category_classList = JSONParser.parse_sub_category(response);
                     sub_category_adapter = new Sub_Category_Adapter(Sub_Category.this, sub_category_classList,getIntent().getStringExtra("c_id"));
                     recyclerView.setAdapter(sub_category_adapter);
-                    recyclerView.setLayoutManager(new GridLayoutManager(Sub_Category.this,2));
-
+                   // recyclerView.setLayoutManager(new GridLayoutManager(Sub_Category.this,2));
+                    LinearLayoutManager llm = new LinearLayoutManager(Sub_Category.this);
+                    llm.setOrientation(LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(llm);
                 }
 
 

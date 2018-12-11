@@ -48,6 +48,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
+            card_view:cardBackgroundColor="@color/blur"
             android:elevation="8dp">
 
             <TextView
@@ -58,7 +59,7 @@
                 android:textAlignment="center"
                 android:fontFamily="@font/cutive_mono"
                 android:text="Hellos"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/white"
                 android:textSize="15sp" />
 
             <!--<TextView-->

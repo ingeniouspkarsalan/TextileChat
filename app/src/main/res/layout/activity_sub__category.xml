@@ -20,30 +20,50 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="15dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center" />
 
-    <!--<com.cooltechworks.views.shimmer.ShimmerRecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"-->
-        <!--android:id="@+id/recyclerview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_below="@id/tv_email"-->
-        <!--app:shimmer_demo_angle="20"-->
-        <!--app:shimmer_demo_child_count="10" />-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/videoView"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="15dp"/>
+
+            <!--<com.cooltechworks.views.shimmer.ShimmerRecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"-->
+            <!--android:id="@+id/recyclerview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_below="@id/tv_email"-->
+            <!--app:shimmer_demo_angle="20"-->
+            <!--app:shimmer_demo_child_count="10" />-->
 
 
-    <com.cooltechworks.views.shimmer.ShimmerRecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/recyclerview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        app:shimmer_demo_angle="20"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:layout_weight="1"
-        app:shimmer_demo_child_count="10" />
+            <com.cooltechworks.views.shimmer.ShimmerRecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/recyclerview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:shimmer_demo_angle="20"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:layout_weight="1"
+                app:shimmer_demo_child_count="10" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
 </LinearLayout>

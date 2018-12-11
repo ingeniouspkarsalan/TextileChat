@@ -3,6 +3,7 @@ package com.textilechat.ingenious.textilechat.activities;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -90,7 +91,17 @@ public class Home extends AppCompatActivity
         videoview = (VideoView) findViewById(R.id.videoView);
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.textile);
         videoview.setVideoURI(uri);
+
         videoview.start();
+
+        videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+
+                mp.setVolume(0, 0);
+            }
+        });
 
 
 

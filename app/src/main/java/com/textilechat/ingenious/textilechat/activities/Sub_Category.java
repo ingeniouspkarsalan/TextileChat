@@ -1,5 +1,7 @@
 package com.textilechat.ingenious.textilechat.activities;
 
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -7,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -36,6 +39,7 @@ public class Sub_Category extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Sub_category_class> sub_category_classList;
     private Sub_Category_Adapter sub_category_adapter;
+    VideoView videoview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +49,22 @@ public class Sub_Category extends AppCompatActivity {
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        videoview = (VideoView) findViewById(R.id.videoView);
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.textile);
+        videoview.setVideoURI(uri);
+       
+        videoview.start();
+
+        videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+
+                mp.setVolume(0, 0);
+            }
+        });
+
 
         recyclerView=(RecyclerView) findViewById(R.id.recyclerview);
 
@@ -147,6 +167,13 @@ public class Sub_Category extends AppCompatActivity {
         super.finish();
         Animation.swipeLeft(this);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // to restart the video after coming from other activity like Sing up
+        videoview.start();
 
+
+    }
 
 }

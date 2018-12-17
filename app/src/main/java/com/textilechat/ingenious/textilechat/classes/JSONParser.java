@@ -125,6 +125,7 @@ public class JSONParser
                 chat_messagess.setTimestamp(jsonObject.getString("created_at"));
                 chat_messagess.setU_status(jsonObject.getString("status"));
                 chat_messagess.setU_image(jsonObject.getString("u_image"));
+                chat_messagess.setAdmin_msg(jsonObject.getString("admin_msg"));
 
 
 

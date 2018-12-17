@@ -8,6 +8,7 @@ public class chat_messages {
     private String u_status;
     private String u_image;
     private String m_id;
+    private String admin_msg;
 
     public String getU_status() {
         return u_status;
@@ -64,5 +65,13 @@ public class chat_messages {
 
     public void setM_id(String m_id) {
         this.m_id = m_id;
+    }
+
+    public String getAdmin_msg() {
+        return admin_msg;
+    }
+
+    public void setAdmin_msg(String admin_msg) {
+        this.admin_msg = admin_msg;
     }
 }

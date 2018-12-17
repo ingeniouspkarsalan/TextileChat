@@ -33,8 +33,8 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     private int for_unread=0;
 
     public class chatViewHolder extends RecyclerView.ViewHolder {
-        TextView message,timestamp,owner_message,owner_timestamp,username,owner_username,new_msg;
-        RelativeLayout layoutofother,layoutofowner;
+        TextView message,timestamp,owner_message,owner_timestamp,username,owner_username,new_msg,admin_msg;
+        RelativeLayout layoutofother,layoutofowner,admin_layout;
         ImageView owner_image,other_image;
 
         public chatViewHolder(View itemView) {
@@ -50,6 +50,9 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
             owner_image=itemView.findViewById(R.id.owner_image);
             other_image=itemView.findViewById(R.id.other_image);
             new_msg=itemView.findViewById(R.id.new_msg);
+
+            admin_layout=itemView.findViewById(R.id.admin_layout);
+            admin_msg=itemView.findViewById(R.id.admin_msg);
         }
     }
 
@@ -75,7 +78,7 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
             }
         });
 
-        if(c_message.getIds().equals(id)){
+        if(c_message.getIds().equals(id) && c_message.getAdmin_msg().equals("0")){
             holder.layoutofowner.setVisibility(View.VISIBLE);
             holder.owner_username.setText(c_message.getUser_name().toString());
             holder.owner_message.setText(" "+c_message.getMessages().toString());
@@ -94,7 +97,8 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
                     }
                 });
             }
-        }else {
+        }
+        else if(!c_message.getIds().equals(id) && c_message.getAdmin_msg().equals("0")) {
             if(!c_message.getU_status().equals("0")){
                 holder.layoutofother.setVisibility(View.VISIBLE);
                 if(for_unread!=0){
@@ -122,6 +126,9 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
                 i.putExtra("other_image",c_message.getU_image());
             }
 
+        }else if(!c_message.getIds().equals(id) && c_message.getAdmin_msg().equals("1")){
+        holder.admin_layout.setVisibility(View.VISIBLE);
+        holder.admin_msg.setText(c_message.getMessages());
         }
 
     }

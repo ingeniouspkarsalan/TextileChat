@@ -13,7 +13,7 @@ public class serialize_msg_class implements Serializable {
 
     String u_name;
 
-    public serialize_msg_class(String massege, String u_id, String u_name, String created_at, String id_name, String c_id, String sc_id) {
+    public serialize_msg_class(String massege, String u_id, String u_name, String created_at, String id_name, String c_id, String sc_id,String ad_msg) {
         this.massege = massege;
         this.u_id = u_id;
         this.u_name = u_name;
@@ -21,11 +21,21 @@ public class serialize_msg_class implements Serializable {
         this.id_name = id_name;
         this.c_id = c_id;
         this.sc_id = sc_id;
+        this.ad_msg=ad_msg;
     }
 
     String created_at;
     String id_name;
     String c_id;
+    String ad_msg;
+
+    public String getAd_msg() {
+        return ad_msg;
+    }
+
+    public void setAd_msg(String ad_msg) {
+        this.ad_msg = ad_msg;
+    }
 
     public String getMassege() {
         return massege;

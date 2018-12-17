@@ -217,6 +217,7 @@ public class Chat_Activity extends AppCompatActivity {
                 coming.setTimestamp(msg_class.getCreated_at().toString());
                 coming.setU_status("0");
                 coming.setU_image(image_owner);
+                coming.setAdmin_msg(msg_class.getAd_msg().toString());
 
                 if(getIntent().getStringExtra("id_name").equals("category")) {
                     if(getIntent().getStringExtra("c_id").equals(msg_class.getC_id())){

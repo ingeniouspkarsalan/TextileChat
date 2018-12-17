@@ -76,9 +76,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     created_at = remoteMessage.getData().get("created_at"),
                     id_name = remoteMessage.getData().get("id_name"),
                     c_id = remoteMessage.getData().get("c_id"),
-                    sc_id = remoteMessage.getData().get("sc_id");
+                    sc_id = remoteMessage.getData().get("sc_id"),
+                    ad_msg = remoteMessage.getData().get("ad_msg");
 
-            serialize_msg_class sendclass = new serialize_msg_class(massege, u_id, u_name, created_at, id_name, c_id, sc_id);
+            serialize_msg_class sendclass = new serialize_msg_class(massege, u_id, u_name, created_at, id_name, c_id, sc_id,ad_msg);
             Intent pushNotification = new Intent("chat");
             pushNotification.putExtra("msg", sendclass);
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);

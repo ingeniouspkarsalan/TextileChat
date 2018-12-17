@@ -162,16 +162,24 @@
         android:layout_centerInParent="true"
         android:background="@color/colorPrimary"
         android:layout_below="@id/layoutofowner">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/admin_msg"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:padding="5dp"
-            android:fontFamily="monospace"
-            android:gravity="center_horizontal"
-            android:text="hello world"/>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/admin_msg"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textIsSelectable="true"
+        android:padding="5dp"
+        android:fontFamily="monospace"
+        android:gravity="center_horizontal"
+        android:text="hello world"/>
+
+</LinearLayout>
 
     </RelativeLayout>
 

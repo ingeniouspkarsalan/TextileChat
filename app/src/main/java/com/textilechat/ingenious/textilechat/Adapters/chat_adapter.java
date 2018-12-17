@@ -33,7 +33,7 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
     private int for_unread=0;
 
     public class chatViewHolder extends RecyclerView.ViewHolder {
-        TextView message,timestamp,owner_message,owner_timestamp,username,owner_username,new_msg,admin_msg;
+        TextView message,timestamp,owner_message,owner_timestamp,username,owner_username,new_msg,admin_msg,nad_msg;
         RelativeLayout layoutofother,layoutofowner,admin_layout;
         ImageView owner_image,other_image;
 
@@ -53,6 +53,7 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
 
             admin_layout=itemView.findViewById(R.id.admin_layout);
             admin_msg=itemView.findViewById(R.id.admin_msg);
+            nad_msg=itemView.findViewById(R.id.nad_msg);
         }
     }
 
@@ -129,6 +130,11 @@ public class chat_adapter extends RecyclerView.Adapter<chat_adapter.chatViewHold
         }else if(!c_message.getIds().equals(id) && c_message.getAdmin_msg().equals("1")){
         holder.admin_layout.setVisibility(View.VISIBLE);
         holder.admin_msg.setText(c_message.getMessages());
+            if(for_unread!=0){
+                if(for_unread==position){
+                    holder.nad_msg.setVisibility(View.VISIBLE);
+                }
+            }
         }
 
     }
